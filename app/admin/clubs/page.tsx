@@ -141,10 +141,13 @@ export default function AdminClubs() {
 
               <div className="space-y-2 mb-4 text-sm text-gray-300">
                 <p>
-                  <span className="font-semibold">Leader:</span> {club.leader.username}
+                  <span className="font-semibold">Leader:</span> {club.leader?.username || "Unknown"}
                 </p>
                 <p>
-                  <span className="font-semibold">Members:</span> {club.members.length}
+                  <span className="font-semibold">Email:</span> {club.leader?.email || "N/A"}
+                </p>
+                <p>
+                  <span className="font-semibold">Members:</span> {club.members?.length || 0}
                 </p>
                 <p>
                   <span className="font-semibold">Created:</span>{" "}
