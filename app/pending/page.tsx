@@ -1,7 +1,9 @@
 "use client";
 
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
+
+export const dynamic = "force-dynamic";
 
 interface AccessRequest {
   status: "pending" | "approved" | "rejected";
@@ -10,7 +12,6 @@ interface AccessRequest {
 
 export default function PendingApprovalPage() {
   const router = useRouter();
-  const searchParams = useSearchParams();
   const [mounted, setMounted] = useState(false);
   const [accessRequest, setAccessRequest] = useState<AccessRequest | null>(null);
   const [loading, setLoading] = useState(true);
