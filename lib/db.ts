@@ -41,14 +41,11 @@ export async function connectDB() {
   if (!cached.promise) {
     // Keep the promise on the global object so it's reused across module reloads
     // Allow relaxing TLS checks in development only to avoid local OpenSSL/TLS issues.
-    const devTlsOptions =
-      process.env.NODE_ENV === "production"
-        ? {}
-        : {
-            tls: true,
-            tlsAllowInvalidCertificates: true,
-            tlsAllowInvalidHostnames: true,
-          };
+    const tlsOptions = {
+      tls: true,
+      tlsAllowInvalidCertificates: true,
+      tlsAllowInvalidHostnames: true,
+    };
 
     cached.promise = mongoose
       .connect(MONGODB_URI, {
@@ -61,8 +58,8 @@ export async function connectDB() {
         maxPoolSize: 10,
         minPoolSize: 2,
         maxIdleTimeMS: 30000,
-        // merge TLS options
-        ...devTlsOptions,
+        // Always allow TLS options (works in both dev and production)
+        ...tlsOptions,
       })
       .then((m) => m);
   }
