@@ -89,6 +89,17 @@ export async function POST(req: Request) {
     );
   } catch (error) {
     console.error("Login error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : '';
+    console.error('Error message:', errorMessage);
+    console.error('Error stack:', errorStack);
+    return Response.json(
+      { 
+        error: "Internal server error",
+        details: errorMessage,
+        stack: process.env.NODE_ENV === 'production' ? undefined : errorStack
+      },
+      { status: 500 }
+    );
   }
 }
