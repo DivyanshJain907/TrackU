@@ -4,10 +4,28 @@ import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
+interface StatsData {
+  users: {
+    total: number;
+    approved: number;
+    pending: number;
+  };
+  teamMembers: number;
+  clubs: number;
+  attendance: {
+    total: number;
+    present: number;
+    absent: number;
+    excused: number;
+    rate: string;
+  };
+}
+
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [stats, setStats] = useState<StatsData | null>(null);
   const router = useRouter();
 
   useEffect(() => {
@@ -38,9 +56,28 @@ export default function AdminPage() {
       }
 
       setIsAdmin(true);
-      setLoading(false);
+      await fetchStats(token);
     } catch (err) {
       setError("Error verifying admin access");
+      setLoading(false);
+    }
+  };
+
+  const fetchStats = async (token: string) => {
+    try {
+      const res = await fetch("/api/admin/stats", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setStats(data);
+      }
+    } catch (err) {
+      console.error("Error fetching stats:", err);
+    } finally {
       setLoading(false);
     }
   };
@@ -112,12 +149,15 @@ export default function AdminPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {/* System Statistics */}
+          {/* Total Users */}
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition">
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-300 text-sm font-medium">Total Users</p>
-                <h3 className="text-3xl font-bold text-white mt-2">--</h3>
+                <h3 className="text-3xl font-bold text-white mt-2">{stats?.users.total || 0}</h3>
+                <p className="text-gray-400 text-xs mt-1">
+                  {stats?.users.approved || 0} approved, {stats?.users.pending || 0} pending
+                </p>
               </div>
               <div className="bg-blue-500/20 p-3 rounded-lg">
                 <svg
@@ -142,7 +182,8 @@ export default function AdminPage() {
             <div className="flex items-center justify-between">
               <div>
                 <p className="text-gray-300 text-sm font-medium">Team Members</p>
-                <h3 className="text-3xl font-bold text-white mt-2">--</h3>
+                <h3 className="text-3xl font-bold text-white mt-2">{stats?.teamMembers || 0}</h3>
+                <p className="text-gray-400 text-xs mt-1">Active members</p>
               </div>
               <div className="bg-green-500/20 p-3 rounded-lg">
                 <svg
@@ -162,15 +203,104 @@ export default function AdminPage() {
             </div>
           </div>
 
-          {/* Database Status */}
+          {/* Total Clubs */}
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition">
             <div className="flex items-center justify-between">
               <div>
-                <p className="text-gray-300 text-sm font-medium">Database</p>
-                <p className="text-green-400 text-sm font-semibold mt-2">Connected</p>
+                <p className="text-gray-300 text-sm font-medium">Clubs</p>
+                <h3 className="text-3xl font-bold text-white mt-2">{stats?.clubs || 0}</h3>
+                <p className="text-gray-400 text-xs mt-1">Active clubs</p>
+              </div>
+              <div className="bg-purple-500/20 p-3 rounded-lg">
+                <svg
+                  className="w-8 h-8 text-purple-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Attendance Rate */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-300 text-sm font-medium">Attendance Rate</p>
+                <h3 className="text-3xl font-bold text-white mt-2">{stats?.attendance.rate || 0}%</h3>
+                <p className="text-gray-400 text-xs mt-1">{stats?.attendance.total || 0} records</p>
               </div>
               <div className="bg-green-500/20 p-3 rounded-lg">
-                <div className="w-3 h-3 bg-green-400 rounded-full animate-pulse"></div>
+                <svg
+                  className="w-8 h-8 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Present Count */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-300 text-sm font-medium">Present</p>
+                <h3 className="text-3xl font-bold text-green-400 mt-2">{stats?.attendance.present || 0}</h3>
+              </div>
+              <div className="bg-green-500/20 p-3 rounded-lg">
+                <svg
+                  className="w-8 h-8 text-green-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M5 13l4 4L19 7"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+
+          {/* Absent Count */}
+          <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition">
+            <div className="flex items-center justify-between">
+              <div>
+                <p className="text-gray-300 text-sm font-medium">Absent</p>
+                <h3 className="text-3xl font-bold text-red-400 mt-2">{stats?.attendance.absent || 0}</h3>
+              </div>
+              <div className="bg-red-500/20 p-3 rounded-lg">
+                <svg
+                  className="w-8 h-8 text-red-400"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M6 18L18 6M6 6l12 12"
+                  />
+                </svg>
               </div>
             </div>
           </div>
