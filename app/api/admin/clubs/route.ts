@@ -14,11 +14,16 @@ export async function GET(req: Request) {
 
     const clubs = await Club.find()
       .populate("leader", "username email")
+      .lean()
       .sort({ createdAt: -1 });
 
-    return Response.json(clubs);
+    return Response.json(clubs || []);
   } catch (error) {
     console.error("Fetch clubs error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return Response.json(
+      { error: "Internal server error", details: errorMessage },
+      { status: 500 }
+    );
   }
 }

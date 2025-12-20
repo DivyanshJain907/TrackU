@@ -33,6 +33,12 @@ export default function AdminClubs() {
     try {
       setLoading(true);
       const token = localStorage.getItem("token");
+      if (!token) {
+        setError("No authentication token found");
+        setLoading(false);
+        return;
+      }
+
       const res = await fetch("/api/admin/clubs", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -40,39 +46,52 @@ export default function AdminClubs() {
       });
 
       if (!res.ok) {
-        setError("Failed to fetch clubs");
+        const errorData = await res.json().catch(() => ({}));
+        setError(`Failed to fetch clubs: ${errorData.error || "Unknown error"}`);
         return;
       }
 
       const data = await res.json();
-      setClubs(data);
+      setClubs(Array.isArray(data) ? data : []);
     } catch (err) {
-      setError("An error occurred");
+      setError(`An error occurred: ${err instanceof Error ? err.message : "Unknown error"}`);
     } finally {
       setLoading(false);
     }
   };
 
   const handleDeleteClub = async (clubId: string) => {
-    if (!confirm("Are you sure you want to delete this club?")) return;
+    if (!confirm("Are you sure you want to delete this club? This will also delete all associated users and data.")) return;
 
     try {
       const token = localStorage.getItem("token");
+      if (!token) {
+        alert("No authentication token found");
+        return;
+      }
+
+      console.log(`Deleting club with ID: ${clubId}`);
       const res = await fetch(`/api/admin/clubs/${clubId}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
         },
       });
 
       if (!res.ok) {
-        alert("Failed to delete club");
+        const errorData = await res.json().catch(() => ({ error: "Unknown error" }));
+        console.error("Delete error:", errorData);
+        alert(`Failed to delete club: ${errorData.error || "Unknown error"}`);
         return;
       }
 
+      const data = await res.json();
+      alert(`${data.message} (${data.deletedUsers} users removed)`);
       setClubs((prev) => prev.filter((club) => club._id !== clubId));
     } catch (err) {
-      alert("An error occurred");
+      console.error("Delete exception:", err);
+      alert(`An error occurred: ${err instanceof Error ? err.message : "Unknown error"}`);
     }
   };
 

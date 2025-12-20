@@ -15,11 +15,14 @@ export async function GET(req: Request) {
 
     await connectDB();
 
-    // Fetch all statistics in parallel
+    // Get admin email from environment
+    const adminEmail = process.env.ADMIN_EMAIL;
+
+    // Fetch all statistics in parallel, excluding admin user
     const [totalUsers, approvedUsers, pendingUsers, totalTeamMembers, totalClubs, totalAttendance] = await Promise.all([
-      User.countDocuments(),
-      User.countDocuments({ isApproved: true }),
-      User.countDocuments({ isApproved: false }),
+      User.countDocuments({ email: { $ne: adminEmail } }),
+      User.countDocuments({ email: { $ne: adminEmail }, isApproved: true }),
+      User.countDocuments({ email: { $ne: adminEmail }, isApproved: false }),
       TeamMember.countDocuments(),
       Club.countDocuments(),
       Attendance.countDocuments(),

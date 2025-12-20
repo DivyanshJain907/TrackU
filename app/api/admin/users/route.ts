@@ -13,12 +13,22 @@ export async function GET(req: Request) {
 
     await connectDB();
 
-    // Verify admin access (you'd need to decode the token and check)
-    const users = await User.find().populate("club", "name");
+    // Get admin email from environment
+    const adminEmail = process.env.ADMIN_EMAIL;
+
+    // Fetch all users except the admin user
+    const users = await User.find({ email: { $ne: adminEmail } })
+      .populate("club", "name")
+      .lean()
+      .sort({ createdAt: -1 });
     
-    return Response.json(users);
+    return Response.json(users || []);
   } catch (error) {
     console.error("Fetch users error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    return Response.json(
+      { error: "Internal server error", details: errorMessage },
+      { status: 500 }
+    );
   }
 }
