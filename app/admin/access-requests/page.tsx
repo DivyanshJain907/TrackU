@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 interface AccessRequest {
   _id: string;
-  user: { _id: string; username: string; email: string };
+  user: { _id: string; username: string; email: string; club?: { _id: string; name: string } };
   username: string;
   email: string;
   phone?: string;
@@ -199,6 +199,9 @@ export default function AdminAccessRequests() {
                     Email
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                    Club Name
+                  </th>
+                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                     Phone
                   </th>
                   <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -220,6 +223,13 @@ export default function AdminAccessRequests() {
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                       {request.email}
+                    </td>
+                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
+                      {request.user.club?.name ? (
+                        <span className="font-medium text-gray-900">{request.user.club.name}</span>
+                      ) : (
+                        <span className="text-gray-400">-</span>
+                      )}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
                       {request.phone ? (

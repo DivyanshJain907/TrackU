@@ -49,9 +49,13 @@ export async function GET(req: Request) {
       );
     }
 
-    // Get all access requests with user details
+    // Get all access requests with user details and club info
     const accessRequests = await AccessRequest.find()
-      .populate('user', 'username email')
+      .populate('user', 'username email club')
+      .populate({
+        path: 'user',
+        populate: { path: 'club', select: 'name' }
+      })
       .populate('reviewedBy', 'username')
       .sort({ createdAt: -1 });
 

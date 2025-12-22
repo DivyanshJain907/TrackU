@@ -33,9 +33,9 @@ export default function Register() {
       return;
     }
 
-    // Validate username - only alphabets allowed
-    if (!/^[a-zA-Z]+$/.test(username)) {
-      setError("Username must contain only alphabets");
+    // Validate username - only alphabets and spaces allowed
+    if (!/^[a-zA-Z ]+$/.test(username)) {
+      setError("Username must contain only alphabets and spaces");
       setLoading(false);
       return;
     }
@@ -178,8 +178,8 @@ export default function Register() {
                     type="text"
                     value={username}
                     onChange={(e) => {
-                      // Allow only alphabets
-                      const value = e.target.value.replace(/[^a-zA-Z]/g, "");
+                      // Allow only alphabets and spaces
+                      const value = e.target.value.replace(/[^a-zA-Z ]/g, "");
                       setUsername(value);
                     }}
                     placeholder="username"
