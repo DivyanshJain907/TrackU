@@ -64,7 +64,10 @@ export default function Performers() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    router.replace("/login");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("isClubLeader");
+    localStorage.removeItem("isApproved");
+    router.replace("/");
   };
 
   // Sort members by hours

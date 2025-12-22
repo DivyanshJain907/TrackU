@@ -135,7 +135,10 @@ export default function AdminPage() {
                   localStorage.removeItem("token");
                   localStorage.removeItem("userId");
                   localStorage.removeItem("username");
-                  window.location.href = "/login";
+                  localStorage.removeItem("isAdmin");
+                  localStorage.removeItem("isClubLeader");
+                  localStorage.removeItem("isApproved");
+                  window.location.href = "/";
                 }}
                 className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg font-semibold transition"
               >

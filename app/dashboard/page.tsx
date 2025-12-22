@@ -356,7 +356,10 @@ export default function Dashboard() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    router.push("/login");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("isClubLeader");
+    localStorage.removeItem("isApproved");
+    router.push("/");
   };
 
   if (loading) {

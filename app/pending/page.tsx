@@ -79,7 +79,10 @@ export default function PendingApprovalPage() {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
     localStorage.removeItem("username");
-    router.push("/login");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("isClubLeader");
+    localStorage.removeItem("isApproved");
+    router.push("/");
   };
 
   const isRejected = accessRequest?.status === "rejected";

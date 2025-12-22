@@ -125,7 +125,11 @@ export default function Attendance() {
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("username");
-    router.replace("/login");
+    localStorage.removeItem("userId");
+    localStorage.removeItem("isAdmin");
+    localStorage.removeItem("isClubLeader");
+    localStorage.removeItem("isApproved");
+    router.replace("/");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
