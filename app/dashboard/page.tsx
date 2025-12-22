@@ -364,10 +364,12 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50 flex items-center justify-center">
+      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-amber-600 mx-auto"></div>
-          <p className="mt-4 text-amber-800 font-semibold">
+          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4 animate-spin">
+            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full"></div>
+          </div>
+          <p className="mt-4 text-white font-semibold">
             Loading dashboard...
           </p>
         </div>
@@ -376,36 +378,112 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-amber-50 via-orange-50 to-red-50">
+    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
+      {/* Animated Background Elements */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+      <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+
       {/* Header */}
-      <div className="bg-gradient-to-r from-amber-600 via-orange-600 to-red-600 text-white shadow-lg">
-        <div className="max-w-7xl mx-auto px-4 py-4 sm:py-6">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
-            <div>
-              <h1 className="text-2xl sm:text-3xl font-bold">
-                TrackU Dashboard
-              </h1>
-              <p className="text-amber-100 mt-1 text-sm">Manage Your Team</p>
+      <div className="relative z-10 bg-gradient-to-r from-purple-700/90 via-blue-700/90 to-purple-700/90 backdrop-blur-xl text-white shadow-2xl border-b border-purple-500/20">
+        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6">
+            <div className="space-y-2">
+              <div className="flex items-center gap-3">
+                <div className="p-3 bg-gradient-to-br from-purple-400 to-blue-400 rounded-2xl shadow-lg">
+                  <svg
+                    className="w-7 h-7 text-white"
+                    fill="none"
+                    stroke="currentColor"
+                    viewBox="0 0 24 24"
+                  >
+                    <path
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                      strokeWidth={2}
+                      d="M13 10V3L4 14h7v7l9-11h-7z"
+                    />
+                  </svg>
+                </div>
+                <h1 className="text-4xl sm:text-5xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  TrackU
+                </h1>
+              </div>
+              <p className="text-purple-200 text-sm ml-16 font-semibold">
+                Manage Your Team with Excellence
+              </p>
             </div>
 
             {/* Desktop Navigation */}
-            <div className="hidden md:flex gap-2">
+            <div className="hidden md:flex gap-4 items-center">
               <Link
                 href="/performers"
-                className="bg-white text-amber-700 px-4 py-2 rounded-lg font-semibold hover:bg-amber-50 transition text-sm"
+                className="group relative bg-white/10 hover:bg-white/20 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center gap-2 hover:shadow-xl hover:shadow-purple-500/20 transform hover:-translate-y-1"
               >
-                View Performers
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  />
+                </svg>
+                Performers
               </Link>
               <Link
                 href="/attendance"
-                className="bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-4 py-2 rounded-lg transition font-semibold text-sm shadow-md"
+                className="group relative bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/40 flex items-center gap-2 transform hover:-translate-y-1"
               >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
+                  />
+                </svg>
                 Attendance
               </Link>
+
+              {/* User Info */}
+              {username && (
+                <div className="flex items-center space-x-3 px-4 py-2 bg-white/10 backdrop-blur border border-white/30 rounded-2xl hover:border-white/60 hover:bg-white/20 transition group">
+                  <svg className="w-5 h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
+                  </svg>
+                  <p className="text-white font-semibold whitespace-nowrap group-hover:text-purple-200 transition">
+                    {username}
+                  </p>
+                </div>
+              )}
+
               <button
                 onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 px-4 py-2 rounded-lg font-semibold transition text-sm"
+                className="group relative bg-red-600/80 hover:bg-red-700 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-red-500/50 hover:border-red-500/80 shadow-lg hover:shadow-xl hover:shadow-red-500/20 flex items-center gap-2 transform hover:-translate-y-1"
               >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"
+                  />
+                </svg>
                 Logout
               </button>
             </div>
@@ -413,11 +491,11 @@ export default function Dashboard() {
             {/* Mobile Menu Button */}
             <button
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-              className="md:hidden text-white hover:text-amber-100 focus:outline-none"
+              className="md:hidden text-white hover:text-purple-200 focus:outline-none transition transform hover:scale-110"
               aria-label="Toggle menu"
             >
               <svg
-                className="w-6 h-6"
+                className="w-7 h-7"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -443,93 +521,111 @@ export default function Dashboard() {
 
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
-            <div className="md:hidden mt-3 pb-3 space-y-2">
+            <div className="md:hidden mt-6 pb-4 space-y-3 border-t border-white/10 pt-4 animate-in fade-in slide-in-from-top-2">
               <Link
                 href="/performers"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block bg-white text-amber-700 px-4 py-2.5 rounded-lg transition font-semibold text-center"
+                className="block bg-white/10 backdrop-blur text-white px-4 py-3 rounded-xl transition font-semibold text-center hover:bg-white/20 border border-white/30 hover:border-white/60"
               >
-                View Performers
+                📊 View Performers
               </Link>
               <Link
                 href="/attendance"
                 onClick={() => setIsMobileMenuOpen(false)}
-                className="block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-2.5 rounded-lg transition font-semibold text-center"
+                className="block bg-gradient-to-r from-blue-500 to-blue-600 text-white px-4 py-3 rounded-xl transition font-semibold text-center hover:shadow-lg hover:shadow-blue-500/40"
               >
-                Attendance
+                ✓ Attendance
               </Link>
               <button
                 onClick={() => {
                   setIsMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2.5 rounded-lg transition font-semibold"
+                className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-3 rounded-xl transition font-semibold shadow-md hover:shadow-lg"
               >
-                Logout
+                🚪 Logout
               </button>
-            </div>
-          )}
-
-          {username && (
-            <div className="flex items-center space-x-2 text-amber-100 mt-3">
-              <svg
-                className="w-4 h-4 sm:w-5 sm:h-5"
-                fill="currentColor"
-                viewBox="0 0 20 20"
-              >
-                <path
-                  fillRule="evenodd"
-                  d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"
-                  clipRule="evenodd"
-                />
-              </svg>
-              <span className="text-sm font-semibold">
-                Logged in as <span className="text-white">{username}</span>
-              </span>
             </div>
           )}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 sm:py-14">
         {/* Club Header */}
         {club && (
-          <div className="bg-gradient-to-r from-amber-50 to-orange-50 border-2 border-amber-300 rounded-2xl shadow-lg p-8 mb-8">
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-amber-900 mb-3">
-              {club.name}
-            </h1>
-            <p className="text-gray-700 text-lg sm:text-xl">
-              {club.description}
-            </p>
+          <div className="bg-gradient-to-r from-purple-600/50 via-blue-600/50 to-indigo-600/50 backdrop-blur-2xl border-2 border-purple-400/40 hover:border-purple-400/70 rounded-3xl shadow-2xl p-12 mb-12 transition duration-300 hover:shadow-2xl hover:shadow-purple-500/20 transform hover:-translate-y-1">
+            <div className="flex flex-col items-center justify-center gap-6 text-center">
+              <div className="p-6 bg-gradient-to-br from-purple-500 to-blue-500 rounded-3xl shadow-2xl">
+                <svg
+                  className="w-12 h-12 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={1.5}
+                    d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
+                  />
+                </svg>
+              </div>
+              <div className="max-w-3xl">
+                <h1 className="text-6xl sm:text-7xl font-bold text-white drop-shadow-lg mb-3 bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
+                  {club.name}
+                </h1>
+                <div className="flex items-center justify-center gap-2 mb-4">
+                  <div className="h-1 w-12 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
+                  <p className="text-purple-200 text-xl font-bold">Club Dashboard</p>
+                  <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                </div>
+                <p className="text-gray-100 text-lg sm:text-xl max-w-2xl mx-auto drop-shadow-lg leading-relaxed">
+                  {club.description}
+                </p>
+              </div>
+            </div>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-50 border-2 border-red-300 text-red-800 px-4 py-3 rounded-lg mb-6 font-semibold">
-            {error}
+          <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
+            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
+            </svg>
+            <div>
+              <p className="font-bold text-red-200 mb-1">Error</p>
+              <p>{error}</p>
+            </div>
           </div>
         )}
 
         {successMessage && (
-          <div className="bg-green-50 border-2 border-green-300 text-green-800 px-4 py-3 rounded-lg mb-6 font-semibold">
-            {successMessage}
+          <div className="bg-green-600/20 border-2 border-green-500/50 text-green-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-green-500/80 transition animate-in fade-in slide-in-from-top-2">
+            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div>
+              <p className="font-bold text-green-200 mb-1">Success</p>
+              <p>{successMessage}</p>
+            </div>
           </div>
         )}
 
         {/* Search Bar and Add Member Button */}
-        <div className="mb-6 flex flex-col sm:flex-row gap-3 items-stretch sm:items-center">
+        <div className="mb-8 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
           {/* Search Bar */}
-          <div className="flex-1 relative">
+          <div className="flex-1 relative group">
+            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-300"></div>
             <input
               type="text"
-              placeholder="Search by name or enrollment number..."
+              placeholder="🔍 Search by name or enrollment number..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full pl-11 pr-10 py-3 border-2 border-amber-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-transparent text-gray-900 placeholder-gray-500 shadow-sm bg-white"
+              className="relative w-full pl-14 pr-12 py-4 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 shadow-lg hover:shadow-xl transition duration-300 bg-slate-800/70 backdrop-blur-sm text-base font-medium"
             />
             <svg
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-amber-600"
+              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-400 pointer-events-none"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -544,7 +640,7 @@ export default function Dashboard() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 transition"
                 aria-label="Clear search"
               >
                 <svg
@@ -567,31 +663,55 @@ export default function Dashboard() {
           {/* Add Member Button */}
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-6 py-3 rounded-xl transition font-bold shadow-md whitespace-nowrap"
+            className="group bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-8 py-4 rounded-2xl transition duration-300 font-bold shadow-xl hover:shadow-2xl hover:shadow-purple-500/40 whitespace-nowrap transform hover:-translate-y-1 flex items-center justify-center gap-2 text-base hover:scale-105"
           >
-            {showAddForm ? "✕ Cancel" : "+ Add Team Member"}
+            {showAddForm ? (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                Cancel
+              </>
+            ) : (
+              <>
+                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                Add Member
+              </>
+            )}
           </button>
         </div>
 
         {/* Search Results Info */}
         {searchQuery && (
-          <div className="mb-4 text-sm text-gray-700 font-medium">
-            Found{" "}
-            <span className="font-bold text-amber-700">
-              {filteredMembers.length}
-            </span>{" "}
-            member(s) matching "{searchQuery}"
+          <div className="mb-6 p-4 bg-gradient-to-r from-purple-600/20 to-blue-600/20 border-2 border-purple-500/40 rounded-2xl backdrop-blur-sm flex items-center gap-3 animate-in fade-in">
+            <svg className="w-5 h-5 text-purple-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+            </svg>
+            <div className="text-sm text-gray-200">
+              Found <span className="font-bold text-purple-300 text-base">{filteredMembers.length}</span>{" "}
+              <span className="font-semibold">
+                member{filteredMembers.length !== 1 ? "s" : ""}
+              </span>{" "}
+              matching "<span className="font-bold text-purple-200">{searchQuery}</span>"
+            </div>
           </div>
         )}
 
         {/* Add Member Form */}
         {showAddForm && (
-          <div className="bg-white rounded-2xl shadow-xl p-6 mb-6 border-2 border-amber-200">
-            <h2 className="text-2xl font-bold text-gray-800 mb-4">
-              Add New Team Member
-            </h2>
-            <form onSubmit={handleAddMember} className="space-y-4">
-              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition animate-in fade-in slide-in-from-top-2">
+            <div className="flex items-center gap-3 mb-6">
+              <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+                <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+              </div>
+              <h2 className="text-3xl font-bold text-white">Add New Team Member</h2>
+            </div>
+            <form onSubmit={handleAddMember} className="space-y-5">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <input
                   type="text"
                   placeholder="Full Name"
@@ -600,7 +720,7 @@ export default function Dashboard() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
-                  className="px-4 py-3 bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500"
+                  className="px-5 py-4 bg-slate-700/60 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-500 font-semibold transition shadow-lg"
                 />
                 <input
                   type="text"
@@ -613,7 +733,7 @@ export default function Dashboard() {
                     })
                   }
                   required
-                  className="px-4 py-3 bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500"
+                  className="px-5 py-4 bg-slate-700/60 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-500 font-semibold transition shadow-lg"
                 />
               </div>
               <input
@@ -623,12 +743,15 @@ export default function Dashboard() {
                 onChange={(e) =>
                   setFormData({ ...formData, position: e.target.value })
                 }
-                className="w-full px-4 py-3 bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500"
+                className="w-full px-5 py-4 bg-slate-700/60 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-500 font-semibold transition shadow-lg"
               />
               <button
                 type="submit"
-                className="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 py-3 rounded-xl transition font-bold shadow-md"
+                className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:from-green-800 active:to-green-900 text-white px-6 py-4 rounded-2xl transition font-bold shadow-lg hover:shadow-xl hover:shadow-green-500/40 transform hover:-translate-y-1 text-lg flex items-center justify-center gap-2"
               >
+                <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                </svg>
                 Add Member
               </button>
             </form>
@@ -637,46 +760,87 @@ export default function Dashboard() {
 
         {/* Team Members List */}
         {members.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow-xl p-12 text-center border-2 border-amber-200">
-            <p className="text-gray-700 text-lg font-semibold">
-              No team members added yet. Click "Add Team Member" to get started!
+          <div className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-purple-500/30 hover:border-purple-500/60 transition">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-full mb-6">
+              <svg className="w-10 h-10 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
+              </svg>
+            </div>
+            <p className="text-gray-300 text-lg font-semibold mb-2">
+              No Team Members Yet
             </p>
+            <p className="text-gray-400 text-base mb-6 max-w-md mx-auto">
+              Your team list is empty. Start by clicking the "Add Member" button to add your first team member!
+            </p>
+            <button
+              onClick={() => setShowAddForm(true)}
+              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
+            >
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+              </svg>
+              Add First Member
+            </button>
           </div>
         ) : filteredMembers.length === 0 ? (
-          <div className="bg-white rounded-2xl shadow-xl p-12 text-center border-2 border-amber-200">
-            <p className="text-gray-700 text-lg font-semibold">
-              No members found matching your search.
+          <div className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-amber-500/30 hover:border-amber-500/60 transition">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-500/30 to-orange-500/30 rounded-full mb-6">
+              <svg className="w-10 h-10 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+            </div>
+            <p className="text-gray-300 text-lg font-semibold mb-2">
+              No Results Found
+            </p>
+            <p className="text-gray-400 text-base mb-6 max-w-md mx-auto">
+              Your search for "<span className="font-bold text-amber-300">{searchQuery}</span>" didn't match any members.
             </p>
             <button
               onClick={() => setSearchQuery("")}
-              className="mt-4 text-amber-600 hover:text-amber-700 font-semibold"
+              className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-amber-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
             >
-              Clear search
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+              Clear Search
             </button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {filteredMembers.map((member) => (
               <div
                 key={member._id}
-                className="bg-white rounded-2xl shadow-xl p-5 hover:shadow-2xl transition border-2 border-amber-200"
+                className="group bg-slate-800/50 backdrop-blur-xl rounded-3xl shadow-xl p-6 hover:shadow-2xl hover:shadow-purple-500/30 transition-all duration-300 border border-purple-500/30 hover:border-purple-500/70 transform hover:-translate-y-2 hover:scale-105 overflow-hidden relative"
               >
-                <div className="mb-4">
-                  <h3 className="text-lg font-bold text-gray-800">
-                    {member.name}
-                  </h3>
-                  <p className="text-sm text-gray-600">
-                    {member.enrollmentNumber}
-                  </p>
+                {/* Gradient overlay on hover */}
+                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-blue-600/0 group-hover:from-purple-600/10 group-hover:to-blue-600/10 transition duration-300"></div>
+
+                <div className="relative z-10 mb-5">
+                  <div className="flex items-start justify-between mb-3">
+                    <div>
+                      <h3 className="text-2xl font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-200 group-hover:to-blue-200 group-hover:bg-clip-text transition duration-300">
+                        {member.name}
+                      </h3>
+                      <p className="text-sm text-gray-400 mt-1">
+                        ID: {member.enrollmentNumber}
+                      </p>
+                    </div>
+                  </div>
+
                   {member.position && (
-                    <p className="text-base font-bold text-amber-700 mt-2 bg-amber-50 px-3 py-1 rounded-lg inline-block">
-                      📍 {member.position}
-                    </p>
+                    <div className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 rounded-xl mb-4 hover:border-amber-500/70 transition">
+                      <span className="text-xl">📍</span>
+                      <p className="text-sm font-bold text-amber-300">
+                        {member.position}
+                      </p>
+                    </div>
                   )}
+
+                  {/* Creator Info */}
                   {member.createdBy && (
-                    <p className="text-xs text-gray-500 mt-2">
+                    <p className="text-xs text-gray-500 mb-2">
                       Added by:{" "}
-                      <span className="font-semibold text-amber-600">
+                      <span className="font-semibold text-blue-400">
                         {member.createdBy.username}
                       </span>
                     </p>
@@ -684,45 +848,51 @@ export default function Dashboard() {
                   {member.lastUpdatedBy && (
                     <p className="text-xs text-gray-500">
                       Last updated by:{" "}
-                      <span className="font-semibold text-green-600">
+                      <span className="font-semibold text-green-400">
                         {member.lastUpdatedBy.username}
                       </span>
                     </p>
                   )}
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-4 py-4 border-t-2 border-b-2 border-amber-100">
-                  <div className="text-center p-3 bg-gradient-to-br from-amber-50 to-amber-100 rounded-xl">
-                    <p className="text-2xl font-bold text-amber-700">
+                {/* Stats Section */}
+                <div className="grid grid-cols-2 gap-4 mb-5 py-5 border-t border-b border-purple-500/30 relative z-10">
+                  <div className="text-center p-4 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-2xl border border-purple-500/40 hover:border-purple-500/70 transition group-hover:shadow-lg group-hover:shadow-purple-500/20">
+                    <p className="text-3xl font-bold text-purple-300 drop-shadow-lg">
                       {member.points}
                     </p>
-                    <p className="text-xs text-gray-600 mt-1">Points</p>
+                    <p className="text-xs text-gray-300 mt-2 font-semibold">
+                      ⭐ Points
+                    </p>
                   </div>
-                  <div className="text-center p-3 bg-gradient-to-br from-green-50 to-green-100 rounded-xl">
-                    <p className="text-2xl font-bold text-green-700">
+                  <div className="text-center p-4 bg-gradient-to-br from-green-500/30 to-emerald-500/30 rounded-2xl border border-green-500/40 hover:border-green-500/70 transition group-hover:shadow-lg group-hover:shadow-green-500/20">
+                    <p className="text-3xl font-bold text-green-300 drop-shadow-lg">
                       {member.hours}
                     </p>
-                    <p className="text-xs text-gray-600 mt-1">Hours</p>
+                    <p className="text-xs text-gray-300 mt-2 font-semibold">
+                      ⏱️ Hours
+                    </p>
                   </div>
                 </div>
 
                 {/* Remarks Section */}
                 {(member.remarks ?? []).length > 0 && (
-                  <div className="mb-4">
-                    <p className="text-sm font-semibold text-gray-800 mb-2">
-                      Remarks ({(member.remarks ?? []).length}):
+                  <div className="mb-5 relative z-10">
+                    <p className="text-sm font-bold text-gray-200 mb-3 flex items-center gap-2">
+                      <span className="text-lg">💬</span>
+                      Remarks ({(member.remarks ?? []).length})
                     </p>
-                    <div className="bg-gradient-to-r from-orange-50 to-amber-50 rounded-xl p-3 max-h-32 overflow-y-auto border border-amber-200">
+                    <div className="bg-slate-700/50 rounded-2xl p-4 max-h-40 overflow-y-auto border border-purple-500/20 hover:border-purple-500/40 transition">
                       {(member.remarks ?? []).map((remark, idx) => (
                         <div
                           key={idx}
-                          className="text-xs text-gray-700 mb-2 pb-2 border-b border-amber-200 last:border-b-0"
+                          className="text-xs text-gray-300 mb-3 pb-3 border-b border-purple-500/20 last:border-b-0"
                         >
-                          <p className="font-medium text-blue-700">
+                          <p className="font-bold text-blue-300 mb-1">
                             {remark.text}
                           </p>
-                          <p className="text-gray-500">
-                            {new Date(remark.date).toLocaleDateString()}
+                          <p className="text-gray-500 text-xs">
+                            📅 {new Date(remark.date).toLocaleDateString()}
                           </p>
                         </div>
                       ))}
@@ -730,27 +900,28 @@ export default function Dashboard() {
                   </div>
                 )}
 
-                <div className="flex gap-2">
+                {/* Action Buttons */}
+                <div className="flex gap-2 relative z-10">
                   <button
                     onClick={() => openEditForm(member)}
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-3 py-2 rounded-xl transition text-sm font-bold shadow-sm"
+                    className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 text-white px-4 py-3 rounded-2xl transition duration-200 text-sm font-bold shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transform hover:-translate-y-0.5"
                   >
-                    Edit Info
+                    ✏️ Edit
                   </button>
                   <button
                     onClick={() => openUpdateForm(member)}
-                    className="flex-1 bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-3 py-2 rounded-xl transition text-sm font-bold shadow-sm"
+                    className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 text-white px-4 py-3 rounded-2xl transition duration-200 text-sm font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
                   >
-                    Update
+                    ⬆️ Update
                   </button>
                   <button
                     onClick={() => {
                       setSelectedMember(member);
                       setShowDeleteConfirm(true);
                     }}
-                    className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-3 py-2 rounded-xl transition text-sm font-bold shadow-sm"
+                    className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 active:from-red-800 active:to-red-900 text-white px-4 py-3 rounded-2xl transition duration-200 text-sm font-bold shadow-lg hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5"
                   >
-                    Delete
+                    🗑️
                   </button>
                 </div>
               </div>
