@@ -260,7 +260,7 @@ export default function Register() {
                     }}
                     placeholder="9876543210"
                     className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
-                    maxLength="10"
+                    maxLength={10}
                   />
                 </div>
               </div>
