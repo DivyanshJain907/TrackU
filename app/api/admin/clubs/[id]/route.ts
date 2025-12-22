@@ -7,11 +7,10 @@ import mongoose from "mongoose";
 
 export async function DELETE(
   req: Request,
-  { params }: { params: Promise<{ id: string }> | { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    const resolvedParams = await Promise.resolve(params);
-    const { id } = resolvedParams;
+    const { id } = await params;
 
     if (!id || !mongoose.Types.ObjectId.isValid(id)) {
       return Response.json({ error: "Invalid club ID" }, { status: 400 });
@@ -59,5 +58,36 @@ export async function DELETE(
       { error: "Internal server error", details: errorMessage },
       { status: 500 }
     );
+  }
+}
+
+export async function PUT(
+  req: Request,
+  { params }: { params: Promise<{ id: string }> }
+) {
+  try {
+    const { id } = await params;
+    const body = await req.json();
+
+    if (!id || !mongoose.Types.ObjectId.isValid(id)) {
+      return Response.json({ error: "Invalid club ID" }, { status: 400 });
+    }
+
+    await connectDB();
+
+    const club = await Club.findByIdAndUpdate(
+      id,
+      { name: body.name, description: body.description },
+      { new: true }
+    );
+
+    if (!club) {
+      return Response.json({ error: "Club not found" }, { status: 404 });
+    }
+
+    return Response.json(club);
+  } catch (error) {
+    console.error("Update club error:", error);
+    return Response.json({ error: "Internal server error" }, { status: 500 });
   }
 }
