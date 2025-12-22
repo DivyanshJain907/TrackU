@@ -33,6 +33,13 @@ export default function Register() {
       return;
     }
 
+    // Validate username - only alphabets allowed
+    if (!/^[a-zA-Z]+$/.test(username)) {
+      setError("Username must contain only alphabets");
+      setLoading(false);
+      return;
+    }
+
     if (password !== confirmPassword) {
       setError("Passwords do not match");
       setLoading(false);
@@ -41,6 +48,14 @@ export default function Register() {
 
     if (password.length < 6) {
       setError("Password must be at least 6 characters long");
+      setLoading(false);
+      return;
+    }
+
+    // Validate phone number - only 10 digits
+    const phoneDigitsOnly = phone.replace(/\D/g, "");
+    if (phoneDigitsOnly.length !== 10) {
+      setError("Phone number must be exactly 10 digits");
       setLoading(false);
       return;
     }
@@ -162,8 +177,12 @@ export default function Register() {
                     id="username"
                     type="text"
                     value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    placeholder="your_username"
+                    onChange={(e) => {
+                      // Allow only alphabets
+                      const value = e.target.value.replace(/[^a-zA-Z]/g, "");
+                      setUsername(value);
+                    }}
+                    placeholder="username"
                     required
                     className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
                   />
@@ -234,9 +253,14 @@ export default function Register() {
                     id="phone"
                     type="tel"
                     value={phone}
-                    onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+91 98765 43210"
+                    onChange={(e) => {
+                      // Allow only digits and limit to 10
+                      const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      setPhone(value);
+                    }}
+                    placeholder="9876543210"
                     className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                    maxLength="10"
                   />
                 </div>
               </div>

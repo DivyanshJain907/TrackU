@@ -19,13 +19,31 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if user already exists
+    // Check if user already exists by email or username
     const existingUser = await User.findOne({ $or: [{ email }, { username }] });
     if (existingUser) {
+      if (existingUser.email === email) {
+        return Response.json(
+          { error: 'Email already registered' },
+          { status: 400 }
+        );
+      }
       return Response.json(
-        { error: 'User already exists' },
+        { error: 'Username already exists' },
         { status: 400 }
       );
+    }
+
+    // Check if phone number already exists
+    if (phone && typeof phone === 'string' && phone.trim()) {
+      const phoneDigitsOnly = phone.replace(/\D/g, '');
+      const existingPhone = await User.findOne({ phone: phoneDigitsOnly });
+      if (existingPhone) {
+        return Response.json(
+          { error: 'Phone number already registered' },
+          { status: 400 }
+        );
+      }
     }
 
     // Only allow club leaders to register directly
@@ -40,8 +58,8 @@ export async function POST(req: Request) {
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
 
-    // Ensure phone is a string, not undefined
-    const phoneNumber = phone && typeof phone === 'string' ? phone.trim() : '';
+    // Ensure phone is a string with only digits, not undefined
+    const phoneNumber = phone && typeof phone === 'string' ? phone.replace(/\D/g, '') : '';
 
     // Create user (club leaders are NOT auto-approved, must wait for admin verification)
     const user = new User({
