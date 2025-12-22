@@ -14,6 +14,7 @@ export default function Pricing() {
       ],
       cta: "Get Started",
       highlighted: false,
+      period: "",
     },
     {
       name: "Enterprise",
@@ -29,6 +30,7 @@ export default function Pricing() {
       ],
       cta: "Contact Sales",
       highlighted: false,
+      period: "",
     },
   ];
 
