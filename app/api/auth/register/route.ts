@@ -19,17 +19,11 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if user already exists by email or username
-    const existingUser = await User.findOne({ $or: [{ email }, { username }] });
-    if (existingUser) {
-      if (existingUser.email === email) {
-        return Response.json(
-          { error: 'Email already registered' },
-          { status: 400 }
-        );
-      }
+    // Check if user already exists by email only
+    const existingEmail = await User.findOne({ email });
+    if (existingEmail) {
       return Response.json(
-        { error: 'Username already exists' },
+        { error: 'Email already registered' },
         { status: 400 }
       );
     }
@@ -74,13 +68,44 @@ export async function POST(req: Request) {
     await user.save();
     console.log('User saved with phone:', user.phone);
 
-    // Create club for club leader
-    let club = new Club({
-      name: clubName || `${username}'s Club`,
-      description: clubDescription || `Club created by ${username}`,
-      leader: user._id,
-    });
-    await club.save();
+    // Check if club with same name already exists (case-insensitive, ignoring spaces)
+    const normalizedClubName = clubName?.replace(/\s+/g, '').toLowerCase() || '';
+    let club;
+    
+    if (normalizedClubName) {
+      // Find all clubs and check by normalized name
+      const allClubs = await Club.find();
+      const existingClub = allClubs.find(c => 
+        c.name.replace(/\s+/g, '').toLowerCase() === normalizedClubName
+      );
+
+      if (existingClub) {
+        // Use existing club
+        club = existingClub;
+        if (!club.members.includes(user._id)) {
+          club.members.push(user._id);
+          await club.save();
+        }
+      } else {
+        // Create new club
+        club = new Club({
+          name: clubName,
+          description: clubDescription || `Club created by ${username}`,
+          leader: user._id,
+          members: [user._id],
+        });
+        await club.save();
+      }
+    } else {
+      // Create club with default name
+      club = new Club({
+        name: `${username}'s Club`,
+        description: clubDescription || `Club created by ${username}`,
+        leader: user._id,
+        members: [user._id],
+      });
+      await club.save();
+    }
 
     // Assign club to user
     user.club = club._id;

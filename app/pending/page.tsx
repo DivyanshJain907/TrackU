@@ -88,7 +88,39 @@ export default function PendingApprovalPage() {
   const isRejected = accessRequest?.status === "rejected";
 
   return (
-    <div className={`min-h-screen flex items-center justify-center p-4 ${isRejected ? "bg-red-50" : "bg-blue-50 to-indigo-100"}`}>
+    <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center p-4">
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => {
+            const size = Math.random() * 2;
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const opacity = Math.random() * 0.7 + 0.3;
+            const duration = Math.random() * 3 + 2;
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full bg-white"
+                style={{
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  opacity: opacity,
+                  animation: `twinkle ${duration}s infinite`
+                }}
+              ></div>
+            );
+          })}
+        </div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      </div>
+      <div className="relative z-10">
       <div className={`rounded-lg shadow-lg p-8 max-w-md w-full text-center ${isRejected ? "bg-white border-2 border-red-200" : "bg-white"}`}>
         <div className="mb-6">
           <div className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${isRejected ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}>
@@ -152,6 +184,7 @@ export default function PendingApprovalPage() {
         >
           {isRejected ? "Return to Login" : "Return to Login"}
         </button>
+      </div>
       </div>
     </div>
   );

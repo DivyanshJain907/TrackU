@@ -49,6 +49,24 @@ body {
   animation-delay: 2s;
 }
 
+.animation-delay-3000 {
+  animation-delay: 3s;
+}
+
+.animation-delay-4000 {
+  animation-delay: 4s;
+}
+
+/* Twinkle animation for stars */
+@keyframes twinkle {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
 .animation-delay-4000 {
   animation-delay: 4s;
 }

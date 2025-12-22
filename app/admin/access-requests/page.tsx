@@ -225,7 +225,7 @@ export default function AdminAccessRequests() {
                       {request.email}
                     </td>
                     <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {request.user.club?.name ? (
+                      {request.user?.club?.name ? (
                         <span className="font-medium text-gray-900">{request.user.club.name}</span>
                       ) : (
                         <span className="text-gray-400">-</span>

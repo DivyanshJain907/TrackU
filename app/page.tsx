@@ -13,9 +13,41 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Galaxy Background Effect */}
+      <div className="fixed inset-0 z-0">
+        {/* Animated gradient background */}
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        
+        {/* Stars */}
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-white"
+              style={{
+                width: Math.random() * 2 + 'px',
+                height: Math.random() * 2 + 'px',
+                left: Math.random() * 100 + '%',
+                top: Math.random() * 100 + '%',
+                opacity: Math.random() * 0.7 + 0.3,
+                animation: `twinkle ${Math.random() * 3 + 2}s infinite`,
+              }}
+            ></div>
+          ))}
+        </div>
+
+        {/* Nebula glow effects */}
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      </div>
+
+      {/* Content wrapper with relative positioning */}
+      <div className="relative z-10">
       {/* Navigation */}
-      <nav className="fixed top-0 w-full z-50 bg-slate-900/80 backdrop-blur border-b border-purple-500/20">
+      <nav className="fixed top-0 w-full z-50 bg-slate-900/50 backdrop-blur border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center h-16">
             <div className="flex items-center gap-2">
@@ -59,9 +91,12 @@ export default function Home() {
                 >
                   Get Started
                 </Link>
-                <button className="border-2 border-purple-500 text-purple-400 hover:bg-purple-500/10 px-8 py-4 rounded-lg font-semibold transition">
+                <Link
+                  href="/about"
+                  className="border-2 border-purple-500 text-purple-400 hover:bg-purple-500/10 px-8 py-4 rounded-lg font-semibold transition text-center"
+                >
                   Learn More
-                </button>
+                </Link>
               </div>
             </div>
 
@@ -207,25 +242,25 @@ export default function Home() {
             <div>
               <h4 className="text-white font-semibold mb-4">Product</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition">Features</a></li>
-                <li><a href="#" className="hover:text-white transition">Pricing</a></li>
-                <li><a href="#" className="hover:text-white transition">Security</a></li>
+                <li><Link href="/features" className="hover:text-white transition">Features</Link></li>
+                <li><Link href="/pricing" className="hover:text-white transition">Pricing</Link></li>
+                <li><Link href="/security" className="hover:text-white transition">Security</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Company</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition">About</a></li>
-                <li><a href="#" className="hover:text-white transition">Blog</a></li>
-                <li><a href="#" className="hover:text-white transition">Contact</a></li>
+                <li><Link href="/company" className="hover:text-white transition">Company</Link></li>
+                <li><Link href="/about" className="hover:text-white transition">About</Link></li>
+                <li><Link href="/blog" className="hover:text-white transition">Blog</Link></li>
+                <li><Link href="/contact" className="hover:text-white transition">Contact</Link></li>
               </ul>
             </div>
             <div>
               <h4 className="text-white font-semibold mb-4">Legal</h4>
               <ul className="space-y-2 text-gray-400 text-sm">
-                <li><a href="#" className="hover:text-white transition">Privacy</a></li>
-                <li><a href="#" className="hover:text-white transition">Terms</a></li>
-                <li><a href="#" className="hover:text-white transition">Cookies</a></li>
+                <li><Link href="/privacy" className="hover:text-white transition">Privacy</Link></li>
+                <li><Link href="/terms" className="hover:text-white transition">Terms</Link></li>
               </ul>
             </div>
           </div>
@@ -234,6 +269,7 @@ export default function Home() {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   );
 }

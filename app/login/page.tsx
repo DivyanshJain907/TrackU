@@ -58,12 +58,37 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-      {/* Animated Background */}
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute w-96 h-96 -top-10 -left-10 bg-purple-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute w-96 h-96 -bottom-10 -right-10 bg-blue-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute w-96 h-96 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-pink-500 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-black overflow-hidden">
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => {
+            const size = Math.random() * 2;
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const opacity = Math.random() * 0.7 + 0.3;
+            const duration = Math.random() * 3 + 2;
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full bg-white"
+                style={{
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  opacity: opacity,
+                  animation: `twinkle ${duration}s infinite`
+                }}
+              ></div>
+            );
+          })}
+        </div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
       </div>
 
       <div className="relative w-full max-w-md z-10">

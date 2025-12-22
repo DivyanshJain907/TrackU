@@ -382,8 +382,38 @@ export default function Attendance() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 flex items-center justify-center">
-        <div className="text-center">
+      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0">
+            {[...Array(100)].map((_, i) => {
+              const size = Math.random() * 2;
+              const left = Math.random() * 100;
+              const top = Math.random() * 100;
+              const opacity = Math.random() * 0.7 + 0.3;
+              const duration = Math.random() * 3 + 2;
+              return (
+                <div
+                  key={i}
+                  className="absolute rounded-full bg-white"
+                  style={{
+                    width: `${size}px`,
+                    height: `${size}px`,
+                    left: `${left}%`,
+                    top: `${top}%`,
+                    opacity: opacity,
+                    animation: `twinkle ${duration}s infinite`
+                  }}
+                ></div>
+              );
+            })}
+          </div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+        </div>
+        <div className="relative z-10 text-center">
           <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-500 mx-auto"></div>
           <p className="mt-4 text-purple-300 font-semibold">Loading attendance records...</p>
         </div>
@@ -392,13 +422,23 @@ export default function Attendance() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 relative overflow-hidden">
-      {/* Animated Background Elements */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute top-0 right-0 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
-      <div className="absolute bottom-0 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-pulse"></div>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => (
+            <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
+          ))}
+        </div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      </div>
 
-      {/* Navigation Bar */}
+      {/* Content */}
+      <div className="relative z-10">       {/* Navigation Bar */}
       <nav className="relative z-10 bg-gradient-to-r from-purple-700/90 via-blue-700/90 to-purple-700/90 backdrop-blur-xl text-white shadow-2xl border-b border-purple-500/20">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-6">
@@ -1239,6 +1279,7 @@ export default function Attendance() {
             </div>
           </div>
         )}
+      </div>
       </div>
     </div>
   );
