@@ -315,7 +315,10 @@ export default function AdminPage() {
               Attendance Reports
             </Link>
 
-            <div className="bg-gray-700/50 text-gray-400 p-4 rounded-lg font-semibold flex items-center gap-3 opacity-50 cursor-not-allowed">
+            <Link
+              href="/admin/settings"
+              className="bg-orange-600 hover:bg-orange-700 text-white p-4 rounded-lg font-semibold transition flex items-center gap-3"
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -335,10 +338,13 @@ export default function AdminPage() {
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              System Settings (Coming Soon)
-            </div>
+              System Settings
+            </Link>
 
-            <div className="bg-gray-700/50 text-gray-400 p-4 rounded-lg font-semibold flex items-center gap-3 opacity-50 cursor-not-allowed">
+            <Link
+              href="/admin/activity-logs"
+              className="bg-indigo-600 hover:bg-indigo-700 text-white p-4 rounded-lg font-semibold transition flex items-center gap-3"
+            >
               <svg
                 className="w-5 h-5"
                 fill="none"
@@ -352,8 +358,8 @@ export default function AdminPage() {
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              Activity Logs (Coming Soon)
-            </div>
+              Activity Logs
+            </Link>
           </div>
         </div>
 

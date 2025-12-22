@@ -18,6 +18,8 @@ export default function AdminClubs() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editData, setEditData] = useState({ name: "", description: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -95,6 +97,48 @@ export default function AdminClubs() {
     }
   };
 
+  const handleEditClub = (club: Club) => {
+    setEditingId(club._id);
+    setEditData({ name: club.name, description: club.description || "" });
+  };
+
+  const handleSaveEdit = async (clubId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        alert("No authentication token found");
+        return;
+      }
+
+      const res = await fetch(`/api/admin/clubs/${clubId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: "Unknown error" }));
+        alert(`Failed to update club: ${errorData.error || "Unknown error"}`);
+        return;
+      }
+
+      setClubs((prev) =>
+        prev.map((club) =>
+          club._id === clubId
+            ? { ...club, name: editData.name, description: editData.description }
+            : club
+        )
+      );
+      setEditingId(null);
+      alert("Club updated successfully!");
+    } catch (err) {
+      alert(`An error occurred: ${err instanceof Error ? err.message : "Unknown error"}`);
+    }
+  };
+
   const filteredClubs = clubs.filter((club) =>
     club.name.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -153,33 +197,76 @@ export default function AdminClubs() {
               key={club._id}
               className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg p-6 hover:border-purple-500/40 transition"
             >
-              <h3 className="text-xl font-bold text-white mb-2">{club.name}</h3>
-              <p className="text-gray-400 text-sm mb-4">
-                {club.description || "No description provided"}
-              </p>
+              {editingId === club._id ? (
+                <>
+                  <input
+                    type="text"
+                    value={editData.name}
+                    onChange={(e) => setEditData({ ...editData, name: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-purple-500/30 rounded-lg text-white mb-2"
+                    placeholder="Club name"
+                  />
+                  <textarea
+                    value={editData.description}
+                    onChange={(e) => setEditData({ ...editData, description: e.target.value })}
+                    className="w-full px-3 py-2 bg-slate-900 border border-purple-500/30 rounded-lg text-white mb-4"
+                    placeholder="Club description"
+                    rows={3}
+                  />
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleSaveEdit(club._id)}
+                      className="flex-1 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg transition"
+                    >
+                      Save
+                    </button>
+                    <button
+                      onClick={() => setEditingId(null)}
+                      className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg transition"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                </>
+              ) : (
+                <>
+                  <h3 className="text-xl font-bold text-white mb-2">{club.name}</h3>
+                  <p className="text-gray-400 text-sm mb-4">
+                    {club.description || "No description provided"}
+                  </p>
 
-              <div className="space-y-2 mb-4 text-sm text-gray-300">
-                <p>
-                  <span className="font-semibold">Leader:</span> {club.leader?.username || "Unknown"}
-                </p>
-                <p>
-                  <span className="font-semibold">Email:</span> {club.leader?.email || "N/A"}
-                </p>
-                <p>
-                  <span className="font-semibold">Members:</span> {club.members?.length || 0}
-                </p>
-                <p>
-                  <span className="font-semibold">Created:</span>{" "}
-                  {new Date(club.createdAt).toLocaleDateString()}
-                </p>
-              </div>
+                  <div className="space-y-2 mb-4 text-sm text-gray-300">
+                    <p>
+                      <span className="font-semibold">Leader:</span> {club.leader?.username || "Unknown"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Email:</span> {club.leader?.email || "N/A"}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Members:</span> {club.members?.length || 0}
+                    </p>
+                    <p>
+                      <span className="font-semibold">Created:</span>{" "}
+                      {new Date(club.createdAt).toLocaleDateString()}
+                    </p>
+                  </div>
 
-              <button
-                onClick={() => handleDeleteClub(club._id)}
-                className="w-full bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
-              >
-                Delete Club
-              </button>
+                  <div className="flex gap-2">
+                    <button
+                      onClick={() => handleEditClub(club)}
+                      className="flex-1 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg transition"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteClub(club._id)}
+                      className="flex-1 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg transition"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </>
+              )}
             </div>
           ))}
         </div>

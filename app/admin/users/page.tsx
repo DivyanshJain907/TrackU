@@ -21,6 +21,8 @@ export default function AdminUsers() {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"all" | "approved" | "pending" | "leaders">("all");
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [editData, setEditData] = useState({ email: "", phone: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -118,6 +120,43 @@ export default function AdminUsers() {
     }
   };
 
+  const handleEditUser = (user: User) => {
+    setEditingId(user._id);
+    setEditData({ email: user.email, phone: user.phone || "" });
+  };
+
+  const handleSaveEdit = async (userId: string) => {
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(`/api/admin/users/${userId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(editData),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: "Unknown error" }));
+        alert(`Failed to update user: ${errorData.error || "Unknown error"}`);
+        return;
+      }
+
+      setUsers((prev) =>
+        prev.map((user) =>
+          user._id === userId
+            ? { ...user, email: editData.email, phone: editData.phone }
+            : user
+        )
+      );
+      setEditingId(null);
+      alert("User updated successfully!");
+    } catch (err) {
+      alert(`An error occurred: ${err instanceof Error ? err.message : "Unknown error"}`);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -199,8 +238,30 @@ export default function AdminUsers() {
                     className="border-b border-purple-500/10 hover:bg-purple-600/10 transition"
                   >
                     <td className="px-6 py-4 text-white">{user.username}</td>
-                    <td className="px-6 py-4 text-gray-300">{user.email}</td>
-                    <td className="px-6 py-4 text-gray-300">{user.phone || "-"}</td>
+                    <td className="px-6 py-4 text-gray-300">
+                      {editingId === user._id ? (
+                        <input
+                          type="email"
+                          value={editData.email}
+                          onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                          className="px-2 py-1 bg-slate-900 border border-purple-500/30 rounded text-white text-sm"
+                        />
+                      ) : (
+                        user.email
+                      )}
+                    </td>
+                    <td className="px-6 py-4 text-gray-300">
+                      {editingId === user._id ? (
+                        <input
+                          type="tel"
+                          value={editData.phone}
+                          onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
+                          className="px-2 py-1 bg-slate-900 border border-purple-500/30 rounded text-white text-sm"
+                        />
+                      ) : (
+                        user.phone || "-"
+                      )}
+                    </td>
                     <td className="px-6 py-4">
                       <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400">
                         {user.isClubLeader ? "Leader" : "Member"}
@@ -218,21 +279,46 @@ export default function AdminUsers() {
                       </span>
                     </td>
                     <td className="px-6 py-4 text-gray-300">{user.club?.name || "-"}</td>
-                    <td className="px-6 py-4 flex gap-2">
-                      {!user.isApproved && (
-                        <button
-                          onClick={() => handleApproveUser(user._id)}
-                          className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
-                        >
-                          Approve
-                        </button>
+                    <td className="px-6 py-4 flex gap-2 flex-wrap">
+                      {editingId === user._id ? (
+                        <>
+                          <button
+                            onClick={() => handleSaveEdit(user._id)}
+                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+                          >
+                            Save
+                          </button>
+                          <button
+                            onClick={() => setEditingId(null)}
+                            className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm"
+                          >
+                            Cancel
+                          </button>
+                        </>
+                      ) : (
+                        <>
+                          <button
+                            onClick={() => handleEditUser(user)}
+                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                          >
+                            Edit
+                          </button>
+                          {!user.isApproved && (
+                            <button
+                              onClick={() => handleApproveUser(user._id)}
+                              className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+                            >
+                              Approve
+                            </button>
+                          )}
+                          <button
+                            onClick={() => handleDeleteUser(user._id)}
+                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+                          >
+                            Delete
+                          </button>
+                        </>
                       )}
-                      <button
-                        onClick={() => handleDeleteUser(user._id)}
-                        className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
-                      >
-                        Delete
-                      </button>
                     </td>
                   </tr>
                 ))}
