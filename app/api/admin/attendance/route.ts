@@ -26,12 +26,31 @@ export async function GET(req: Request) {
       return Response.json({ error: "Forbidden - Admin access required" }, { status: 403 });
     }
 
+    // Fetch all attendance records with populated references
     const records = await Attendance.find()
-      .populate("member", "name email")
-      .populate("event", "name date")
-      .sort({ date: -1 });
+      .populate("createdBy", "username email")
+      .populate("lastUpdatedBy", "username email")
+      .sort({ meetingDate: -1 });
 
-    return Response.json(records);
+    // Transform attendance records to match front-end expectations
+    const transformedRecords = records.flatMap((record: any) => {
+      return (record.attendees || []).map((attendee: any) => ({
+        _id: `${record._id}-${attendee.memberId}`,
+        member: {
+          _id: attendee.memberId,
+          name: attendee.memberName || "Unknown",
+        },
+        event: {
+          _id: record._id,
+          name: record.meetingTitle,
+        },
+        date: record.meetingDate,
+        status: attendee.status,
+        remarks: attendee.remarks || "",
+      }));
+    });
+
+    return Response.json(transformedRecords);
   } catch (error) {
     console.error("Fetch attendance error:", error);
     return Response.json({ error: "Internal server error" }, { status: 500 });

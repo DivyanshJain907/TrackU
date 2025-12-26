@@ -7,6 +7,7 @@ import { MemberStatus } from "@/models/MemberStatus";
 import { Attendance } from "@/models/Attendance";
 import { AccessRequest } from "@/models/AccessRequest";
 import { verifyToken, isAdmin } from "@/lib/auth";
+import { addActivityLog } from "@/app/api/admin/activity/route";
 import mongoose from "mongoose";
 
 // Helper function to verify admin token
@@ -85,6 +86,9 @@ export async function DELETE(
       return Response.json({ error: "User not found" }, { status: 404 });
     }
 
+    // Import activity logger
+    const { addActivityLog } = require("@/app/api/admin/activity/route");
+
     // If user is a club leader, handle club deletion
     if (user.isClubLeader) {
       const club = await Club.findOne({ leader: id });
@@ -141,6 +145,23 @@ export async function DELETE(
     // Finally, delete the user
     await User.findByIdAndDelete(id);
 
+    // Log activity
+    const adminUser = await User.findById(adminUserId);
+    addActivityLog(
+      "delete",
+      `User ${user.username} (${user.email}) was permanently deleted`,
+      {
+        _id: adminUserId,
+        username: adminUser?.username || "Unknown",
+      },
+      {
+        deletedUserId: id,
+        deletedUsername: user.username,
+        deletedEmail: user.email,
+        wasClubLeader: user.isClubLeader,
+      }
+    );
+
     return Response.json({ message: "User deleted successfully" });
   } catch (error) {
     console.error("Delete user error:", error);
@@ -175,6 +196,23 @@ export async function PUT(
     if (!user) {
       return Response.json({ error: "User not found" }, { status: 404 });
     }
+
+    // Log activity
+    const { addActivityLog } = require("@/app/api/admin/activity/route");
+    const adminUser = await User.findById(adminUserId);
+    addActivityLog(
+      "update",
+      `User ${user.username} information was updated`,
+      {
+        _id: adminUserId,
+        username: adminUser?.username || "Unknown",
+      },
+      {
+        targetUserId: id,
+        targetUsername: user.username,
+        changes: { email: body.email, phone: body.phone },
+      }
+    );
 
     return Response.json(user);
   } catch (error) {

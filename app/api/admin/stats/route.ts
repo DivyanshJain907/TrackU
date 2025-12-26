@@ -46,15 +46,21 @@ export async function GET(req: Request) {
       return Response.json({ error: "Forbidden - Admin access required" }, { status: 403 });
     }
 
-    // Try to get from cache first
-    const cachedStats = getCachedStats();
-    if (cachedStats) {
-      return Response.json(cachedStats, {
-        headers: {
-          "Cache-Control": "public, max-age=300",
-          "X-Cache": "HIT",
-        },
-      });
+    // Check for force refresh parameter
+    const url = new URL(req.url);
+    const forceRefresh = url.searchParams.get("refresh") === "true";
+
+    // Try to get from cache first (unless force refresh)
+    if (!forceRefresh) {
+      const cachedStats = getCachedStats();
+      if (cachedStats) {
+        return Response.json(cachedStats, {
+          headers: {
+            "Cache-Control": "public, max-age=120",
+            "X-Cache": "HIT",
+          },
+        });
+      }
     }
 
     // Get admin email from environment

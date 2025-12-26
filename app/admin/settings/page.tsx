@@ -26,18 +26,40 @@ export default function AdminSettings() {
   const router = useRouter();
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
-    if (!isAdmin) {
-      router.replace("/dashboard");
-      return;
-    }
-    loadSettings();
+    checkAdminAccess();
   }, [router]);
 
-  const loadSettings = async () => {
+  const checkAdminAccess = async () => {
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        router.push("/login");
+        return;
+      }
+
+      const res = await fetch("/api/admin/verify", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) {
+        router.push("/dashboard");
+        return;
+      }
+
+      loadSettings(token);
+    } catch (err) {
+      router.push("/dashboard");
+    }
+  };
+
+  const loadSettings = async (token: string) => {
     try {
       setLoading(true);
-      const token = localStorage.getItem("token");
+      setError("");
       const res = await fetch("/api/admin/settings", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -50,9 +72,11 @@ export default function AdminSettings() {
       } else {
         // Use default settings if API not available
         console.log("Using default settings");
+        setError("Failed to load settings from server, using defaults");
       }
     } catch (err) {
       console.error("Error loading settings:", err);
+      setError("Error loading settings: " + (err instanceof Error ? err.message : "Unknown error"));
     } finally {
       setLoading(false);
     }
@@ -63,6 +87,11 @@ export default function AdminSettings() {
       setError("");
       setSuccess("");
       const token = localStorage.getItem("token");
+      if (!token) {
+        setError("Authentication token not found");
+        return;
+      }
+
       const res = await fetch("/api/admin/settings", {
         method: "PUT",
         headers: {
@@ -78,6 +107,8 @@ export default function AdminSettings() {
         return;
       }
 
+      const updatedSettings = await res.json();
+      setSettings(updatedSettings);
       setSuccess("Settings saved successfully!");
       setTimeout(() => setSuccess(""), 3000);
     } catch (err) {
@@ -241,7 +272,22 @@ export default function AdminSettings() {
               Save Settings
             </button>
             <button
-              onClick={loadSettings}
+              onClick={async () => {
+                const token = localStorage.getItem("token");
+                if (!token) {
+                  setError("Authentication token not found");
+                  return;
+                }
+                setError("");
+                setSuccess("");
+                try {
+                  await loadSettings(token);
+                  setSuccess("Settings reset successfully!");
+                  setTimeout(() => setSuccess(""), 3000);
+                } catch (err) {
+                  setError("Failed to reset settings");
+                }
+              }}
               className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-6 py-3 rounded-lg font-semibold transition"
             >
               Reset

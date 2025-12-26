@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useStats } from "@/lib/useStats";
 
@@ -28,6 +28,7 @@ export default function AdminPage() {
   const [error, setError] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+  const pathname = usePathname();
   const { data: stats, loading: statsLoading, refetch: refetchStats, isFromCache } = useStats(token);
 
   useEffect(() => {
@@ -166,12 +167,14 @@ export default function AdminPage() {
               <p className="text-purple-100 mt-2">Manage the application</p>
             </div>
             <div className="flex gap-2">
-              <Link
-                href="/dashboard"
-                className="bg-white text-purple-700 px-4 py-2 rounded-lg font-semibold hover:bg-purple-50 transition"
-              >
-                Back to Dashboard
-              </Link>
+              {pathname !== "/admin" && (
+                <Link
+                  href="/dashboard"
+                  className="bg-white text-purple-700 px-4 py-2 rounded-lg font-semibold hover:bg-purple-50 transition"
+                >
+                  Back to Dashboard
+                </Link>
+              )}
               <button
                 onClick={() => {
                   localStorage.removeItem("token");
@@ -194,33 +197,43 @@ export default function AdminPage() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
         {/* Cache Status Indicator */}
-        <div className="mb-6 flex items-center gap-2 text-sm">
-          {statsLoading && (
-            <div className="flex items-center gap-2 text-blue-400">
-              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
-              <span>Loading stats...</span>
-            </div>
-          )}
-          {!statsLoading && isFromCache && (
-            <div className="flex items-center gap-2 text-yellow-400">
-              <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
-              <span>Showing cached data (auto-refreshing)</span>
-            </div>
-          )}
-          {!statsLoading && !isFromCache && stats && (
-            <div className="flex items-center gap-2 text-green-400">
-              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
-              <span>Fresh data</span>
-            </div>
-          )}
-          {statsLoading === false && !stats && (
-            <button
-              onClick={refetchStats}
-              className="text-red-400 hover:text-red-300 font-semibold"
-            >
-              Retry loading stats
-            </button>
-          )}
+        <div className="mb-6 flex items-center justify-between">
+          <div className="flex items-center gap-2 text-sm">
+            {statsLoading && (
+              <div className="flex items-center gap-2 text-blue-400">
+                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+                <span>Loading stats...</span>
+              </div>
+            )}
+            {!statsLoading && isFromCache && (
+              <div className="flex items-center gap-2 text-yellow-400">
+                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+                <span>Showing cached data</span>
+              </div>
+            )}
+            {!statsLoading && !isFromCache && stats && (
+              <div className="flex items-center gap-2 text-green-400">
+                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+                <span>Fresh data</span>
+              </div>
+            )}
+            {statsLoading === false && !stats && (
+              <div className="flex items-center gap-2 text-red-400">
+                <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+                <span>Failed to load stats</span>
+              </div>
+            )}
+          </div>
+          <button
+            onClick={refetchStats}
+            disabled={statsLoading}
+            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2"
+          >
+            <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+            </svg>
+            {statsLoading ? "Refreshing..." : "Refresh Stats"}
+          </button>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -371,7 +384,7 @@ export default function AdminPage() {
             </Link>
 
             <Link
-              href="/admin/attendance"
+              href="/admin/activity"
               className="bg-purple-600 hover:bg-purple-700 text-white p-4 rounded-lg font-semibold transition flex items-center gap-3"
             >
               <svg
@@ -384,10 +397,10 @@ export default function AdminPage() {
                   strokeLinecap="round"
                   strokeLinejoin="round"
                   strokeWidth={2}
-                  d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"
+                  d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              Attendance Reports
+              Activity Logs
             </Link>
 
             <Link
@@ -418,6 +431,9 @@ export default function AdminPage() {
           </div>
         </div>
 
+        {/* Recent Activity Widget */}
+        <RecentActivityWidget token={token} />
+
         {/* Welcome Message */}
         <div className="mt-8 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/50 rounded-2xl p-6">
           <h3 className="text-xl font-bold text-white mb-2">Welcome Admin</h3>
@@ -427,6 +443,109 @@ export default function AdminPage() {
         </div>
       </div>
       </div>
+    </div>
+  );
+}
+
+function RecentActivityWidget({ token }: { token: string | null }) {
+  const [activities, setActivities] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!token) return;
+    fetchActivities();
+    const interval = setInterval(fetchActivities, 30000); // Refresh every 30 seconds
+    return () => clearInterval(interval);
+  }, [token]);
+
+  const fetchActivities = async () => {
+    try {
+      const res = await fetch("/api/admin/activity", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (res.ok) {
+        const data = await res.json();
+        setActivities(data.slice(0, 5)); // Show only last 5
+        setLoading(false);
+      }
+    } catch (error) {
+      console.error("Failed to fetch activities:", error);
+    }
+  };
+
+  const getActionIcon = (action: string) => {
+    switch (action) {
+      case "create":
+        return "✨";
+      case "update":
+        return "✏️";
+      case "delete":
+        return "🗑️";
+      case "approve":
+        return "✅";
+      default:
+        return "📝";
+    }
+  };
+
+  const getActionColor = (action: string) => {
+    switch (action) {
+      case "create":
+        return "border-l-green-500";
+      case "update":
+        return "border-l-blue-500";
+      case "delete":
+        return "border-l-red-500";
+      case "approve":
+        return "border-l-purple-500";
+      default:
+        return "border-l-gray-500";
+    }
+  };
+
+  return (
+    <div className="mt-8 bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-2xl p-6">
+      <div className="flex justify-between items-center mb-4">
+        <h3 className="text-xl font-bold text-white">Recent Activity</h3>
+        <Link href="/admin/activity" className="text-purple-400 hover:text-purple-300 text-sm">
+          View All →
+        </Link>
+      </div>
+
+      {loading ? (
+        <div className="text-center py-4">
+          <p className="text-gray-400">Loading activities...</p>
+        </div>
+      ) : activities.length > 0 ? (
+        <div className="space-y-3">
+          {activities.map((activity) => (
+            <div
+              key={activity._id}
+              className={`p-3 bg-slate-700/30 border-l-4 ${getActionColor(
+                activity.action
+              )} rounded hover:bg-slate-700/50 transition`}
+            >
+              <div className="flex items-start gap-3">
+                <span className="text-lg">{getActionIcon(activity.action)}</span>
+                <div className="flex-1">
+                  <p className="text-white text-sm font-semibold">
+                    {activity.description}
+                  </p>
+                  <p className="text-gray-400 text-xs">
+                    By {activity.performedBy?.username || "Unknown"} •{" "}
+                    {new Date(activity.timestamp).toLocaleTimeString()}
+                  </p>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      ) : (
+        <p className="text-gray-400 text-center py-4">No activities yet</p>
+      )}
     </div>
   );
 }

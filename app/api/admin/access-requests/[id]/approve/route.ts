@@ -2,6 +2,7 @@ import { connectDB } from '@/lib/db';
 import { AccessRequest } from '@/models/AccessRequest';
 import { User } from '@/models/User';
 import { verifyToken } from '@/lib/auth';
+import { addActivityLog } from '@/app/api/admin/activity/route';
 
 export async function POST(
   req: Request,
@@ -61,6 +62,22 @@ export async function POST(
       user.isApproved = true;
       await user.save();
     }
+
+    // Log activity
+    addActivityLog(
+      'approve',
+      `Access request for ${user?.username} (${accessRequest.email}) was approved`,
+      {
+        _id: admin._id.toString(),
+        username: admin.username,
+      },
+      {
+        requestId,
+        targetUserId: accessRequest.user.toString(),
+        targetUsername: user?.username,
+        targetEmail: accessRequest.email,
+      }
+    );
 
     return Response.json({
       message: 'Access request approved',

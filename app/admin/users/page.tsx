@@ -267,9 +267,9 @@ export default function AdminUsers() {
                           value={editData.phone}
                           onChange={(e) => {
                             // Only allow digits
-                            const digitsOnly = e.target.value.replace(/\D/g, '');
+                            let digitsOnly = e.target.value.replace(/\D/g, '');
                             // Limit to 10 digits
-                            const limited = digitsOnly.slice(0, 10);
+                            let limited = digitsOnly.slice(0, 10);
                             // If first digit is less than 6, don't allow
                             if (limited.length > 0 && parseInt(limited[0]) < 6) {
                               limited = limited.slice(1);

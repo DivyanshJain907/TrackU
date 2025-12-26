@@ -26,12 +26,12 @@ interface UseStatsReturn {
 }
 
 const CACHE_KEY = "admin_stats_client";
-const REVALIDATION_INTERVAL = 5 * 60 * 1000; // 5 minutes
+const REVALIDATION_INTERVAL = 2 * 60 * 1000; // 2 minutes
 
 class StatsCache {
   private cache: StatsData | null = null;
   private timestamp: number = 0;
-  private TTL: number = 5 * 60 * 1000; // 5 minutes
+  private TTL: number = 2 * 60 * 1000; // 2 minutes
   private revalidationTimer: NodeJS.Timeout | null = null;
   private subscribers: Set<() => void> = new Set();
 
@@ -87,7 +87,7 @@ export function useStats(token: string | null): UseStatsReturn {
   const [isFromCache, setIsFromCache] = useState(false);
   const isMountedRef = useRef(true);
 
-  const fetchStats = async (fromCache = false) => {
+  const fetchStats = async (fromCache = false, forceRefresh = false) => {
     if (!token) {
       setLoading(false);
       return;
@@ -96,7 +96,12 @@ export function useStats(token: string | null): UseStatsReturn {
     try {
       setError(null);
       
-      const response = await fetch("/api/admin/stats", {
+      const url = new URL("/api/admin/stats", window.location.origin);
+      if (forceRefresh) {
+        url.searchParams.append("refresh", "true");
+      }
+      
+      const response = await fetch(url.toString(), {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -130,7 +135,8 @@ export function useStats(token: string | null): UseStatsReturn {
 
   const refetch = () => {
     setLoading(true);
-    fetchStats(false);
+    statsCache.clearTimer(); // Clear scheduled revalidation
+    fetchStats(false, true); // Force refresh from server
   };
 
   useEffect(() => {

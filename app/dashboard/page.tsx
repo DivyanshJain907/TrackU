@@ -921,7 +921,7 @@ export default function Dashboard() {
                       {member.points}
                     </p>
                     <p className="text-xs text-gray-300 mt-1 font-semibold">
-                      ⭐ Points
+                      ⭐ Task
                     </p>
                   </div>
                   <div className="text-center p-3 bg-gradient-to-br from-green-500/30 to-emerald-500/30 rounded-lg border border-green-500/40 hover:border-green-500/70 transition group-hover:shadow-lg group-hover:shadow-green-500/20">
@@ -1090,7 +1090,7 @@ export default function Dashboard() {
               >
                 <div>
                   <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
-                    Add Points (Current: {selectedMember.points})
+                    Add Task (Current: {selectedMember.points})
                   </label>
                   <input
                     type="number"
@@ -1102,7 +1102,7 @@ export default function Dashboard() {
                           e.target.value === "" ? "" : parseInt(e.target.value),
                       })
                     }
-                    placeholder="Enter points to add"
+                    placeholder="Enter task to add"
                     className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
                   />
                 </div>

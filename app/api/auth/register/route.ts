@@ -70,7 +70,7 @@ export async function POST(req: Request) {
     // Ensure phone is a string with only digits, not undefined
     const phoneNumber = phone && typeof phone === 'string' ? phone.replace(/\D/g, '') : '';
 
-    // Create user (club leaders are NOT auto-approved, must wait for admin verification)
+    // Create user (club leaders require admin approval)
     const user = new User({
       username,
       email,
