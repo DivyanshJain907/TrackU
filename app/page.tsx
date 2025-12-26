@@ -5,8 +5,28 @@ import { useEffect, useState } from 'react';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
+  const [stars, setStars] = useState<Array<{
+    width: string;
+    height: string;
+    left: string;
+    top: string;
+    opacity: number;
+    duration: number;
+  }>>([]);
 
   useEffect(() => {
+    // Generate stars on client side only
+    setStars(
+      [...Array(100)].map(() => ({
+        width: Math.random() * 2 + 'px',
+        height: Math.random() * 2 + 'px',
+        left: Math.random() * 100 + '%',
+        top: Math.random() * 100 + '%',
+        opacity: Math.random() * 0.7 + 0.3,
+        duration: Math.random() * 3 + 2,
+      }))
+    );
+
     // Small delay to prevent flash of loading state
     const timer = setTimeout(() => setIsLoading(false), 300);
     return () => clearTimeout(timer);
@@ -21,17 +41,17 @@ export default function Home() {
         
         {/* Stars */}
         <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => (
+          {stars.map((star, i) => (
             <div
               key={i}
               className="absolute rounded-full bg-white"
               style={{
-                width: Math.random() * 2 + 'px',
-                height: Math.random() * 2 + 'px',
-                left: Math.random() * 100 + '%',
-                top: Math.random() * 100 + '%',
-                opacity: Math.random() * 0.7 + 0.3,
-                animation: `twinkle ${Math.random() * 3 + 2}s infinite`,
+                width: star.width,
+                height: star.height,
+                left: star.left,
+                top: star.top,
+                opacity: star.opacity,
+                animation: `twinkle ${star.duration}s infinite`,
               }}
             ></div>
           ))}

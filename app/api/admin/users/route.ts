@@ -1,6 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
-import { isAdmin } from "@/lib/auth";
+import { verifyToken, isAdmin } from "@/lib/auth";
 
 export async function GET(req: Request) {
   try {
@@ -11,7 +11,19 @@ export async function GET(req: Request) {
       return Response.json({ error: "Unauthorized" }, { status: 401 });
     }
 
+    // Verify the token
+    const payload = verifyToken(token);
+    if (!payload) {
+      return Response.json({ error: "Invalid or expired token" }, { status: 401 });
+    }
+
     await connectDB();
+
+    // Check if user is admin
+    const user = await User.findById(payload.userId);
+    if (!user || !isAdmin(user.email)) {
+      return Response.json({ error: "Forbidden - Admin access required" }, { status: 403 });
+    }
 
     // Get admin email from environment
     const adminEmail = process.env.ADMIN_EMAIL;

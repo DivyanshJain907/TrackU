@@ -126,6 +126,16 @@ export default function AdminUsers() {
   };
 
   const handleSaveEdit = async (userId: string) => {
+    // Validate phone - must be exactly 10 digits and first digit >= 6 (Indian format)
+    if (editData.phone && editData.phone.length !== 10) {
+      alert("Phone number must be exactly 10 digits");
+      return;
+    }
+    if (editData.phone && parseInt(editData.phone[0]) < 6) {
+      alert("Phone number must start with a digit >= 6 (valid Indian format)");
+      return;
+    }
+
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(`/api/admin/users/${userId}`, {
@@ -255,7 +265,19 @@ export default function AdminUsers() {
                         <input
                           type="tel"
                           value={editData.phone}
-                          onChange={(e) => setEditData({ ...editData, phone: e.target.value })}
+                          onChange={(e) => {
+                            // Only allow digits
+                            const digitsOnly = e.target.value.replace(/\D/g, '');
+                            // Limit to 10 digits
+                            const limited = digitsOnly.slice(0, 10);
+                            // If first digit is less than 6, don't allow
+                            if (limited.length > 0 && parseInt(limited[0]) < 6) {
+                              limited = limited.slice(1);
+                            }
+                            setEditData({ ...editData, phone: limited });
+                          }}
+                          placeholder="9XXXXXXXXX"
+                          maxLength={10}
                           className="px-2 py-1 bg-slate-900 border border-purple-500/30 rounded text-white text-sm"
                         />
                       ) : (

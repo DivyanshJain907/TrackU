@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 
@@ -18,7 +18,27 @@ export default function Register() {
   const [isClubLeader, setIsClubLeader] = useState(false);
   const [clubName, setClubName] = useState("");
   const [clubDescription, setClubDescription] = useState("");
+  const [stars, setStars] = useState<Array<{
+    size: number;
+    left: number;
+    top: number;
+    opacity: number;
+    duration: number;
+  }>>([]);
   const router = useRouter();
+
+  useEffect(() => {
+    // Generate stars on client side only
+    setStars(
+      [...Array(100)].map(() => ({
+        size: Math.random() * 2,
+        left: Math.random() * 100,
+        top: Math.random() * 100,
+        opacity: Math.random() * 0.7 + 0.3,
+        duration: Math.random() * 3 + 2,
+      }))
+    );
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -52,10 +72,15 @@ export default function Register() {
       return;
     }
 
-    // Validate phone number - only 10 digits
+    // Validate phone number - only 10 digits and first digit >= 6 (Indian format)
     const phoneDigitsOnly = phone.replace(/\D/g, "");
     if (phoneDigitsOnly.length !== 10) {
       setError("Phone number must be exactly 10 digits");
+      setLoading(false);
+      return;
+    }
+    if (parseInt(phoneDigitsOnly[0]) < 6) {
+      setError("Phone number must start with a digit >= 6 (valid Indian format)");
       setLoading(false);
       return;
     }
@@ -119,27 +144,20 @@ export default function Register() {
       <div className="fixed inset-0 z-0">
         <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
+          {stars.map((star, i) => (
+            <div
+              key={i}
+              className="absolute rounded-full bg-white"
+              style={{
+                width: `${star.size}px`,
+                height: `${star.size}px`,
+                left: `${star.left}%`,
+                top: `${star.top}%`,
+                opacity: star.opacity,
+                animation: `twinkle ${star.duration}s infinite`
+              }}
+            ></div>
+          ))}
         </div>
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
@@ -280,10 +298,14 @@ export default function Register() {
                     value={phone}
                     onChange={(e) => {
                       // Allow only digits and limit to 10
-                      const value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      let value = e.target.value.replace(/\D/g, "").slice(0, 10);
+                      // If first digit is less than 6, don't allow
+                      if (value.length > 0 && parseInt(value[0]) < 6) {
+                        value = value.slice(1);
+                      }
                       setPhone(value);
                     }}
-                    placeholder="9876543210"
+                    placeholder="9XXXXXXXXX"
                     className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
                     maxLength={10}
                   />

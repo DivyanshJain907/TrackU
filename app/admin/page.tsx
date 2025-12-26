@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import { useStats } from "@/lib/useStats";
 
 interface StatsData {
   users: {
@@ -23,10 +24,11 @@ interface StatsData {
 
 export default function AdminPage() {
   const [isAdmin, setIsAdmin] = useState(false);
-  const [loading, setLoading] = useState(true);
+  const [verifyLoading, setVerifyLoading] = useState(true);
   const [error, setError] = useState("");
-  const [stats, setStats] = useState<StatsData | null>(null);
+  const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
+  const { data: stats, loading: statsLoading, refetch: refetchStats, isFromCache } = useStats(token);
 
   useEffect(() => {
     checkAdminAccess();
@@ -34,8 +36,8 @@ export default function AdminPage() {
 
   const checkAdminAccess = async () => {
     try {
-      const token = localStorage.getItem("token");
-      if (!token) {
+      const tokenValue = localStorage.getItem("token");
+      if (!tokenValue) {
         router.push("/login");
         return;
       }
@@ -44,45 +46,27 @@ export default function AdminPage() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${tokenValue}`,
         },
       });
 
       if (!res.ok) {
         setError("Unauthorized: Admin access only");
-        setLoading(false);
+        setVerifyLoading(false);
         setTimeout(() => router.push("/dashboard"), 2000);
         return;
       }
 
       setIsAdmin(true);
-      await fetchStats(token);
+      setToken(tokenValue);
+      setVerifyLoading(false);
     } catch (err) {
       setError("Error verifying admin access");
-      setLoading(false);
+      setVerifyLoading(false);
     }
   };
 
-  const fetchStats = async (token: string) => {
-    try {
-      const res = await fetch("/api/admin/stats", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      if (res.ok) {
-        const data = await res.json();
-        setStats(data);
-      }
-    } catch (err) {
-      console.error("Error fetching stats:", err);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  if (loading) {
+  if (verifyLoading) {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
         <div className="fixed inset-0 z-0">
@@ -209,6 +193,36 @@ export default function AdminPage() {
 
       {/* Main Content */}
       <div className="max-w-7xl mx-auto px-4 py-8">
+        {/* Cache Status Indicator */}
+        <div className="mb-6 flex items-center gap-2 text-sm">
+          {statsLoading && (
+            <div className="flex items-center gap-2 text-blue-400">
+              <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              <span>Loading stats...</span>
+            </div>
+          )}
+          {!statsLoading && isFromCache && (
+            <div className="flex items-center gap-2 text-yellow-400">
+              <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+              <span>Showing cached data (auto-refreshing)</span>
+            </div>
+          )}
+          {!statsLoading && !isFromCache && stats && (
+            <div className="flex items-center gap-2 text-green-400">
+              <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+              <span>Fresh data</span>
+            </div>
+          )}
+          {statsLoading === false && !stats && (
+            <button
+              onClick={refetchStats}
+              className="text-red-400 hover:text-red-300 font-semibold"
+            >
+              Retry loading stats
+            </button>
+          )}
+        </div>
+
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {/* Total Users */}
           <div className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-6 hover:bg-white/20 transition">

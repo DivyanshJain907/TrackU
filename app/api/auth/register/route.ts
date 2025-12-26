@@ -28,9 +28,24 @@ export async function POST(req: Request) {
       );
     }
 
-    // Check if phone number already exists
+    // Check if phone number already exists and validate format
     if (phone && typeof phone === 'string' && phone.trim()) {
       const phoneDigitsOnly = phone.replace(/\D/g, '');
+      
+      // Validate phone has 10 digits and first digit >= 6 (Indian format)
+      if (phoneDigitsOnly.length !== 10) {
+        return Response.json(
+          { error: 'Phone number must be exactly 10 digits' },
+          { status: 400 }
+        );
+      }
+      if (parseInt(phoneDigitsOnly[0]) < 6) {
+        return Response.json(
+          { error: 'Phone number must start with a digit >= 6 (valid Indian format)' },
+          { status: 400 }
+        );
+      }
+      
       const existingPhone = await User.findOne({ phone: phoneDigitsOnly });
       if (existingPhone) {
         return Response.json(
