@@ -95,19 +95,6 @@ export default function Dashboard() {
     fetchClubInfo(token);
     fetchMembers(token);
 
-    // Auto-logout on browser/tab close
-    const handleBeforeUnload = () => {
-      localStorage.removeItem("token");
-      localStorage.removeItem("userId");
-      localStorage.removeItem("username");
-      localStorage.removeItem("isAdmin");
-    };
-
-    window.addEventListener("beforeunload", handleBeforeUnload);
-
-    return () => {
-      window.removeEventListener("beforeunload", handleBeforeUnload);
-    };
   }, [router]);
 
   const checkMaintenanceMode = async (token: string) => {
