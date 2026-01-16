@@ -19,6 +19,7 @@ export default function Performers() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [username, setUsername] = useState("");
+  const [showAllPerformers, setShowAllPerformers] = useState(false);
   const router = useRouter();
 
   useEffect(() => {
@@ -329,7 +330,91 @@ export default function Performers() {
           </div>
         </div>
 
-        {/* Statistics Summary */}
+        {/* View All Performers Section */}
+        <div className="mt-10">
+          {!showAllPerformers ? (
+            <button
+              onClick={() => setShowAllPerformers(true)}
+              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border border-blue-500/50 hover:border-blue-500/80 flex items-center justify-center gap-3"
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+              </svg>
+              View All {members.length} Performers
+            </button>
+          ) : (
+            <div>
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
+                    </svg>
+                  </div>
+                  <h3 className="text-2xl font-bold text-white">All Performers</h3>
+                </div>
+                <button
+                  onClick={() => setShowAllPerformers(false)}
+                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-xl font-semibold transition"
+                >
+                  Close
+                </button>
+              </div>
+
+              <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border-2 border-blue-500/30">
+                {members.length === 0 ? (
+                  <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
+                ) : (
+                  <div className="space-y-3">
+                    {[...members]
+                      .sort((a, b) => b.hours - a.hours)
+                      .map((member, index) => (
+                        <div
+                          key={member._id}
+                          className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-2 border-blue-500/40 hover:border-blue-500/70 hover:shadow-lg hover:shadow-blue-500/20 transition group"
+                        >
+                          <div className="flex-shrink-0">
+                            <div
+                              className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg ${
+                                index === 0
+                                  ? "bg-gradient-to-br from-yellow-400 to-yellow-600"
+                                  : index === 1
+                                  ? "bg-gradient-to-br from-gray-300 to-gray-500"
+                                  : index === 2
+                                  ? "bg-gradient-to-br from-orange-400 to-orange-600"
+                                  : index < 10
+                                  ? "bg-gradient-to-br from-blue-500 to-blue-700"
+                                  : "bg-gradient-to-br from-purple-500 to-purple-700"
+                              }`}
+                            >
+                              {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1}
+                            </div>
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <h3 className="font-bold text-lg text-white group-hover:text-blue-200 transition truncate">
+                              {member.name}
+                            </h3>
+                            <p className="text-xs text-gray-400 truncate">
+                              {member.enrollmentNumber}
+                            </p>
+                          </div>
+                          <div className="text-right flex-shrink-0">
+                            <p className="text-3xl font-bold text-blue-300 drop-shadow-lg">
+                              {member.hours}
+                            </p>
+                            <p className="text-xs text-gray-400 font-semibold">Hours</p>
+                            <p className="text-xs text-purple-300 font-bold mt-1">
+                              ⭐ {member.points} pts
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+        </div>
         <div className="mt-10 bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition">
           <div className="flex items-center gap-3 mb-6">
             <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
