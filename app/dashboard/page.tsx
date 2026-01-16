@@ -30,6 +30,7 @@ export default function Dashboard() {
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [updateLoading, setUpdateLoading] = useState(false);
+  const [refreshing, setRefreshing] = useState(false);
   const [showAddForm, setShowAddForm] = useState(false);
   const [showUpdateForm, setShowUpdateForm] = useState(false);
   const [showEditForm, setShowEditForm] = useState(false);
@@ -146,8 +147,32 @@ export default function Dashboard() {
       setError("Failed to load team members");
     } finally {
       setLoading(false);
+      setRefreshing(false);
     }
   };
+
+  // Refresh function for manual refresh
+  const handleRefresh = async () => {
+    const token = localStorage.getItem("token");
+    if (token) {
+      setRefreshing(true);
+      await fetchMembers(token);
+      await fetchClubInfo(token);
+    }
+  };
+
+  // Set up auto-refresh every 30 seconds
+  useEffect(() => {
+    const interval = setInterval(async () => {
+      const token = localStorage.getItem("token");
+      if (token) {
+        await fetchMembers(token);
+        await fetchClubInfo(token);
+      }
+    }, 30000);
+
+    return () => clearInterval(interval);
+  }, []);
 
   const fetchClubInfo = async (token: string) => {
     try {
@@ -473,8 +498,53 @@ export default function Dashboard() {
               </p>
             </div>
 
+            {/* Member Count Badge */}
+            <div className="flex sm:hidden items-center gap-2 px-4 py-2 bg-purple-500/20 border border-purple-500/40 rounded-full">
+              <svg className="w-5 h-5 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+              </svg>
+              <span className="text-purple-200 font-bold">{members.length}</span>
+            </div>
+
             {/* Desktop Navigation */}
             <div className="hidden md:flex gap-4 items-center">
+              <button
+                onClick={handleRefresh}
+                disabled={refreshing}
+                className="group relative bg-green-500/20 hover:bg-green-500/30 disabled:bg-gray-400 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-green-500/50 hover:border-green-500/80 disabled:border-gray-500 flex items-center gap-2 hover:shadow-xl hover:shadow-green-500/20 transform hover:-translate-y-1"
+              >
+                {refreshing ? (
+                  <>
+                    <svg
+                      className="w-5 h-5 animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Refreshing...
+                  </>
+                ) : (
+                  <>
+                    <svg
+                      className="w-5 h-5"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"
+                      />
+                    </svg>
+                    Refresh
+                  </>
+                )}
+              </button>
               <Link
                 href="/performers"
                 className="group relative bg-white/10 hover:bg-white/20 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center gap-2 hover:shadow-xl hover:shadow-purple-500/20 transform hover:-translate-y-1"
@@ -513,6 +583,14 @@ export default function Dashboard() {
                 </svg>
                 Attendance
               </Link>
+
+              {/* Member Count Badge */}
+              <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/40 rounded-2xl hover:border-blue-500/60 hover:bg-blue-500/30 transition">
+                <svg className="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+                <span className="text-blue-200 font-bold">{members.length} Members</span>
+              </div>
 
               {/* User Info */}
               {username && (
@@ -581,6 +659,36 @@ export default function Dashboard() {
           {/* Mobile Navigation */}
           {isMobileMenuOpen && (
             <div className="md:hidden mt-6 pb-4 space-y-3 border-t border-white/10 pt-4 animate-in fade-in slide-in-from-top-2">
+              <button
+                onClick={() => {
+                  handleRefresh();
+                  setIsMobileMenuOpen(false);
+                }}
+                disabled={refreshing}
+                className="w-full bg-green-500/20 hover:bg-green-500/30 disabled:bg-gray-400 backdrop-blur text-white px-4 py-3 rounded-xl transition font-semibold text-center border border-green-500/50 hover:border-green-500/80 disabled:border-gray-500 flex items-center justify-center gap-2"
+              >
+                {refreshing ? (
+                  <>
+                    <svg
+                      className="w-5 h-5 animate-spin"
+                      xmlns="http://www.w3.org/2000/svg"
+                      fill="none"
+                      viewBox="0 0 24 24"
+                    >
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    Refreshing...
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Refresh
+                  </>
+                )}
+              </button>
               <Link
                 href="/performers"
                 onClick={() => setIsMobileMenuOpen(false)}
