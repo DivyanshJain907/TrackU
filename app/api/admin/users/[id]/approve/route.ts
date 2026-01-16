@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
+import { AccessRequest } from "@/models/AccessRequest";
 import { verifyToken, isAdmin } from "@/lib/auth";
 import { addActivityLog } from "@/app/api/admin/activity/route";
 
@@ -47,6 +48,17 @@ export async function POST(
     if (!targetUser) {
       return Response.json({ error: "User not found" }, { status: 404 });
     }
+
+    // Also update the corresponding AccessRequest to approved
+    await AccessRequest.findOneAndUpdate(
+      { user: id, status: "pending" },
+      {
+        status: "approved",
+        reviewedBy: adminData.userId,
+        reviewedAt: new Date(),
+      },
+      { new: true }
+    );
 
     // Log activity
     addActivityLog(
