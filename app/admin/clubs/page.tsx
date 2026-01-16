@@ -10,6 +10,7 @@ interface Club {
   description?: string;
   leader: { _id: string; username: string; email: string };
   members: string[];
+  teamMembersCount: number;
   createdAt: string;
 }
 
@@ -243,7 +244,10 @@ export default function AdminClubs() {
                       <span className="font-semibold">Email:</span> {club.leader?.email || "N/A"}
                     </p>
                     <p>
-                      <span className="font-semibold">Members:</span> {club.members?.length || 0}
+                      <span className="font-semibold">Members:</span>{" "}
+                      <span className="inline-block px-3 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs font-bold">
+                        {club.teamMembersCount || 0} member{club.teamMembersCount !== 1 ? "s" : ""}
+                      </span>
                     </p>
                     <p>
                       <span className="font-semibold">Created:</span>{" "}

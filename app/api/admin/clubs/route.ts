@@ -1,5 +1,6 @@
 import { connectDB } from "@/lib/db";
 import { Club } from "@/models/Club";
+import { TeamMember } from "@/models/TeamMember";
 import { User } from "@/models/User";
 import { verifyToken, isAdmin } from "@/lib/auth";
 
@@ -31,7 +32,20 @@ export async function GET(req: Request) {
       .lean()
       .sort({ createdAt: -1 });
 
-    return Response.json(clubs || []);
+    // For each club, count the total TeamMembers added by the club leader
+    const clubsWithMemberCount = await Promise.all(
+      clubs.map(async (club) => {
+        const memberCount = await TeamMember.countDocuments({
+          club: club._id,
+        });
+        return {
+          ...club,
+          teamMembersCount: memberCount,
+        };
+      })
+    );
+
+    return Response.json(clubsWithMemberCount || []);
   } catch (error) {
     console.error("Fetch clubs error:", error);
     const errorMessage = error instanceof Error ? error.message : String(error);
