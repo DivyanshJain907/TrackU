@@ -2,6 +2,7 @@ import { connectDB } from '@/lib/db';
 import { User } from '@/models/User';
 import { Club } from '@/models/Club';
 import { AccessRequest } from '@/models/AccessRequest';
+import { Settings } from '@/models/Settings';
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
@@ -16,6 +17,23 @@ export async function POST(req: Request) {
       return Response.json(
         { error: 'Username, email, and password are required' },
         { status: 400 }
+      );
+    }
+
+    // Check maintenance mode
+    const settings = await Settings.findOne();
+    if (settings?.maintenanceMode) {
+      return Response.json(
+        { error: "Application is in maintenance mode. New registrations are temporarily disabled." },
+        { status: 503 }
+      );
+    }
+
+    // Check if new registrations are allowed
+    if (!settings?.allowNewRegistrations) {
+      return Response.json(
+        { error: "New registrations are currently disabled by the administrator." },
+        { status: 403 }
       );
     }
 

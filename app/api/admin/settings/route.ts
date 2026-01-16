@@ -1,9 +1,10 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
+import { Settings } from "@/models/Settings";
 import { verifyToken, isAdmin } from "@/lib/auth";
 import { addActivityLog } from "@/app/api/admin/activity/route";
 
-// In-memory settings storage (in production, you'd use a database)
+// Default settings
 const defaultSettings = {
   maintenanceMode: false,
   maxUsersPerClub: 50,
@@ -11,8 +12,6 @@ const defaultSettings = {
   defaultUserRole: "member" as const,
   maxAttendanceRecordsDisplay: 100,
 };
-
-let appSettings = { ...defaultSettings };
 
 // Helper function to verify admin token
 async function verifyAdminToken(req: Request): Promise<string | null> {
@@ -45,7 +44,13 @@ export async function GET(req: Request) {
 
     await connectDB();
 
-    return Response.json(appSettings);
+    let settings = await Settings.findOne().lean();
+    if (!settings) {
+      // Create default settings if not found
+      settings = await Settings.create(defaultSettings);
+    }
+
+    return Response.json(settings);
   } catch (error) {
     console.error("Fetch settings error:", error);
     return Response.json({ error: "Internal server error" }, { status: 500 });
@@ -75,17 +80,22 @@ export async function PUT(req: Request) {
       );
     }
 
-    // Store old settings for diff
-    const oldSettings = { ...appSettings };
+    // Get current settings for diff
+    let settings = await Settings.findOne();
+    if (!settings) {
+      settings = await Settings.create(defaultSettings);
+    }
+
+    const oldSettings = settings.toObject();
 
     // Update settings
-    appSettings = {
-      maintenanceMode: body.maintenanceMode,
-      maxUsersPerClub: Math.max(1, body.maxUsersPerClub),
-      allowNewRegistrations: body.allowNewRegistrations,
-      defaultUserRole: body.defaultUserRole,
-      maxAttendanceRecordsDisplay: Math.max(10, body.maxAttendanceRecordsDisplay),
-    };
+    settings.maintenanceMode = body.maintenanceMode;
+    settings.maxUsersPerClub = Math.max(1, body.maxUsersPerClub);
+    settings.allowNewRegistrations = body.allowNewRegistrations;
+    settings.defaultUserRole = body.defaultUserRole;
+    settings.maxAttendanceRecordsDisplay = Math.max(10, body.maxAttendanceRecordsDisplay);
+
+    const updatedSettings = await settings.save();
 
     // Log activity
     const adminUser = await User.findById(adminUserId);
@@ -99,12 +109,12 @@ export async function PUT(req: Request) {
       {
         changes: {
           from: oldSettings,
-          to: appSettings,
+          to: updatedSettings.toObject(),
         },
       }
     );
 
-    return Response.json(appSettings);
+    return Response.json(updatedSettings.toObject());
   } catch (error) {
     console.error("Update settings error:", error);
     return Response.json({ error: "Internal server error" }, { status: 500 });

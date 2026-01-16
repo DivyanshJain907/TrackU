@@ -84,6 +84,9 @@ export default function Dashboard() {
       return;
     }
 
+    // Check for maintenance mode
+    checkMaintenanceMode(token);
+
     if (storedUsername) {
       setUsername(storedUsername);
     }
@@ -106,6 +109,23 @@ export default function Dashboard() {
       window.removeEventListener("beforeunload", handleBeforeUnload);
     };
   }, [router]);
+
+  const checkMaintenanceMode = async (token: string) => {
+    try {
+      const res = await fetch("/api/admin/settings", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+      
+      if (res.ok) {
+        const data = await res.json();
+        if (data.maintenanceMode) {
+          router.replace("/maintenance");
+        }
+      }
+    } catch (err) {
+      console.error("Error checking maintenance mode:", err);
+    }
+  };
 
   // Search functionality
   useEffect(() => {

@@ -1,6 +1,7 @@
 import { connectDB } from "@/lib/db";
 import { User } from "@/models/User";
 import { AccessRequest } from "@/models/AccessRequest";
+import { Settings } from "@/models/Settings";
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import { isAdmin } from "@/lib/auth";
@@ -21,8 +22,20 @@ export async function POST(req: Request) {
 
     await connectDB();
 
+    // Check maintenance mode (skip for admin)
+    const tempUser = await User.findOne({ email });
+    if (tempUser && !isAdmin(tempUser.email)) {
+      const settings = await Settings.findOne();
+      if (settings?.maintenanceMode) {
+        return Response.json(
+          { error: "Application is in maintenance mode. Please try again later." },
+          { status: 503 }
+        );
+      }
+    }
+
     // Find user with lean() for faster queries (returns plain object instead of Mongoose document)
-    const user = await User.findOne({ email });
+    const user = tempUser;
     if (!user) {
       return Response.json({ error: "Invalid credentials" }, { status: 401 });
     }
