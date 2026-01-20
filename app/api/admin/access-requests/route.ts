@@ -49,21 +49,42 @@ export async function GET(req: Request) {
       );
     }
 
-    // Get all access requests with user details and club info
-    const accessRequests = await AccessRequest.find()
-      .populate('user', 'username email club')
-      .populate({
-        path: 'user',
-        populate: { path: 'club', select: 'name' }
-      })
+    // Get all access requests with user details
+    let accessRequests = await AccessRequest.find()
+      .populate('user', 'username email')
       .populate('reviewedBy', 'username')
-      .sort({ createdAt: -1 });
+      .sort({ createdAt: -1 })
+      .lean();
 
-    return Response.json(accessRequests);
+    // Fetch club info separately for each user
+    const accessRequestsWithClubs = await Promise.all(
+      accessRequests.map(async (req: any) => {
+        try {
+          if (req.user?.email) {
+            const userData = await User.findOne({ email: req.user.email })
+              .populate('club', 'name')
+              .lean();
+            if (userData?.club) {
+              req.user.club = userData.club;
+            }
+          }
+        } catch (err) {
+          console.error('Error fetching club info for user:', req.user?.email, err);
+          // Continue even if club fetch fails
+        }
+        return req;
+      })
+    );
+
+    return Response.json(accessRequestsWithClubs);
   } catch (error) {
     console.error('Error fetching access requests:', error);
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    const errorStack = error instanceof Error ? error.stack : '';
+    console.error('Error details:', errorMessage);
+    console.error('Error stack:', errorStack);
     return Response.json(
-      { error: 'Internal server error' },
+      { error: 'Internal server error', details: errorMessage },
       { status: 500 }
     );
   }

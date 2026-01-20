@@ -113,6 +113,11 @@ export async function GET(req: Request) {
     });
   } catch (error) {
     console.error("Fetch stats error:", error);
-    return Response.json({ error: "Internal server error" }, { status: 500 });
+    const errorMessage = error instanceof Error ? error.message : String(error);
+    console.error("Error details:", errorMessage);
+    return Response.json(
+      { error: "Internal server error", details: errorMessage },
+      { status: 500 }
+    );
   }
 }
