@@ -180,8 +180,11 @@ export default function PendingApprovalPage() {
 
         <button
           onClick={handleLogout}
-          className={`w-full font-semibold py-2 px-4 rounded-lg transition duration-200 text-white ${isRejected ? "bg-red-600 hover:bg-red-700" : "bg-blue-600 hover:bg-blue-700"}`}
+          className={`w-full font-semibold py-3 px-4 rounded-xl transition duration-200 text-white flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5 ${isRejected ? "bg-red-600 hover:bg-red-700 hover:shadow-red-500/30" : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-500/30"}`}
         >
+          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
           {isRejected ? "Return to Login" : "Return to Login"}
         </button>
       </div>
