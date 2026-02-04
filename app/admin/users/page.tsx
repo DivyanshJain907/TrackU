@@ -2,7 +2,6 @@
 
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
-import Link from "next/link";
 
 interface User {
   _id: string;
@@ -22,13 +21,13 @@ export default function AdminUsers() {
   const [searchTerm, setSearchTerm] = useState("");
   const [filterType, setFilterType] = useState<"all" | "approved" | "pending" | "leaders">("all");
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editData, setEditData] = useState({ email: "", phone: "" });
+  const [editData, setEditData] = useState({ username: "", email: "", phone: "" });
   const router = useRouter();
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
-    if (!isAdmin) {
-      router.replace("/dashboard");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.replace("/login");
       return;
     }
     fetchUsers();
@@ -122,10 +121,15 @@ export default function AdminUsers() {
 
   const handleEditUser = (user: User) => {
     setEditingId(user._id);
-    setEditData({ email: user.email, phone: user.phone || "" });
+    setEditData({ username: user.username, email: user.email, phone: user.phone || "" });
   };
 
   const handleSaveEdit = async (userId: string) => {
+    // Validate username
+    if (!editData.username || editData.username.trim().length === 0) {
+      alert("Username cannot be empty");
+      return;
+    }
     // Validate phone - must be exactly 10 digits and first digit >= 6 (Indian format)
     if (editData.phone && editData.phone.length !== 10) {
       alert("Phone number must be exactly 10 digits");
@@ -156,7 +160,7 @@ export default function AdminUsers() {
       setUsers((prev) =>
         prev.map((user) =>
           user._id === userId
-            ? { ...user, email: editData.email, phone: editData.phone }
+            ? { ...user, username: editData.username, email: editData.email, phone: editData.phone }
             : user
         )
       );
@@ -169,190 +173,253 @@ export default function AdminUsers() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
-        <div className="text-center">
+      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0">
+          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0">
+            {[...Array(100)].map((_, i) => (
+              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
+            ))}
+          </div>
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+        </div>
+        <div className="relative z-10 text-center">
           <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4 animate-spin">
             <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full"></div>
           </div>
-          <p className="text-white text-lg">Loading users...</p>
+          <p className="text-white text-lg font-semibold">Loading users...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
-      <div className="max-w-7xl mx-auto">
-        {/* Header */}
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-3xl font-bold text-white">User Management</h1>
-            <p className="text-purple-200">Total Users: {users.length}</p>
-          </div>
-          <Link
-            href="/admin"
-            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
-          >
-            Back to Dashboard
-          </Link>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => {
+            const size = Math.random() * 2;
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const opacity = Math.random() * 0.7 + 0.3;
+            const duration = Math.random() * 3 + 2;
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full bg-white"
+                style={{
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  opacity: opacity,
+                  animation: `twinkle ${duration}s infinite`
+                }}
+              ></div>
+            );
+          })}
         </div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      </div>
 
-        {/* Search and Filter */}
-        <div className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg p-4 mb-6">
-          <div className="flex flex-col sm:flex-row gap-4">
-            <input
-              type="text"
-              placeholder="Search by username or email..."
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-              className="flex-1 px-4 py-2 bg-slate-900 border border-purple-500/30 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-purple-500"
-            />
-            <select
-              value={filterType}
-              onChange={(e) => setFilterType(e.target.value as any)}
-              className="px-4 py-2 bg-slate-900 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:border-purple-500"
+      {/* Content */}
+      <div className="relative z-10">
+        <div className="min-h-screen px-3 sm:px-6 py-6 sm:py-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Back Button */}
+            <button
+              onClick={() => router.push("/admin")}
+              className="mb-6 flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white rounded-lg font-medium transition-all hover:shadow-lg"
             >
-              <option value="all">All Users</option>
-              <option value="approved">Approved</option>
-              <option value="pending">Pending</option>
-              <option value="leaders">Club Leaders</option>
-            </select>
-          </div>
-        </div>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+              </svg>
+              Back to Admin
+            </button>
 
-        {error && (
-          <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4 mb-6 text-red-400">
-            {error}
-          </div>
-        )}
+            {/* Header */}
+            <div className="mb-6 sm:mb-8">
+              <h1 className="text-2xl sm:text-3xl font-bold text-white">User Management</h1>
+              <p className="text-gray-400 text-sm sm:text-base mt-1 sm:mt-2">Total Users: {users.length}</p>
+            </div>
 
-        {/* Users Table */}
-        <div className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg overflow-hidden">
-          <div className="overflow-x-auto">
-            <table className="w-full">
-              <thead>
-                <tr className="bg-purple-600/20 border-b border-purple-500/20">
-                  <th className="px-6 py-3 text-left text-white font-semibold">Username</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Email</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Phone</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Type</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Status</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Club</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Actions</th>
-                </tr>
-              </thead>
-              <tbody>
+            {/* Search and Filter */}
+            <div className="mb-6 space-y-3 sm:space-y-0 sm:flex gap-3">
+              <input
+                type="text"
+                placeholder="Search by username or email..."
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
+                className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-white/40 transition"
+              />
+              <select
+                value={filterType}
+                onChange={(e) => setFilterType(e.target.value as any)}
+                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition"
+              >
+                <option value="all">All Users</option>
+                <option value="approved">Approved</option>
+                <option value="pending">Pending</option>
+                <option value="leaders">Club Leaders</option>
+              </select>
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
+            {/* Users Grid */}
+            {filteredUsers.length === 0 ? (
+              <div className="text-center py-12 text-gray-400">
+                <p>No users found matching your criteria.</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {filteredUsers.map((user) => (
-                  <tr
+                  <div
                     key={user._id}
-                    className="border-b border-purple-500/10 hover:bg-purple-600/10 transition"
+                    className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition"
                   >
-                    <td className="px-6 py-4 text-white">{user.username}</td>
-                    <td className="px-6 py-4 text-gray-300">
-                      {editingId === user._id ? (
-                        <input
-                          type="email"
-                          value={editData.email}
-                          onChange={(e) => setEditData({ ...editData, email: e.target.value })}
-                          className="px-2 py-1 bg-slate-900 border border-purple-500/30 rounded text-white text-sm"
-                        />
-                      ) : (
-                        user.email
+                    {/* Header with badges */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-lg sm:text-xl font-bold text-white">{user.username}</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm mt-1">{user.email}</p>
+                      </div>
+                      <div className="ml-2 flex flex-col gap-1">
+                        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-400 text-center">
+                          {user.isClubLeader ? "Leader" : "Member"}
+                        </span>
+                        <span
+                          className={`px-2 py-1 text-xs font-semibold rounded-full text-center ${
+                            user.isApproved
+                              ? "bg-green-500/20 text-green-400"
+                              : "bg-yellow-500/20 text-yellow-400"
+                          }`}
+                        >
+                          {user.isApproved ? "Approved" : "Pending"}
+                        </span>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="space-y-3 mb-4">
+                      {user.phone && (
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Phone</p>
+                          {editingId === user._id ? (
+                            <input
+                              type="tel"
+                              value={editData.phone}
+                              onChange={(e) => {
+                                let digitsOnly = e.target.value.replace(/\D/g, '');
+                                let limited = digitsOnly.slice(0, 10);
+                                if (limited.length > 0 && parseInt(limited[0]) < 6) {
+                                  limited = limited.slice(1);
+                                }
+                                setEditData({ ...editData, phone: limited });
+                              }}
+                              placeholder="9XXXXXXXXX"
+                              maxLength={10}
+                              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                            />
+                          ) : (
+                            <a href={`tel:${user.phone}`} className="text-blue-400 hover:text-blue-300 text-sm">
+                              {user.phone}
+                            </a>
+                          )}
+                        </div>
                       )}
-                    </td>
-                    <td className="px-6 py-4 text-gray-300">
-                      {editingId === user._id ? (
-                        <input
-                          type="tel"
-                          value={editData.phone}
-                          onChange={(e) => {
-                            // Only allow digits
-                            let digitsOnly = e.target.value.replace(/\D/g, '');
-                            // Limit to 10 digits
-                            let limited = digitsOnly.slice(0, 10);
-                            // If first digit is less than 6, don't allow
-                            if (limited.length > 0 && parseInt(limited[0]) < 6) {
-                              limited = limited.slice(1);
-                            }
-                            setEditData({ ...editData, phone: limited });
-                          }}
-                          placeholder="9XXXXXXXXX"
-                          maxLength={10}
-                          className="px-2 py-1 bg-slate-900 border border-purple-500/30 rounded text-white text-sm"
-                        />
-                      ) : (
-                        user.phone || "-"
+
+                      {user.club?.name && (
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Club</p>
+                          <p className="text-white text-sm">{user.club.name}</p>
+                        </div>
                       )}
-                    </td>
-                    <td className="px-6 py-4">
-                      <span className="inline-block px-3 py-1 rounded-full text-xs font-semibold bg-blue-500/20 text-blue-400">
-                        {user.isClubLeader ? "Leader" : "Member"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4">
-                      <span
-                        className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
-                          user.isApproved
-                            ? "bg-green-500/20 text-green-400"
-                            : "bg-yellow-500/20 text-yellow-400"
-                        }`}
-                      >
-                        {user.isApproved ? "Approved" : "Pending"}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 text-gray-300">{user.club?.name || "-"}</td>
-                    <td className="px-6 py-4 flex gap-2 flex-wrap">
-                      {editingId === user._id ? (
+
+                      {editingId === user._id && (
                         <>
+                          <div>
+                            <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Username</p>
+                            <input
+                              type="text"
+                              value={editData.username}
+                              onChange={(e) => setEditData({ ...editData, username: e.target.value })}
+                              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                            />
+                          </div>
+                          <div>
+                            <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Email</p>
+                            <input
+                              type="email"
+                              value={editData.email}
+                              onChange={(e) => setEditData({ ...editData, email: e.target.value })}
+                              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                            />
+                          </div>
+                        </>
+                      )}
+                    </div>
+
+                    {/* Actions */}
+                    <div className="flex flex-col gap-2">
+                      {editingId === user._id ? (
+                        <div className="flex gap-2">
                           <button
                             onClick={() => handleSaveEdit(user._id)}
-                            className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+                            className="flex-1 px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditingId(null)}
-                            className="bg-gray-600 hover:bg-gray-700 text-white px-3 py-1 rounded text-sm"
+                            className="flex-1 px-3 py-2 bg-gray-600/20 border border-gray-500 hover:bg-gray-600/40 text-gray-300 text-sm font-medium rounded-lg transition-all"
                           >
                             Cancel
                           </button>
-                        </>
+                        </div>
                       ) : (
                         <>
                           <button
                             onClick={() => handleEditUser(user)}
-                            className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded text-sm"
+                            className="w-full px-3 py-2 bg-blue-600/20 border border-blue-500 hover:bg-blue-600/40 text-blue-400 text-sm font-medium rounded-lg transition-all"
                           >
                             Edit
                           </button>
                           {!user.isApproved && (
                             <button
                               onClick={() => handleApproveUser(user._id)}
-                              className="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm"
+                              className="w-full px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
                             >
                               Approve
                             </button>
                           )}
                           <button
                             onClick={() => handleDeleteUser(user._id)}
-                            className="bg-red-600 hover:bg-red-700 text-white px-3 py-1 rounded text-sm"
+                            className="w-full px-3 py-2 bg-red-600/20 border border-red-500 hover:bg-red-600/40 text-red-400 text-sm font-medium rounded-lg transition-all"
                           >
                             Delete
                           </button>
                         </>
                       )}
-                    </td>
-                  </tr>
+                    </div>
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            )}
           </div>
-
-          {filteredUsers.length === 0 && (
-            <div className="text-center py-8 text-gray-400">
-              No users found matching your criteria.
-            </div>
-          )}
         </div>
       </div>
     </div>

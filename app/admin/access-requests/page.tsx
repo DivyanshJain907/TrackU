@@ -26,9 +26,9 @@ export default function AdminAccessRequests() {
   const router = useRouter();
 
   useEffect(() => {
-    const isAdmin = localStorage.getItem("isAdmin") === "true";
-    if (!isAdmin) {
-      router.replace("/dashboard");
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.replace("/login");
       return;
     }
 
@@ -136,193 +136,229 @@ export default function AdminAccessRequests() {
       : requests.filter((req) => req.status === activeTab);
 
   return (
-    <div className="min-h-screen bg-gray-50 py-8 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-6xl mx-auto">
-        {/* Header */}
-        <div className="mb-8 flex justify-between items-center">
-          <div>
-            <h1 className="text-3xl font-bold text-gray-900">Access Requests</h1>
-            <p className="text-gray-600 mt-2">Manage user access requests</p>
-          </div>
-          <button
-            onClick={() => fetchRequests()}
-            disabled={refreshing}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-400 text-white rounded-lg font-medium transition-colors flex items-center gap-2"
-          >
-            {refreshing ? (
-              <>
-                <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                  <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-                  <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                </svg>
-                Refreshing...
-              </>
-            ) : (
-              <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
-                </svg>
-                Refresh
-              </>
-            )}
-          </button>
+    <div className="min-h-screen bg-black relative overflow-hidden">
+      {/* Galaxy Background */}
+      <div className="fixed inset-0 z-0">
+        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0">
+          {[...Array(100)].map((_, i) => {
+            const size = Math.random() * 2;
+            const left = Math.random() * 100;
+            const top = Math.random() * 100;
+            const opacity = Math.random() * 0.7 + 0.3;
+            const duration = Math.random() * 3 + 2;
+            return (
+              <div
+                key={i}
+                className="absolute rounded-full bg-white"
+                style={{
+                  width: `${size}px`,
+                  height: `${size}px`,
+                  left: `${left}%`,
+                  top: `${top}%`,
+                  opacity: opacity,
+                  animation: `twinkle ${duration}s infinite`
+                }}
+              ></div>
+            );
+          })}
         </div>
+        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      </div>
 
-        {/* Tabs */}
-        <div className="mb-6 flex flex-wrap gap-2 border-b border-gray-200">
-          {["all", "pending", "approved", "rejected"].map((tab) => (
+      {/* Content */}
+      <div className="relative z-10">
+        <div className="min-h-screen px-3 sm:px-6 py-6 sm:py-8">
+          <div className="max-w-7xl mx-auto">
+            {/* Back Button */}
             <button
-              key={tab}
-              onClick={() => setActiveTab(tab as any)}
-              className={`px-4 py-2 font-medium transition-colors ${
-                activeTab === tab
-                  ? "text-blue-600 border-b-2 border-blue-600"
-                  : "text-gray-600 hover:text-gray-900"
-              }`}
+              onClick={() => router.push("/admin")}
+              className="mb-6 flex items-center gap-2 px-4 py-2 bg-white/10 border border-white/20 hover:bg-white/20 text-white rounded-lg font-medium transition-all hover:shadow-lg"
             >
-              {tab.charAt(0).toUpperCase() + tab.slice(1)}
-            </button>
-          ))}
-        </div>
-
-        {/* Error Message */}
-        {error && (
-          <div className="mb-6 bg-red-50 border border-red-200 text-red-800 px-4 py-3 rounded-lg">
-            {error}
-          </div>
-        )}
-
-        {/* Loading */}
-        {loading ? (
-          <div className="text-center py-12">
-            <div className="inline-block">
-              <svg
-                className="animate-spin h-8 w-8 text-blue-600"
-                fill="none"
-                viewBox="0 0 24 24"
-              >
-                <circle
-                  className="opacity-25"
-                  cx="12"
-                  cy="12"
-                  r="10"
-                  stroke="currentColor"
-                  strokeWidth="4"
-                ></circle>
-                <path
-                  className="opacity-75"
-                  fill="currentColor"
-                  d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-                ></path>
+              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
               </svg>
+              Back to Admin
+            </button>
+
+            {/* Header */}
+            <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
+              <div>
+                <h1 className="text-2xl sm:text-3xl font-bold text-white">Access Requests</h1>
+                <p className="text-gray-400 text-sm sm:text-base mt-1 sm:mt-2">Manage user access requests</p>
+              </div>
+              <button
+                onClick={() => fetchRequests()}
+                disabled={refreshing}
+                className="px-4 py-2 bg-blue-600/20 border border-blue-500 hover:bg-blue-600/40 disabled:opacity-50 text-blue-400 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+              >
+                {refreshing ? (
+                  <>
+                    <svg className="animate-spin h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                      <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
+                      <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                    </svg>
+                    <span>Refreshing...</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Refresh</span>
+                  </>
+                )}
+              </button>
             </div>
-          </div>
-        ) : filteredRequests.length === 0 ? (
-          <div className="text-center py-12 text-gray-500">
-            <p>No {activeTab === "all" ? "requests" : `${activeTab} requests`} found</p>
-          </div>
-        ) : (
-          <div className="bg-white rounded-lg shadow overflow-x-auto">
-            <table className="min-w-full divide-y divide-gray-200">
-              <thead className="bg-gray-50">
-                <tr>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    User
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Email
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Club Name
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Phone
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Date
-                  </th>
-                  <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody className="bg-white divide-y divide-gray-200">
+
+            {/* Tabs */}
+            <div className="mb-6 flex gap-2 sm:gap-4 overflow-x-auto pb-2">
+              {["all", "pending", "approved", "rejected"].map((tab) => (
+                <button
+                  key={tab}
+                  onClick={() => setActiveTab(tab as any)}
+                  className={`px-3 sm:px-4 py-2 text-sm sm:text-base font-medium rounded-lg transition-all whitespace-nowrap ${
+                    activeTab === tab
+                      ? "bg-blue-600 text-white"
+                      : "bg-white/10 border border-white/20 text-gray-300 hover:bg-white/20"
+                  }`}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </div>
+
+            {/* Error Message */}
+            {error && (
+              <div className="mb-6 bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm">
+                {error}
+              </div>
+            )}
+
+            {/* Loading */}
+            {loading ? (
+              <div className="flex items-center justify-center py-12">
+                <div>
+                  <svg
+                    className="animate-spin h-8 w-8 text-blue-500 mx-auto"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                </div>
+              </div>
+            ) : filteredRequests.length === 0 ? (
+              <div className="text-center py-12 text-gray-400">
+                <p>No {activeTab === "all" ? "requests" : `${activeTab} requests`} found</p>
+              </div>
+            ) : (
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
                 {filteredRequests.map((request) => (
-                  <tr key={request._id}>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">
-                      {request.username}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {request.email}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {request.user?.club?.name ? (
-                        <span className="font-medium text-gray-900">{request.user.club.name}</span>
-                      ) : (
-                        <span className="text-gray-400">-</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {request.phone ? (
-                        <a
-                          href={`tel:${request.phone}`}
-                          className="text-blue-600 hover:text-blue-800 hover:underline"
-                        >
-                          {request.phone}
-                        </a>
-                      ) : (
-                        <span className="text-gray-400">-</span>
-                      )}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
+                  <div
+                    key={request._id}
+                    className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition"
+                  >
+                    {/* Status Badge */}
+                    <div className="flex items-start justify-between mb-4">
+                      <div className="flex-1">
+                        <h3 className="text-lg sm:text-xl font-bold text-white">{request.username}</h3>
+                        <p className="text-gray-400 text-xs sm:text-sm mt-1">{request.email}</p>
+                      </div>
                       <span
-                        className={`px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full ${
+                        className={`ml-2 px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${
                           request.status === "pending"
-                            ? "bg-yellow-100 text-yellow-800"
+                            ? "bg-yellow-500/20 text-yellow-400"
                             : request.status === "approved"
-                            ? "bg-green-100 text-green-800"
-                            : "bg-red-100 text-red-800"
+                            ? "bg-green-500/20 text-green-400"
+                            : "bg-red-500/20 text-red-400"
                         }`}
                       >
-                        {request.status.charAt(0).toUpperCase() +
-                          request.status.slice(1)}
+                        {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
                       </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-600">
-                      {new Date(request.createdAt).toLocaleDateString()}
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm space-x-2">
-                      {request.status === "pending" && (
-                        <>
-                          <button
-                            onClick={() => handleApprove(request._id)}
-                            className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-green-600 hover:bg-green-700 transition"
-                          >
-                            Approve
-                          </button>
-                          <button
-                            onClick={() => handleReject(request._id)}
-                            className="inline-flex items-center px-3 py-1 border border-transparent text-sm font-medium rounded-md shadow-sm text-white bg-red-600 hover:bg-red-700 transition"
-                          >
-                            Reject
-                          </button>
-                        </>
-                      )}
-                      {request.status === "rejected" && request.rejectionReason && (
-                        <div className="text-xs text-gray-500">
-                          Reason: {request.rejectionReason}
+                    </div>
+
+                    {/* Content */}
+                    <div className="space-y-3 mb-4">
+                      {request.user?.club?.name && (
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Club</p>
+                          <p className="text-white text-sm font-medium">{request.user.club.name}</p>
                         </div>
                       )}
-                    </td>
-                  </tr>
+
+                      {request.phone && (
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Phone</p>
+                          <a
+                            href={`tel:${request.phone}`}
+                            className="text-blue-400 hover:text-blue-300 text-sm"
+                          >
+                            {request.phone}
+                          </a>
+                        </div>
+                      )}
+
+                      <div>
+                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Date</p>
+                        <p className="text-gray-300 text-sm">
+                          {new Date(request.createdAt).toLocaleDateString()} {new Date(request.createdAt).toLocaleTimeString()}
+                        </p>
+                      </div>
+
+                      {request.requestMessage && (
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Message</p>
+                          <p className="text-gray-300 text-sm line-clamp-2">{request.requestMessage}</p>
+                        </div>
+                      )}
+
+                      {request.status === "rejected" && request.rejectionReason && (
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Rejection Reason</p>
+                          <p className="text-red-400 text-sm">{request.rejectionReason}</p>
+                        </div>
+                      )}
+                    </div>
+
+                    {/* Actions */}
+                    {request.status === "pending" && (
+                      <div className="flex gap-2">
+                        <button
+                          onClick={() => handleApprove(request._id)}
+                          className="flex-1 px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
+                        >
+                          Approve
+                        </button>
+                        <button
+                          onClick={() => handleReject(request._id)}
+                          className="flex-1 px-3 py-2 bg-red-600/20 border border-red-500 hover:bg-red-600/40 text-red-400 text-sm font-medium rounded-lg transition-all"
+                        >
+                          Reject
+                        </button>
+                      </div>
+                    )}
+                  </div>
                 ))}
-              </tbody>
-            </table>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
     </div>
   );
