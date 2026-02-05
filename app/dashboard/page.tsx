@@ -21,6 +21,7 @@ interface Club {
   id: string;
   name: string;
   description: string;
+  imageUrl?: string;
 }
 
 export default function Dashboard() {
@@ -42,6 +43,15 @@ export default function Dashboard() {
   const [showSecondDeleteConfirm, setShowSecondDeleteConfirm] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [showClubSettings, setShowClubSettings] = useState(false);
+  const [clubSettingsData, setClubSettingsData] = useState({
+    name: "",
+    description: "",
+    imageUrl: "",
+    uploadMode: "url" as "url" | "upload",
+  });
+  const [savingSettings, setSavingSettings] = useState(false);
+  const [imageLoadStatus, setImageLoadStatus] = useState(""); // For debugging
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -194,6 +204,10 @@ export default function Dashboard() {
       }
 
       const data = await res.json();
+      console.log("Club data fetched:", data);
+      if (data.imageUrl) {
+        console.log("Image URL found:", data.imageUrl.substring(0, 100) + "...");
+      }
       setClub(data);
     } catch (err) {
       console.error("Failed to load club info:", err);
@@ -396,6 +410,76 @@ export default function Dashboard() {
     router.push("/");
   };
 
+  const openClubSettings = () => {
+    if (club) {
+      setClubSettingsData({
+        name: club.name,
+        description: club.description || "",
+        imageUrl: club.imageUrl || "",
+        uploadMode: "url",
+      });
+      setShowClubSettings(true);
+    }
+  };
+
+  const handleSaveClubSettings = async () => {
+    try {
+      setSavingSettings(true);
+      const token = localStorage.getItem("token");
+      if (!token || !club) {
+        alert("Authentication error");
+        setSavingSettings(false);
+        return;
+      }
+
+      // Validate that at least name is provided
+      if (!clubSettingsData.name.trim()) {
+        alert("Club name is required");
+        setSavingSettings(false);
+        return;
+      }
+
+      console.log("Saving club settings:", {
+        name: clubSettingsData.name,
+        description: clubSettingsData.description,
+        hasImage: !!clubSettingsData.imageUrl,
+        imageSize: clubSettingsData.imageUrl?.length,
+      });
+
+      const res = await fetch(`/api/club/${club.id}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          name: clubSettingsData.name,
+          description: clubSettingsData.description,
+          imageUrl: clubSettingsData.imageUrl,
+        }),
+      });
+
+      if (!res.ok) {
+        const errorData = await res.json().catch(() => ({ error: "Failed to parse error response" }));
+        alert(`Failed to update club: ${errorData.error || "Unknown error"}`);
+        setSavingSettings(false);
+        return;
+      }
+
+      const updatedClub = await res.json();
+      console.log("Club updated:", updatedClub);
+      setClub(updatedClub);
+      setShowClubSettings(false);
+      setSuccessMessage("Club settings updated successfully!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (err) {
+      console.error("Error saving club settings:", err);
+      alert(`Error: ${err instanceof Error ? err.message : "Unknown error"}`);
+    } finally {
+      setSavingSettings(false);
+    }
+  };
+
   if (loading) {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
@@ -579,7 +663,22 @@ export default function Dashboard() {
                 </Link>
               </div>
 
-              {/* User Profile Dropdown - Mobile and Desktop */}
+              {/* Settings and Profile Section */}
+              <div className="flex items-center gap-2 sm:gap-3">
+                {/* Settings Button */}
+                <button
+                  onClick={openClubSettings}
+                  className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white text-sm sm:text-base"
+                  title="Club Settings"
+                >
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                  </svg>
+                  <span className="sm:hidden">Settings</span>
+                </button>
+
+                {/* User Profile Dropdown - Mobile and Desktop */}
               {username && (
                 <div className="relative">
                   <button
@@ -625,6 +724,7 @@ export default function Dashboard() {
                   )}
                 </div>
               )}
+              </div>
             </div>
           </div>
         </div>
@@ -634,29 +734,33 @@ export default function Dashboard() {
       <div className="max-w-7xl mx-auto px-4 py-10 sm:py-14">
         {/* Club Header */}
         {club && (
-          <div className="bg-gradient-to-r from-purple-600/50 via-blue-600/50 to-indigo-600/50 backdrop-blur-2xl border-2 border-purple-400/40 hover:border-purple-400/70 rounded-3xl shadow-2xl p-12 mb-12 transition duration-300 hover:shadow-2xl hover:shadow-purple-500/20 transform hover:-translate-y-1">
-            <div className="flex flex-col items-center justify-center gap-6 text-center">
-              <div className="p-6 bg-gradient-to-br from-purple-500 to-blue-500 rounded-3xl shadow-2xl">
-                <svg
-                  className="w-12 h-12 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={1.5}
-                    d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
-                  />
-                </svg>
-              </div>
-              <div className="max-w-3xl">
-                <h1 className="text-6xl sm:text-7xl font-bold text-white drop-shadow-lg mb-3 bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
-                  {club.name}
-                </h1>
-                <div className="flex items-center justify-center gap-2 mb-4">
-                  <div className="h-1 w-12 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
+          <div className="relative overflow-hidden rounded-3xl shadow-2xl mb-12">
+            {/* Background Image - Only if imageUrl exists */}
+            {club.imageUrl ? (
+              <>
+                <div
+                  className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                  style={{
+                    backgroundImage: `url(${club.imageUrl})`,
+                    zIndex: 0,
+                  }}
+                ></div>
+                {/* Overlay for better text readability */}
+                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-purple-900/40 to-slate-900/40 backdrop-blur-sm" style={{ zIndex: 1 }}></div>
+              </>
+            ) : (
+              /* Fallback gradient when no image */
+              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-purple-900/80 to-slate-900/80 backdrop-blur-xl" style={{ zIndex: 0 }}></div>
+            )}
+            {/* Content */}
+            <div className="relative z-10 p-12">
+              <div className="flex flex-col items-center justify-center gap-6 text-center">
+                <div className="max-w-3xl">
+                  <h1 className="text-6xl sm:text-7xl font-bold text-white drop-shadow-lg mb-3 bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
+                    {club.name}
+                  </h1>
+                  <div className="flex items-center justify-center gap-2 mb-4">
+                    <div className="h-1 w-12 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
                   <p className="text-purple-200 text-xl font-bold">Club Dashboard</p>
                   <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
                 </div>
@@ -664,6 +768,7 @@ export default function Dashboard() {
                   {club.description}
                 </p>
               </div>
+            </div>
             </div>
           </div>
         )}
@@ -1315,6 +1420,244 @@ export default function Dashboard() {
                     setSelectedMember(null);
                   }}
                   className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
+        {/* Club Settings Modal */}
+        {showClubSettings && (
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
+            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 border-2 border-blue-500/30 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl">
+                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                    </svg>
+                  </div>
+                  <h2 className="text-2xl sm:text-3xl font-bold text-white">Club Settings</h2>
+                </div>
+                <button
+                  onClick={() => setShowClubSettings(false)}
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              <div className="space-y-4">
+                {/* Club Name */}
+                <div>
+                  <label className="text-gray-300 text-sm font-semibold mb-2 block">Club Name</label>
+                  <input
+                    type="text"
+                    value={clubSettingsData.name}
+                    onChange={(e) => setClubSettingsData({ ...clubSettingsData, name: e.target.value })}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
+                    placeholder="Enter club name"
+                  />
+                </div>
+
+                {/* Description */}
+                <div>
+                  <label className="text-gray-300 text-sm font-semibold mb-2 block">Description</label>
+                  <textarea
+                    value={clubSettingsData.description}
+                    onChange={(e) => setClubSettingsData({ ...clubSettingsData, description: e.target.value })}
+                    className="w-full px-4 py-3 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition resize-none"
+                    placeholder="Enter club description"
+                    rows={4}
+                  />
+                </div>
+
+                {/* Banner Image - URL or Upload */}
+                <div>
+                  <label className="text-gray-300 text-sm font-semibold mb-3 block">Banner Image</label>
+                  
+                  {/* Image Upload Tabs */}
+                  <div className="flex gap-2 mb-4">
+                    <button
+                      type="button"
+                      onClick={() => setClubSettingsData({ ...clubSettingsData, uploadMode: 'url' } as any)}
+                      className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                        (clubSettingsData as any).uploadMode !== 'upload'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+                      </svg>
+                      URL
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setClubSettingsData({ ...clubSettingsData, uploadMode: 'upload' } as any)}
+                      className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                        (clubSettingsData as any).uploadMode === 'upload'
+                          ? 'bg-blue-600 text-white'
+                          : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                      }`}
+                    >
+                      <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                      </svg>
+                      Upload
+                    </button>
+                  </div>
+
+                  {/* URL Input */}
+                  {(clubSettingsData as any).uploadMode !== 'upload' && (
+                    <input
+                      type="url"
+                      value={clubSettingsData.imageUrl}
+                      onChange={(e) => setClubSettingsData({ ...clubSettingsData, imageUrl: e.target.value })}
+                      className="w-full px-4 py-3 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
+                      placeholder="https://example.com/image.jpg"
+                    />
+                  )}
+
+                  {/* File Upload Input */}
+                  {(clubSettingsData as any).uploadMode === 'upload' && (
+                    <div>
+                      <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-blue-500/30 rounded-2xl hover:border-blue-500/70 hover:bg-slate-700/50 transition cursor-pointer bg-slate-700/30">
+                        <div className="text-center">
+                          <svg className="w-8 h-8 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                          </svg>
+                          <p className="text-gray-300 font-semibold">Drop image here or click to upload</p>
+                          <p className="text-gray-400 text-xs mt-1">PNG, JPG, GIF up to 5MB</p>
+                        </div>
+                        <input
+                          type="file"
+                          accept="image/*"
+                          onChange={(e) => {
+                            const file = e.target.files?.[0];
+                            if (!file) return;
+                            
+                            setImageLoadStatus(""); // Reset status
+                            
+                            if (file.size > 5 * 1024 * 1024) {
+                              alert("File size must be less than 5MB");
+                              return;
+                            }
+                            
+                            const reader = new FileReader();
+                            reader.onload = (event) => {
+                              const result = event.target?.result as string;
+                              const img = new Image();
+                              img.onload = () => {
+                                const canvas = document.createElement("canvas");
+                                let width = img.width;
+                                let height = img.height;
+                                
+                                // Resize if larger than 1200px width
+                                if (width > 1200) {
+                                  height = (height * 1200) / width;
+                                  width = 1200;
+                                }
+                                
+                                canvas.width = width;
+                                canvas.height = height;
+                                const ctx = canvas.getContext("2d");
+                                if (ctx) {
+                                  ctx.drawImage(img, 0, 0, width, height);
+                                  const compressedImage = canvas.toDataURL("image/jpeg", 0.90);
+                                  console.log("Image compressed successfully", {
+                                    originalSize: file.size,
+                                    compressedSize: compressedImage.length,
+                                    quality: "90%",
+                                    maxWidth: "1200px",
+                                  });
+                                  setClubSettingsData({
+                                    ...clubSettingsData,
+                                    imageUrl: compressedImage,
+                                  });
+                                }
+                              };
+                              img.onerror = () => {
+                                alert("Failed to load image. Please try another file.");
+                              };
+                              img.src = result;
+                            };
+                            reader.onerror = () => {
+                              alert("Failed to read file. Please try again.");
+                            };
+                            reader.readAsDataURL(file);
+                          }}
+                          className="hidden"
+                        />
+                      </label>
+                    </div>
+                  )}
+
+                  <p className="text-gray-400 text-xs mt-2">Recommended size: 1200x400px or wider</p>
+                  {clubSettingsData.imageUrl && (
+                    <div className="mt-4">
+                      <p className="text-gray-300 text-xs font-semibold mb-2">Preview:</p>
+                      <div className="relative h-40 rounded-lg overflow-hidden border-2 border-blue-500/50 bg-slate-700/30 flex items-center justify-center">
+                        <img
+                          src={clubSettingsData.imageUrl}
+                          alt="Banner preview"
+                          className="w-full h-full object-cover"
+                          onLoad={(e) => {
+                            console.log("Preview image loaded successfully");
+                            setImageLoadStatus("loaded");
+                          }}
+                          onError={(e) => {
+                            console.error("Preview image failed to load", e);
+                            setImageLoadStatus("error");
+                          }}
+                        />
+                        {!imageLoadStatus && (
+                          <div className="absolute inset-0 flex items-center justify-center bg-slate-700/50">
+                            <p className="text-gray-400 text-sm">Loading image...</p>
+                          </div>
+                        )}
+                      </div>
+                      {imageLoadStatus === "loaded" && (
+                        <p className="text-green-400 text-xs mt-2">✓ Image ready - Click "Save Changes" to apply</p>
+                      )}
+                      {imageLoadStatus === "error" && (
+                        <p className="text-orange-400 text-xs mt-2">⚠ Preview issue but will still save</p>
+                      )}
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              {/* Buttons */}
+              <div className="flex gap-3 mt-8">
+                <button
+                  onClick={handleSaveClubSettings}
+                  disabled={savingSettings}
+                  className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-600 disabled:to-gray-700 text-white px-6 py-3 rounded-2xl transition font-bold shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-2"
+                >
+                  {savingSettings ? (
+                    <>
+                      <CloudLoader />
+                      Saving...
+                    </>
+                  ) : (
+                    <>
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                      </svg>
+                      Save Changes
+                    </>
+                  )}
+                </button>
+                <button
+                  onClick={() => setShowClubSettings(false)}
+                  disabled={savingSettings}
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-700 text-white px-6 py-3 rounded-2xl transition font-bold shadow-md"
                 >
                   Cancel
                 </button>

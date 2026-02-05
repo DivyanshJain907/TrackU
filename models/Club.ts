@@ -10,6 +10,10 @@ const clubSchema = new mongoose.Schema(
       type: String,
       default: "",
     },
+    imageUrl: {
+      type: String,
+      default: "",
+    },
     leader: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

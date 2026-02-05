@@ -8,6 +8,7 @@ interface Club {
   _id: string;
   name: string;
   description?: string;
+  imageUrl?: string;
   leader: { _id: string; username: string; email: string };
   members: string[];
   teamMembersCount: number;
@@ -20,7 +21,7 @@ export default function AdminClubs() {
   const [error, setError] = useState("");
   const [searchTerm, setSearchTerm] = useState("");
   const [editingId, setEditingId] = useState<string | null>(null);
-  const [editData, setEditData] = useState({ name: "", description: "" });
+  const [editData, setEditData] = useState({ name: "", description: "", imageUrl: "" });
   const router = useRouter();
 
   useEffect(() => {
@@ -100,7 +101,7 @@ export default function AdminClubs() {
 
   const handleEditClub = (club: Club) => {
     setEditingId(club._id);
-    setEditData({ name: club.name, description: club.description || "" });
+    setEditData({ name: club.name, description: club.description || "", imageUrl: club.imageUrl || "" });
   };
 
   const handleSaveEdit = async (clubId: string) => {
@@ -129,7 +130,7 @@ export default function AdminClubs() {
       setClubs((prev) =>
         prev.map((club) =>
           club._id === clubId
-            ? { ...club, name: editData.name, description: editData.description }
+            ? { ...club, name: editData.name, description: editData.description, imageUrl: editData.imageUrl }
             : club
         )
       );
@@ -273,6 +274,19 @@ export default function AdminClubs() {
                             placeholder="Club description"
                             rows={3}
                           />
+                        </div>
+                        <div>
+                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide mb-2">Banner Image URL</p>
+                          <input
+                            type="url"
+                            value={editData.imageUrl}
+                            onChange={(e) => setEditData({ ...editData, imageUrl: e.target.value })}
+                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                            placeholder="https://example.com/image.jpg"
+                          />
+                          {editData.imageUrl && (
+                            <p className="text-gray-400 text-xs mt-2">Preview: Image will be used as dashboard background</p>
+                          )}
                         </div>
                       </div>
                     ) : (

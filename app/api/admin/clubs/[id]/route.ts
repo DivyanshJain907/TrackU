@@ -117,7 +117,7 @@ export async function PUT(
 
     const club = await Club.findByIdAndUpdate(
       id,
-      { name: body.name, description: body.description },
+      { name: body.name, description: body.description, imageUrl: body.imageUrl },
       { new: true }
     );
 

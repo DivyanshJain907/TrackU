@@ -40,6 +40,7 @@ export async function GET(req: Request) {
       id: club._id,
       name: club.name,
       description: club.description,
+      imageUrl: club.imageUrl,
     });
   } catch (error) {
     console.error("Error fetching club info:", error);
