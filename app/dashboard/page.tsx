@@ -699,7 +699,7 @@ export default function Dashboard() {
             <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-300"></div>
             <input
               type="text"
-              placeholder="🔍 Search by name or enrollment number..."
+              placeholder="Search by name or enrollment number..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               className="relative w-full pl-14 pr-12 py-4 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 shadow-lg hover:shadow-xl transition duration-300 bg-slate-800/70 backdrop-blur-sm text-base font-medium"
