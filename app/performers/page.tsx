@@ -228,9 +228,9 @@ export default function Performers() {
       </div>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 sm:py-14">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-14">
         {error && (
-          <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
+          <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-4 sm:px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
             <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
@@ -241,35 +241,35 @@ export default function Performers() {
           </div>
         )}
 
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Top Performers */}
           <div>
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-t-3xl px-6 py-5 shadow-2xl border-t-4 border-green-400">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-white/20 rounded-xl">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 shadow-2xl border-t-4 border-green-400">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-2 sm:p-3 bg-white/20 rounded-xl">
+                  <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 3v4M3 5h4M6 17v4m-2-2h4m5-16l2.286 6.857L21 12l-5.714 2.143L13 21l-2.286-6.857L5 12l5.714-2.143L13 3z" />
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">Top 5 Performers</h2>
-                  <p className="text-green-100 text-sm">Highest Hours Contributed</p>
+                  <h2 className="text-lg sm:text-2xl font-bold">Top 5 Performers</h2>
+                  <p className="text-green-100 text-xs sm:text-sm">Highest Hours Contributed</p>
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-3xl shadow-2xl p-6 border-2 border-green-500/30">
+            <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-2xl sm:rounded-b-3xl shadow-2xl p-4 sm:p-6 border-2 border-green-500/30">
               {topPerformers.length === 0 ? (
                 <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {topPerformers.map((member, index) => (
                     <div
                       key={member._id}
-                      className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/40 hover:border-green-500/70 hover:shadow-lg hover:shadow-green-500/20 transition group"
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/40 hover:border-green-500/70 hover:shadow-lg hover:shadow-green-500/20 transition group"
                     >
                       <div className="flex-shrink-0">
                         <div
-                          className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg ${
+                          className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-white text-sm sm:text-lg shadow-lg ${
                             index === 0
                               ? "bg-gradient-to-br from-yellow-400 to-yellow-600"
                               : index === 1
@@ -283,7 +283,7 @@ export default function Performers() {
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-lg text-white group-hover:text-green-200 transition truncate">
+                        <h3 className="font-bold text-sm sm:text-lg text-white group-hover:text-green-200 transition truncate">
                           {member.name}
                         </h3>
                         <p className="text-xs text-gray-400 truncate">
@@ -291,12 +291,12 @@ export default function Performers() {
                         </p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="text-3xl font-bold text-green-300 drop-shadow-lg">
+                        <p className="text-xl sm:text-3xl font-bold text-green-300 drop-shadow-lg">
                           {member.hours}
                         </p>
                         <p className="text-xs text-gray-400 font-semibold">Hours</p>
                         <p className="text-xs text-purple-300 font-bold mt-1">
-                          ⭐ {member.points} pts
+                          ⭐ {member.points}
                         </p>
                       </div>
                     </div>
@@ -308,36 +308,36 @@ export default function Performers() {
 
           {/* Bottom Performers */}
           <div>
-            <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-t-3xl px-6 py-5 shadow-2xl border-t-4 border-orange-400">
-              <div className="flex items-center gap-3">
-                <div className="p-3 bg-white/20 rounded-xl">
-                  <svg className="w-7 h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 shadow-2xl border-t-4 border-orange-400">
+              <div className="flex items-center gap-2 sm:gap-3">
+                <div className="p-2 sm:p-3 bg-white/20 rounded-xl">
+                  <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 17h8m0 0V9m0 8l-8-8-4 4-6-6" />
                   </svg>
                 </div>
                 <div>
-                  <h2 className="text-2xl font-bold">Bottom 5 Performers</h2>
-                  <p className="text-orange-100 text-sm">Lowest Hours Contributed</p>
+                  <h2 className="text-lg sm:text-2xl font-bold">Bottom 5 Performers</h2>
+                  <p className="text-orange-100 text-xs sm:text-sm">Lowest Hours Contributed</p>
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-3xl shadow-2xl p-6 border-2 border-orange-500/30">
+            <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-2xl sm:rounded-b-3xl shadow-2xl p-4 sm:p-6 border-2 border-orange-500/30">
               {bottomPerformers.length === 0 ? (
                 <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
               ) : (
-                <div className="space-y-3">
+                <div className="space-y-2 sm:space-y-3">
                   {bottomPerformers.map((member, index) => (
                     <div
                       key={member._id}
-                      className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-orange-600/20 to-red-600/20 border-2 border-orange-500/40 hover:border-orange-500/70 hover:shadow-lg hover:shadow-orange-500/20 transition group"
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-orange-600/20 to-red-600/20 border-2 border-orange-500/40 hover:border-orange-500/70 hover:shadow-lg hover:shadow-orange-500/20 transition group"
                     >
                       <div className="flex-shrink-0">
-                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-700 flex items-center justify-center font-bold text-white text-lg shadow-lg">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-700 flex items-center justify-center font-bold text-white text-sm sm:text-lg shadow-lg">
                           {index + 1}
                         </div>
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-bold text-lg text-white group-hover:text-orange-200 transition truncate">
+                        <h3 className="font-bold text-sm sm:text-lg text-white group-hover:text-orange-200 transition truncate">
                           {member.name}
                         </h3>
                         <p className="text-xs text-gray-400 truncate">
@@ -345,12 +345,12 @@ export default function Performers() {
                         </p>
                       </div>
                       <div className="text-right flex-shrink-0">
-                        <p className="text-3xl font-bold text-orange-300 drop-shadow-lg">
+                        <p className="text-xl sm:text-3xl font-bold text-orange-300 drop-shadow-lg">
                           {member.hours}
                         </p>
                         <p className="text-xs text-gray-400 font-semibold">Hours</p>
                         <p className="text-xs text-purple-300 font-bold mt-1">
-                          ⭐ {member.points} pts
+                          ⭐ {member.points}
                         </p>
                       </div>
                     </div>
