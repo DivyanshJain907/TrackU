@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import CloudLoader from "@/app/components/CloudLoader";
 
 interface TeamMember {
   _id: string;
@@ -110,7 +111,7 @@ export default function Performers() {
           <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
         </div>
         <div className="relative z-10 text-center">
-          <div className="animate-spin rounded-full h-16 w-16 border-b-4 border-purple-500 mx-auto"></div>
+          <CloudLoader size="50px" />
           <p className="mt-4 text-purple-300 font-semibold">Loading performers...</p>
         </div>
       </div>
