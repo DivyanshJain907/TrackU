@@ -74,7 +74,7 @@ export default function Home() {
               <img 
                 src="/image2.png" 
                 alt="TrackU Logo" 
-                className="w-10 h-10 rounded-lg"
+                className="w-14 h-14 rounded-lg"
               />
             </div>
             <Link
