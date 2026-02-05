@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
+import CloudLoader from "@/app/components/CloudLoader";
 
 interface Settings {
   maintenanceMode: boolean;
@@ -119,10 +120,8 @@ export default function AdminSettings() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-blue-600 rounded-full mb-4 animate-spin">
-            <div className="w-12 h-12 bg-gradient-to-br from-blue-600 to-purple-600 rounded-full"></div>
-          </div>
-          <p className="text-white text-lg">Loading settings...</p>
+          <CloudLoader />
+          <p className="text-white text-lg mt-4">Loading settings...</p>
         </div>
       </div>
     );

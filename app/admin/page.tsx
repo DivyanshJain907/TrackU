@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { useRouter, usePathname } from "next/navigation";
 import Link from "next/link";
 import { useStats } from "@/lib/useStats";
+import CloudLoader from "@/app/components/CloudLoader";
 
 interface StatsData {
   users: {
@@ -83,8 +84,8 @@ export default function AdminPage() {
           <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
         </div>
         <div className="relative z-10 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4 animate-spin">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full"></div>
+          <div className="mb-4">
+            <CloudLoader />
           </div>
           <p className="text-white text-lg font-semibold">Verifying access...</p>
         </div>
@@ -303,13 +304,13 @@ export default function AdminPage() {
         <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-white/20 p-4 sm:p-6">
           <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Admin Controls</h2>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <Link
               href="/admin/access-requests"
-              className="bg-blue-600 hover:bg-blue-700 text-white p-3 sm:p-4 rounded-lg font-semibold transition flex items-center gap-2 sm:gap-3 text-sm sm:text-base justify-center sm:justify-start"
+              className="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-blue-500/50"
             >
               <svg
-                className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -321,16 +322,18 @@ export default function AdminPage() {
                   d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span className="hidden sm:inline">Access Requests</span>
-              <span className="sm:hidden">Requests</span>
+              <div className="text-center sm:text-left">
+                <div className="font-semibold">Access Requests</div>
+                <div className="text-xs text-blue-100">Manage pending requests</div>
+              </div>
             </Link>
 
             <Link
               href="/admin/users"
-              className="bg-blue-600 hover:bg-blue-700 text-white p-3 sm:p-4 rounded-lg font-semibold transition flex items-center gap-2 sm:gap-3 text-sm sm:text-base justify-center sm:justify-start"
+              className="bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-cyan-500/50"
             >
               <svg
-                className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -342,16 +345,18 @@ export default function AdminPage() {
                   d="M12 4.354a4 4 0 110 8.646 4 4 0 010-8.646M12 4.354c2.598 0 4.859 2.04 4.859 4.846a4.858 4.858 0 01-4.859 4.846M12 4.354c-2.598 0-4.859 2.04-4.859 4.846a4.858 4.858 0 004.859 4.846m0 7.5a2.86 2.86 0 01-2.857-2.857 2.86 2.86 0 112.857 2.857m0 0v2.857"
                 />
               </svg>
-              <span className="hidden sm:inline">Manage Users</span>
-              <span className="sm:hidden">Users</span>
+              <div className="text-center sm:text-left">
+                <div className="font-semibold">Manage Users</div>
+                <div className="text-xs text-cyan-100">Edit & approve users</div>
+              </div>
             </Link>
 
             <Link
               href="/admin/clubs"
-              className="bg-green-600 hover:bg-green-700 text-white p-3 sm:p-4 rounded-lg font-semibold transition flex items-center gap-2 sm:gap-3 text-sm sm:text-base justify-center sm:justify-start"
+              className="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-500/50"
             >
               <svg
-                className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -363,16 +368,18 @@ export default function AdminPage() {
                   d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"
                 />
               </svg>
-              <span className="hidden sm:inline">Club Management</span>
-              <span className="sm:hidden">Clubs</span>
+              <div className="text-center sm:text-left">
+                <div className="font-semibold">Club Management</div>
+                <div className="text-xs text-emerald-100">View & manage clubs</div>
+              </div>
             </Link>
 
             <Link
               href="/admin/activity"
-              className="bg-purple-600 hover:bg-purple-700 text-white p-3 sm:p-4 rounded-lg font-semibold transition flex items-center gap-2 sm:gap-3 text-sm sm:text-base justify-center sm:justify-start"
+              className="bg-violet-500/20 hover:bg-violet-500/30 border border-violet-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-violet-500/50"
             >
               <svg
-                className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -384,16 +391,18 @@ export default function AdminPage() {
                   d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
                 />
               </svg>
-              <span className="hidden sm:inline">Activity Logs</span>
-              <span className="sm:hidden">Activity</span>
+              <div className="text-center sm:text-left">
+                <div className="font-semibold">Activity Logs</div>
+                <div className="text-xs text-violet-100">View system activity</div>
+              </div>
             </Link>
 
             <Link
               href="/admin/settings"
-              className="bg-orange-600 hover:bg-orange-700 text-white p-3 sm:p-4 rounded-lg font-semibold transition flex items-center gap-2 sm:gap-3 text-sm sm:text-base justify-center sm:justify-start"
+              className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-amber-500/50"
             >
               <svg
-                className="w-4 sm:w-5 h-4 sm:h-5 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -411,8 +420,10 @@ export default function AdminPage() {
                   d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
                 />
               </svg>
-              <span className="hidden sm:inline">System Settings</span>
-              <span className="sm:hidden">Settings</span>
+              <div className="text-center sm:text-left">
+                <div className="font-semibold">System Settings</div>
+                <div className="text-xs text-amber-100">Configure settings</div>
+              </div>
             </Link>
           </div>
         </div>

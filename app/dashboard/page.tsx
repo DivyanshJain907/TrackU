@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import CloudLoader from "@/app/components/CloudLoader";
 
 interface TeamMember {
   _id: string;
@@ -428,9 +429,7 @@ export default function Dashboard() {
           <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
         </div>
         <div className="relative z-10 text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4 animate-spin">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full"></div>
-          </div>
+          <CloudLoader />
           <p className="mt-4 text-white font-semibold">
             Loading dashboard...
           </p>

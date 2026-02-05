@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
+import CloudLoader from "@/app/components/CloudLoader";
 
 interface AttendanceRecord {
   _id: string;
@@ -81,10 +82,8 @@ export default function AdminAttendance() {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
         <div className="text-center">
-          <div className="inline-flex items-center justify-center w-16 h-16 bg-purple-600 rounded-full mb-4 animate-spin">
-            <div className="w-12 h-12 bg-gradient-to-br from-purple-600 to-blue-600 rounded-full"></div>
-          </div>
-          <p className="text-white text-lg">Loading attendance records...</p>
+          <CloudLoader />
+          <p className="text-white text-lg mt-4">Loading attendance records...</p>
         </div>
       </div>
     );
