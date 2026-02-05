@@ -447,6 +447,7 @@ export default function AdminPage() {
 function RecentActivityWidget({ token }: { token: string | null }) {
   const [activities, setActivities] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     if (!token) return;
@@ -457,6 +458,7 @@ function RecentActivityWidget({ token }: { token: string | null }) {
 
   const fetchActivities = async () => {
     try {
+      setError(null);
       const res = await fetch("/api/admin/activity", {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -467,9 +469,17 @@ function RecentActivityWidget({ token }: { token: string | null }) {
         const data = await res.json();
         setActivities(data.slice(0, 5)); // Show only last 5
         setLoading(false);
+      } else if (res.status === 401 || res.status === 403) {
+        setError("Authorization failed");
+        setLoading(false);
+      } else {
+        setError("Failed to load activities");
+        setLoading(false);
       }
     } catch (error) {
       console.error("Failed to fetch activities:", error);
+      setError("Unable to fetch activities");
+      setLoading(false);
     }
   };
 
@@ -491,48 +501,52 @@ function RecentActivityWidget({ token }: { token: string | null }) {
   const getActionColor = (action: string) => {
     switch (action) {
       case "create":
-        return "border-l-green-500";
+        return "border-l-green-400";
       case "update":
-        return "border-l-blue-500";
+        return "border-l-blue-400";
       case "delete":
-        return "border-l-red-500";
+        return "border-l-red-400";
       case "approve":
-        return "border-l-purple-500";
+        return "border-l-purple-400";
       default:
-        return "border-l-gray-500";
+        return "border-l-gray-400";
     }
   };
 
   return (
-    <div className="mt-6 sm:mt-8 bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg sm:rounded-2xl p-4 sm:p-6">
-      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-4">
-        <h3 className="text-lg sm:text-xl font-bold text-white">Recent Activity</h3>
-        <Link href="/admin/activity" className="text-purple-400 hover:text-purple-300 text-xs sm:text-sm">
+    <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+      <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-6">
+        <h2 className="text-xl sm:text-2xl font-bold text-white">Recent Activity</h2>
+        <Link href="/admin/activity" className="text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-semibold transition">
           View All →
         </Link>
       </div>
 
       {loading ? (
-        <div className="text-center py-4">
-          <p className="text-gray-400">Loading activities...</p>
+        <div className="text-center py-8">
+          <p className="text-gray-300">Loading activities...</p>
+        </div>
+      ) : error ? (
+        <div className="text-center py-8">
+          <p className="text-red-400 text-sm">{error}</p>
         </div>
       ) : activities.length > 0 ? (
         <div className="space-y-3">
           {activities.map((activity) => (
             <div
               key={activity._id}
-              className={`p-3 bg-slate-700/30 border-l-4 ${getActionColor(
+              className={`p-4 bg-white/5 border-l-4 ${getActionColor(
                 activity.action
-              )} rounded hover:bg-slate-700/50 transition`}
+              )} rounded-lg hover:bg-white/10 transition`}
             >
               <div className="flex items-start gap-3">
                 <span className="text-lg">{getActionIcon(activity.action)}</span>
-                <div className="flex-1">
-                  <p className="text-white text-sm font-semibold">
+                <div className="flex-1 min-w-0">
+                  <p className="text-white text-sm font-semibold break-words">
                     {activity.description}
                   </p>
-                  <p className="text-gray-400 text-xs">
-                    By {activity.performedBy?.username || "Unknown"} •{" "}
+                  <p className="text-gray-400 text-xs mt-1">
+                    By {activity.performedBy?.username || "Unknown"} • {" "}
                     {new Date(activity.timestamp).toLocaleTimeString()}
                   </p>
                 </div>
@@ -541,7 +555,7 @@ function RecentActivityWidget({ token }: { token: string | null }) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400 text-center py-4">No activities yet</p>
+        <p className="text-gray-400 text-center py-8">No activities yet</p>
       )}
     </div>
   );

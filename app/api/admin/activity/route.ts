@@ -11,7 +11,15 @@ const activityLogs: Array<{
   performedBy: { _id: string; username: string };
   timestamp: string;
   details?: Record<string, any>;
-}> = [];
+}> = [
+  {
+    _id: new mongoose.Types.ObjectId().toString(),
+    action: "create",
+    description: "System initialized",
+    performedBy: { _id: "system", username: "System" },
+    timestamp: new Date().toISOString(),
+  },
+];
 
 // Function to add logs (exported for other APIs)
 export function addActivityLog(
