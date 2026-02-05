@@ -565,14 +565,14 @@ export default function Attendance() {
       </nav>
 
       {/* Main Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 py-10 sm:py-14">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-14">
         <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">
+          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
             Meeting Attendance
           </h1>
           <button
             onClick={() => setShowAddForm(true)}
-            className="w-full sm:w-auto bg-indigo-600 text-white px-6 py-3 rounded-lg hover:bg-indigo-700 font-medium whitespace-nowrap"
+            className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-6 py-3 rounded-xl hover:shadow-lg font-semibold whitespace-nowrap transition-all transform hover:-translate-y-1 border border-indigo-500/50"
           >
             Record New Meeting
           </button>
@@ -605,104 +605,175 @@ export default function Attendance() {
 
         {/* Attendance Records Table */}
         <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden">
-          <table className="min-w-full">
-            <thead className="bg-gradient-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
-              <tr>
-                <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
-                  Meeting Title
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
-                  Date
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
-                  Type
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
-                  Attendees
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
-                  Duration
-                </th>
-                <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
-                  Actions
-                </th>
-              </tr>
-            </thead>
-            <tbody className="divide-y divide-slate-700/50">
-              {attendanceRecords.length === 0 ? (
+          {/* Desktop Table */}
+          <div className="hidden md:block overflow-x-auto">
+            <table className="min-w-full">
+              <thead className="bg-gradient-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
                 <tr>
-                  <td
-                    colSpan={6}
-                    className="px-6 py-12 text-center text-slate-400"
-                  >
-                    <p className="text-lg font-semibold mb-2">No attendance records found</p>
-                    <p className="text-sm text-slate-500">Create your first meeting record to get started!</p>
-                  </td>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                    Meeting Title
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                    Date
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                    Type
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                    Attendees
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                    Duration
+                  </th>
+                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                    Actions
+                  </th>
                 </tr>
-              ) : (
-                attendanceRecords.map((record) => (
-                  <tr key={record._id} className="hover:bg-purple-700/20 transition-colors border-b border-slate-700/50 last:border-b-0">
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm font-semibold text-blue-300">
-                        {record.meetingTitle}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-slate-300">
-                        {new Date(record.meetingDate).toLocaleDateString()}
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-blue-700/50 text-blue-200 border border-blue-500/50">
-                        {record.meetingType}
-                      </span>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-slate-300">
-                        <span className="text-green-400 font-semibold">
-                          {
-                            record.attendees.filter(
-                              (a) => a.status === "present" || a.status === "late"
-                            ).length
-                          }
-                        </span>
-                        {" / "}
-                        <span className="text-slate-400">
-                          {record.attendees.length}
-                        </span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap">
-                      <div className="text-sm text-slate-300">
-                        {record.duration}
-                        <span className="text-slate-500"> min</span>
-                      </div>
-                    </td>
-                    <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
-                      <button
-                        onClick={() => handleViewDetails(record)}
-                        className="text-blue-400 hover:text-blue-300 hover:bg-blue-700/30 px-3 py-1 rounded-lg transition-all"
-                      >
-                        View
-                      </button>
-                      <button
-                        onClick={() => handleEditRecord(record)}
-                        className="text-purple-400 hover:text-purple-300 hover:bg-purple-700/30 px-3 py-1 rounded-lg transition-all"
-                      >
-                        Edit
-                      </button>
-                      <button
-                        onClick={() => handleDeleteRecord(record._id)}
-                        className="text-red-400 hover:text-red-300 hover:bg-red-700/30 px-3 py-1 rounded-lg transition-all"
-                      >
-                        Delete
-                      </button>
+              </thead>
+              <tbody className="divide-y divide-slate-700/50">
+                {attendanceRecords.length === 0 ? (
+                  <tr>
+                    <td
+                      colSpan={6}
+                      className="px-6 py-12 text-center text-slate-400"
+                    >
+                      <p className="text-lg font-semibold mb-2">No attendance records found</p>
+                      <p className="text-sm text-slate-500">Create your first meeting record to get started!</p>
                     </td>
                   </tr>
-                ))
-              )}
-            </tbody>
-          </table>
+                ) : (
+                  attendanceRecords.map((record) => (
+                    <tr key={record._id} className="hover:bg-purple-700/20 transition-colors border-b border-slate-700/50 last:border-b-0">
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm font-semibold text-blue-300">
+                          {record.meetingTitle}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-300">
+                          {new Date(record.meetingDate).toLocaleDateString()}
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-blue-700/50 text-blue-200 border border-blue-500/50">
+                          {record.meetingType}
+                        </span>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-300">
+                          <span className="text-green-400 font-semibold">
+                            {
+                              record.attendees.filter(
+                                (a) => a.status === "present" || a.status === "late"
+                              ).length
+                            }
+                          </span>
+                          {" / "}
+                          <span className="text-slate-400">
+                            {record.attendees.length}
+                          </span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap">
+                        <div className="text-sm text-slate-300">
+                          {record.duration}
+                          <span className="text-slate-500"> min</span>
+                        </div>
+                      </td>
+                      <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
+                        <button
+                          onClick={() => handleViewDetails(record)}
+                          className="text-blue-400 hover:text-blue-300 hover:bg-blue-700/30 px-3 py-1 rounded-lg transition-all"
+                        >
+                          View
+                        </button>
+                        <button
+                          onClick={() => handleEditRecord(record)}
+                          className="text-purple-400 hover:text-purple-300 hover:bg-purple-700/30 px-3 py-1 rounded-lg transition-all"
+                        >
+                          Edit
+                        </button>
+                        <button
+                          onClick={() => handleDeleteRecord(record._id)}
+                          className="text-red-400 hover:text-red-300 hover:bg-red-700/30 px-3 py-1 rounded-lg transition-all"
+                        >
+                          Delete
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                )}
+              </tbody>
+            </table>
+          </div>
+
+          {/* Mobile Card View */}
+          <div className="md:hidden p-4 space-y-3">
+            {attendanceRecords.length === 0 ? (
+              <div className="text-center py-8 text-slate-400">
+                <p className="text-lg font-semibold mb-2">No attendance records found</p>
+                <p className="text-sm text-slate-500">Create your first meeting record to get started!</p>
+              </div>
+            ) : (
+              attendanceRecords.map((record) => (
+                <div
+                  key={record._id}
+                  className="bg-slate-700/50 border border-purple-500/30 rounded-xl p-4 hover:bg-purple-700/20 transition-colors space-y-2"
+                >
+                  <div className="flex justify-between items-start gap-2">
+                    <h3 className="font-semibold text-blue-300 flex-1 break-words">
+                      {record.meetingTitle}
+                    </h3>
+                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-blue-700/50 text-blue-200 border border-blue-500/50 whitespace-nowrap">
+                      {record.meetingType}
+                    </span>
+                  </div>
+                  <div className="grid grid-cols-2 gap-2 text-sm text-slate-300">
+                    <div>
+                      <span className="text-slate-500">Date:</span> {new Date(record.meetingDate).toLocaleDateString()}
+                    </div>
+                    <div>
+                      <span className="text-slate-500">Duration:</span> {record.duration} min
+                    </div>
+                  </div>
+                  <div className="text-sm text-slate-300">
+                    <span className="text-slate-500">Attendees:</span>{" "}
+                    <span className="text-green-400 font-semibold">
+                      {
+                        record.attendees.filter(
+                          (a) => a.status === "present" || a.status === "late"
+                        ).length
+                      }
+                    </span>
+                    {" / "}
+                    <span className="text-slate-400">
+                      {record.attendees.length}
+                    </span>
+                  </div>
+                  <div className="flex gap-2 pt-2 justify-end">
+                    <button
+                      onClick={() => handleViewDetails(record)}
+                      className="text-blue-400 hover:text-blue-300 hover:bg-blue-700/30 px-3 py-1 text-sm rounded-lg transition-all"
+                    >
+                      View
+                    </button>
+                    <button
+                      onClick={() => handleEditRecord(record)}
+                      className="text-purple-400 hover:text-purple-300 hover:bg-purple-700/30 px-3 py-1 text-sm rounded-lg transition-all"
+                    >
+                      Edit
+                    </button>
+                    <button
+                      onClick={() => handleDeleteRecord(record._id)}
+                      className="text-red-400 hover:text-red-300 hover:bg-red-700/30 px-3 py-1 text-sm rounded-lg transition-all"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                </div>
+              ))
+            )}
+          </div>
         </div>
 
         {/* Add Meeting Form Modal */}
