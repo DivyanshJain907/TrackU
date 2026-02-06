@@ -5,7 +5,7 @@ export default function Security() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -69,7 +69,7 @@ export default function Security() {
         <div className="space-y-8 mb-12">
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">🔐</div>
+              <div className="text-5xl shrink-0">🔐</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">End-to-End Encryption</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -81,7 +81,7 @@ export default function Security() {
 
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">✓</div>
+              <div className="text-5xl shrink-0">✓</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Secure Authentication</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -93,7 +93,7 @@ export default function Security() {
 
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">🛡️</div>
+              <div className="text-5xl shrink-0">🛡️</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Regular Security Audits</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -105,7 +105,7 @@ export default function Security() {
 
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">📊</div>
+              <div className="text-5xl shrink-0">📊</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Data Backups</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -117,7 +117,7 @@ export default function Security() {
 
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">👤</div>
+              <div className="text-5xl shrink-0">👤</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Access Control</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -129,7 +129,7 @@ export default function Security() {
 
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">⚠️</div>
+              <div className="text-5xl shrink-0">⚠️</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Incident Response</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -141,7 +141,7 @@ export default function Security() {
 
           <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8">
             <div className="flex gap-6">
-              <div className="text-5xl flex-shrink-0">📋</div>
+              <div className="text-5xl shrink-0">📋</div>
               <div>
                 <h3 className="text-2xl font-bold text-white mb-3">Compliance</h3>
                 <p className="text-gray-300 leading-relaxed">
@@ -191,7 +191,7 @@ export default function Security() {
         <div className="text-center mt-16">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to secure your organization data?</h3>
           <Link href="/register">
-            <button className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
+            <button className="bg-linear-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
               Get Started Securely
             </button>
           </Link>

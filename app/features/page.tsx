@@ -53,7 +53,7 @@ export default function Features() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -154,7 +154,7 @@ export default function Features() {
         <div className="text-center">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to track your organization?</h3>
           <Link href="/register">
-            <button className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
+            <button className="bg-linear-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
               Get Started Now
             </button>
           </Link>

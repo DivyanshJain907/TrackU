@@ -386,7 +386,7 @@ export default function Attendance() {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
         <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
           <div className="absolute inset-0">
             {[...Array(100)].map((_, i) => {
               const size = Math.random() * 2;
@@ -427,7 +427,7 @@ export default function Attendance() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => (
             <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
@@ -442,7 +442,7 @@ export default function Attendance() {
       {/* Content */}
       <div className="relative z-10">
       {/* Header */}
-      <div className="relative z-10 bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
+      <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-6">
             <div className="space-y-2">
@@ -453,7 +453,7 @@ export default function Attendance() {
                   className="w-20 h-20 rounded-2xl shadow-lg"
                 />
                 <div>
-                  <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  <h1 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                     Attendance
                   </h1>
                   <p className="text-purple-200 text-sm font-semibold">
@@ -514,7 +514,7 @@ export default function Attendance() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-gradient-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
+                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
@@ -553,12 +553,12 @@ export default function Attendance() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-14">
         <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <h1 className="text-3xl sm:text-4xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
             Meeting Attendance
           </h1>
           <button
             onClick={() => setShowAddForm(true)}
-            className="w-full sm:w-auto bg-gradient-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-6 py-3 rounded-xl hover:shadow-lg font-semibold whitespace-nowrap transition-all transform hover:-translate-y-1 border border-indigo-500/50"
+            className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-6 py-3 rounded-xl hover:shadow-lg font-semibold whitespace-nowrap transition-all transform hover:-translate-y-1 border border-indigo-500/50"
           >
             Record New Meeting
           </button>
@@ -567,7 +567,7 @@ export default function Attendance() {
         {/* Success/Error Messages */}
         {successMessage && (
           <div className="bg-green-600/20 border-2 border-green-500/50 text-green-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-green-500/80 transition animate-in fade-in slide-in-from-top-2">
-            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
@@ -579,7 +579,7 @@ export default function Attendance() {
 
         {error && (
           <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
-            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
             <div>
@@ -590,11 +590,11 @@ export default function Attendance() {
         )}
 
         {/* Attendance Records Table */}
-        <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden">
+        <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden">
           {/* Desktop Table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full">
-              <thead className="bg-gradient-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
+              <thead className="bg-linear-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
                 <tr>
                   <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
                     Meeting Title
@@ -707,7 +707,7 @@ export default function Attendance() {
                   className="bg-slate-700/50 border border-purple-500/30 rounded-xl p-4 hover:bg-purple-700/20 transition-colors space-y-2"
                 >
                   <div className="flex justify-between items-start gap-2">
-                    <h3 className="font-semibold text-blue-300 flex-1 break-words">
+                    <h3 className="font-semibold text-blue-300 flex-1 wrap">
                       {record.meetingTitle}
                     </h3>
                     <span className="px-2 py-1 text-xs font-bold rounded-full bg-blue-700/50 text-blue-200 border border-blue-500/50 whitespace-nowrap">
@@ -765,8 +765,8 @@ export default function Attendance() {
         {/* Add Meeting Form Modal */}
         {showAddForm && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
-              <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
+              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                 Record Meeting Attendance
               </h2>
               <form onSubmit={handleSubmit}>
@@ -974,7 +974,7 @@ export default function Attendance() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed"
+                    className="flex-1 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed"
                   >
                     {loading ? "Saving..." : "Save Attendance"}
                   </button>
@@ -998,8 +998,8 @@ export default function Attendance() {
         {/* Edit Meeting Form Modal */}
         {showEditForm && selectedRecord && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
-              <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
+              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                 Edit Meeting Attendance
               </h2>
               <form onSubmit={handleUpdateSubmit}>
@@ -1206,7 +1206,7 @@ export default function Attendance() {
                   <button
                     type="submit"
                     disabled={loading}
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed"
+                    className="flex-1 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed"
                   >
                     {loading ? "Updating..." : "Update Attendance"}
                   </button>
@@ -1239,8 +1239,8 @@ export default function Attendance() {
         {/* View Details Modal */}
         {showViewModal && selectedRecord && (
           <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
-              <h2 className="text-3xl font-bold mb-6 bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
+              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                 {selectedRecord.meetingTitle}
               </h2>
               <div className="mb-6 grid grid-cols-2 gap-4">
@@ -1286,7 +1286,7 @@ export default function Attendance() {
                 </h3>
                 <div className="border border-purple-500/30 bg-slate-700/30 rounded-2xl overflow-hidden">
                   <table className="min-w-full">
-                    <thead className="bg-gradient-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
+                    <thead className="bg-linear-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
                       <tr>
                         <th className="px-6 py-4 text-left text-xs font-bold text-purple-200 uppercase tracking-wider">
                           Name
@@ -1330,7 +1330,7 @@ export default function Attendance() {
 
               <button
                 onClick={() => setShowViewModal(false)}
-                className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50"
+                className="w-full bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50"
               >
                 Close
               </button>

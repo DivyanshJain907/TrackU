@@ -37,7 +37,7 @@ export default function Home() {
       {/* Galaxy Background Effect */}
       <div className="fixed inset-0 z-0">
         {/* Animated gradient background */}
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         
         {/* Stars */}
         <div className="absolute inset-0">
@@ -95,7 +95,7 @@ export default function Home() {
             <div className="space-y-6">
               <h1 className="text-5xl md:text-6xl font-bold text-white leading-tight">
                 Manage Your
-                <span className="block bg-gradient-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
+                <span className="block bg-linear-to-r from-purple-400 to-blue-400 bg-clip-text text-transparent">
                   Clubs Effortlessly
                 </span>
               </h1>
@@ -106,7 +106,7 @@ export default function Home() {
               <div className="flex flex-col sm:flex-row gap-4 pt-4">
                 <Link
                   href="/login"
-                  className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition text-center"
+                  className="bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition text-center"
                 >
                   Get Started
                 </Link>
@@ -122,10 +122,10 @@ export default function Home() {
             {/* Right Visual */}
             <div className="hidden md:flex justify-center">
               <div className="relative">
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur-3xl"></div>
-                <div className="relative bg-gradient-to-br from-slate-800 to-slate-900 border border-purple-500/20 rounded-2xl p-8">
+                <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur-3xl"></div>
+                <div className="relative bg-linear-to-br from-slate-800 to-slate-900 border border-purple-500/20 rounded-2xl p-8">
                   <div className="space-y-4">
-                    <div className="h-8 bg-gradient-to-r from-purple-600 to-blue-600 rounded-lg w-3/4"></div>
+                    <div className="h-8 bg-linear-to-r from-purple-600 to-blue-600 rounded-lg w-3/4"></div>
                     <div className="space-y-3">
                       <div className="h-4 bg-gray-700 rounded w-full"></div>
                       <div className="h-4 bg-gray-700 rounded w-5/6"></div>
@@ -144,7 +144,7 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-20 px-4 bg-gradient-to-b from-transparent via-purple-900/30 to-transparent">
+      <section className="py-20 px-4 bg-linear-to-b from-transparent via-purple-900/30 to-transparent">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16">
             <h2 className="text-4xl font-bold text-white mb-4">Powerful Features</h2>
@@ -223,13 +223,13 @@ export default function Home() {
 
       {/* CTA Section */}
       <section className="py-20 px-4">
-        <div className="max-w-4xl mx-auto bg-gradient-to-r from-purple-600/20 to-blue-600/20 border border-purple-500/50 rounded-2xl p-12 text-center">
+        <div className="max-w-4xl mx-auto bg-linear-to-r from-purple-600/20 to-blue-600/20 border border-purple-500/50 rounded-2xl p-12 text-center">
           <h2 className="text-4xl font-bold text-white mb-4">Ready to Get Started?</h2>
           <p className="text-xl text-gray-300 mb-8">Join thousands of clubs managing their members and attendance with TrackU</p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link
               href="/login"
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition"
+              className="bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-4 rounded-lg font-semibold transition"
             >
               Login Now
             </Link>

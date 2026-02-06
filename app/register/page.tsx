@@ -143,7 +143,7 @@ export default function Register() {
     <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-black overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {stars.map((star, i) => (
             <div
@@ -169,7 +169,7 @@ export default function Register() {
       <div className="relative w-full max-w-md z-10">
         {/* Logo/Brand Section */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500 to-blue-600 rounded-2xl mb-4 shadow-2xl transform hover:rotate-6 transition-transform overflow-hidden">
+          <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-purple-500 to-blue-600 rounded-2xl mb-4 shadow-2xl transform hover:rotate-6 transition-transform overflow-hidden">
             <img
               src="/image2.png"
               alt="TrackU Logo"
@@ -557,7 +557,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-gradient-to-r from-purple-600 via-blue-600 to-purple-600 hover:from-purple-700 hover:via-blue-700 hover:to-purple-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-2xl mt-2"
+                className="w-full bg-linear-to-r from-purple-600 via-blue-600 to-purple-600 hover:from-purple-700 hover:via-blue-700 hover:to-purple-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-2xl mt-2"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">

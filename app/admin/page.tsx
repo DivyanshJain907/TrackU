@@ -72,7 +72,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
         <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
           <div className="absolute inset-0">
             {[...Array(100)].map((_, i) => (
               <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
@@ -97,7 +97,7 @@ export default function AdminPage() {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center p-4">
         <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
           <div className="absolute inset-0">
             {[...Array(100)].map((_, i) => (
               <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
@@ -127,7 +127,7 @@ export default function AdminPage() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -160,7 +160,7 @@ export default function AdminPage() {
       {/* Content */}
       <div className="relative z-10">
       {/* Header */}
-      <div className="bg-gradient-to-r from-purple-700 via-blue-700 to-purple-700 text-white shadow-lg">
+      <div className="bg-linear-to-r from-purple-700 via-blue-700 to-purple-700 text-white shadow-lg">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
           <div className="flex justify-between items-center">
             <div>
@@ -177,7 +177,7 @@ export default function AdminPage() {
                 localStorage.removeItem("isApproved");
                 window.location.href = "/";
               }}
-              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white p-2 sm:p-3 rounded-lg transition hover:shadow-lg hover:shadow-red-500/30 flex items-center justify-center flex-shrink-0"
+              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white p-2 sm:p-3 rounded-lg transition hover:shadow-lg hover:shadow-red-500/30 flex items-center justify-center shrink-0"
               title="Logout"
             >
               <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -310,7 +310,7 @@ export default function AdminPage() {
               className="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-blue-500/50"
             >
               <svg
-                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -333,7 +333,7 @@ export default function AdminPage() {
               className="bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-cyan-500/50"
             >
               <svg
-                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -356,7 +356,7 @@ export default function AdminPage() {
               className="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-500/50"
             >
               <svg
-                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -379,7 +379,7 @@ export default function AdminPage() {
               className="bg-violet-500/20 hover:bg-violet-500/30 border border-violet-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-violet-500/50"
             >
               <svg
-                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -402,7 +402,7 @@ export default function AdminPage() {
               className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-amber-500/50"
             >
               <svg
-                className="w-5 sm:w-6 h-5 sm:h-6 flex-shrink-0"
+                className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -432,7 +432,7 @@ export default function AdminPage() {
         <RecentActivityWidget token={token} />
 
         {/* Welcome Message */}
-        <div className="mt-6 sm:mt-8 bg-gradient-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/50 rounded-lg sm:rounded-2xl p-4 sm:p-6">
+        <div className="mt-6 sm:mt-8 bg-linear-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/50 rounded-lg sm:rounded-2xl p-4 sm:p-6">
           <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Welcome Admin</h3>
           <p className="text-gray-300 text-sm sm:text-base">
             You have exclusive access to the admin dashboard. Use this area to manage users, view analytics, and configure system settings.
@@ -542,7 +542,7 @@ function RecentActivityWidget({ token }: { token: string | null }) {
               <div className="flex items-start gap-3">
                 <span className="text-lg">{getActionIcon(activity.action)}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-semibold break-words">
+                  <p className="text-white text-sm font-semibold wrap">
                     {activity.description}
                   </p>
                   <p className="text-gray-400 text-xs mt-1">

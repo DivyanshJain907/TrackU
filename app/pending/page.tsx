@@ -91,7 +91,7 @@ export default function PendingApprovalPage() {
     <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center p-4">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;

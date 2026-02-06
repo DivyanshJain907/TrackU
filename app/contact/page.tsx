@@ -44,7 +44,7 @@ export default function Contact() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -121,7 +121,7 @@ export default function Contact() {
 
               <div className="space-y-6">
                 <div className="flex gap-4">
-                  <div className="text-3xl text-purple-400 flex-shrink-0">📧</div>
+                  <div className="text-3xl text-purple-400 shrink-0">📧</div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Email</h4>
                     <a href="mailto:divyanshjain883@gmail.com" className="text-gray-300 hover:text-purple-400 transition">
@@ -131,7 +131,7 @@ export default function Contact() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="text-3xl text-blue-400 flex-shrink-0">📱</div>
+                  <div className="text-3xl text-blue-400 shrink-0">📱</div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Phone</h4>
                     <a href="tel:+919761854883" className="text-gray-300 hover:text-blue-400 transition">
@@ -141,7 +141,7 @@ export default function Contact() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="text-3xl text-green-400 flex-shrink-0">📍</div>
+                  <div className="text-3xl text-green-400 shrink-0">📍</div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Address</h4>
                     <p className="text-gray-300">
@@ -153,7 +153,7 @@ export default function Contact() {
                 </div>
 
                 <div className="flex gap-4">
-                  <div className="text-3xl text-pink-400 flex-shrink-0">🕐</div>
+                  <div className="text-3xl text-pink-400 shrink-0">🕐</div>
                   <div>
                     <h4 className="text-white font-semibold mb-1">Business Hours</h4>
                     <p className="text-gray-300">

@@ -80,7 +80,7 @@ export default function AdminAttendance() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">
         <div className="text-center">
           <CloudLoader />
           <p className="text-white text-lg mt-4">Loading attendance records...</p>
@@ -90,7 +90,7 @@ export default function AdminAttendance() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="flex justify-between items-center mb-8">
@@ -131,7 +131,7 @@ export default function AdminAttendance() {
           <p className="text-gray-400 text-sm mb-2">Overall Attendance Rate</p>
           <div className="w-full bg-slate-700 rounded-full h-4">
             <div
-              className="bg-gradient-to-r from-green-500 to-blue-500 h-4 rounded-full transition-all"
+              className="bg-linear-to-r from-green-500 to-blue-500 h-4 rounded-full transition-all"
               style={{ width: `${presentPercentage}%` }}
             ></div>
           </div>

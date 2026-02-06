@@ -132,7 +132,7 @@ export default function AdminSettings() {
       {/* Galaxy Background */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         {/* Gradient Base */}
-        <div className="absolute inset-0 bg-gradient-to-br from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-br from-indigo-950 via-black to-purple-950"></div>
 
         {/* Stars */}
         {[...Array(100)].map((_, i) => (

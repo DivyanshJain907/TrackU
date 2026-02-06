@@ -56,7 +56,7 @@ export default function Blog() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -149,7 +149,7 @@ export default function Blog() {
         </div>
 
         {/* Newsletter Section */}
-        <div className="bg-gradient-to-r from-purple-500/20 to-blue-600/20 backdrop-blur-xl rounded-3xl border border-white/20 p-8 md:p-12 mb-12">
+        <div className="bg-linear-to-r from-purple-500/20 to-blue-600/20 backdrop-blur-xl rounded-3xl border border-white/20 p-8 md:p-12 mb-12">
           <div className="text-center">
             <h2 className="text-3xl font-bold text-white mb-4">Stay Updated</h2>
             <p className="text-gray-300 mb-6">Subscribe to our newsletter for the latest insights on member tracking and organizational growth</p>
@@ -159,7 +159,7 @@ export default function Blog() {
                 placeholder="Enter your email"
                 className="flex-1 px-4 py-3 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
-              <button className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:shadow-lg transition">
+              <button className="bg-linear-to-r from-purple-500 to-blue-600 text-white font-bold px-6 py-3 rounded-lg hover:shadow-lg transition">
                 Subscribe
               </button>
             </div>
@@ -170,7 +170,7 @@ export default function Blog() {
         <div className="text-center">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to track your organization?</h3>
           <Link href="/register">
-            <button className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
+            <button className="bg-linear-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
               Get Started Now
             </button>
           </Link>

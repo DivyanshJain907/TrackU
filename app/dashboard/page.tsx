@@ -484,7 +484,7 @@ export default function Dashboard() {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
         <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
           <div className="absolute inset-0">
             {[...Array(100)].map((_, i) => {
               const size = Math.random() * 2;
@@ -527,7 +527,7 @@ export default function Dashboard() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -570,7 +570,7 @@ export default function Dashboard() {
                   alt="TrackU Logo"
                   className="w-20 h-20 rounded-2xl shadow-lg"
                 />
-                <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                <h1 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                   TrackU
                 </h1>
               </div>
@@ -594,7 +594,7 @@ export default function Dashboard() {
                 </Link>
                 <Link
                   href="/attendance"
-                  className="flex-1 bg-gradient-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-3 py-2 rounded-xl font-semibold transition duration-300 flex items-center justify-center gap-1 text-sm"
+                  className="flex-1 bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-3 py-2 rounded-xl font-semibold transition duration-300 flex items-center justify-center gap-1 text-sm"
                 >
                   <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -634,7 +634,7 @@ export default function Dashboard() {
                 </Link>
                 <Link
                   href="/attendance"
-                  className="group relative bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/40 flex items-center gap-2 transform hover:-translate-y-1"
+                  className="group relative bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/40 flex items-center gap-2 transform hover:-translate-y-1"
                 >
                   <svg
                     className="w-5 h-5"
@@ -658,7 +658,7 @@ export default function Dashboard() {
                 {/* Settings Button */}
                 <button
                   onClick={openClubSettings}
-                  className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-gradient-to-br from-blue-400 to-cyan-400 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white text-sm sm:text-base"
+                  className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-blue-400 to-cyan-400 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white text-sm sm:text-base"
                   title="Club Settings"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -673,7 +673,7 @@ export default function Dashboard() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-gradient-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
+                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
@@ -736,23 +736,23 @@ export default function Dashboard() {
                   }}
                 ></div>
                 {/* Overlay for better text readability */}
-                <div className="absolute inset-0 bg-gradient-to-br from-slate-900/40 via-purple-900/40 to-slate-900/40 backdrop-blur-sm" style={{ zIndex: 1 }}></div>
+                <div className="absolute inset-0 bg-linear-to-br from-slate-900/40 via-purple-900/40 to-slate-900/40 backdrop-blur-sm" style={{ zIndex: 1 }}></div>
               </>
             ) : (
               /* Fallback gradient when no image */
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-purple-900/80 to-slate-900/80 backdrop-blur-xl" style={{ zIndex: 0 }}></div>
+              <div className="absolute inset-0 bg-linear-to-br from-slate-900/80 via-purple-900/80 to-slate-900/80 backdrop-blur-xl" style={{ zIndex: 0 }}></div>
             )}
             {/* Content */}
             <div className="relative z-10 p-12">
               <div className="flex flex-col items-center justify-center gap-6 text-center">
                 <div className="max-w-3xl">
-                  <h1 className="text-6xl sm:text-7xl font-bold text-white drop-shadow-lg mb-3 bg-gradient-to-r from-purple-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
+                  <h1 className="text-6xl sm:text-7xl font-bold drop-shadow-lg mb-3 bg-linear-to-r from-purple-200 via-blue-200 to-purple-200 bg-clip-text text-transparent">
                     {club.name}
                   </h1>
                   <div className="flex items-center justify-center gap-2 mb-4">
-                    <div className="h-1 w-12 bg-gradient-to-r from-purple-400 to-blue-400 rounded-full"></div>
+                    <div className="h-1 w-12 bg-linear-to-r from-purple-400 to-blue-400 rounded-full"></div>
                   <p className="text-purple-200 text-xl font-bold">Club Dashboard</p>
-                  <div className="h-1 w-12 bg-gradient-to-r from-blue-400 to-purple-400 rounded-full"></div>
+                  <div className="h-1 w-12 bg-linear-to-r from-blue-400 to-purple-400 rounded-full"></div>
                 </div>
                 <p className="text-gray-100 text-lg sm:text-xl max-w-2xl mx-auto drop-shadow-lg leading-relaxed">
                   {club.description}
@@ -765,7 +765,7 @@ export default function Dashboard() {
 
         {error && (
           <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
-            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
             <div>
@@ -777,7 +777,7 @@ export default function Dashboard() {
 
         {successMessage && (
           <div className="bg-green-600/20 border-2 border-green-500/50 text-green-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-green-500/80 transition animate-in fade-in slide-in-from-top-2">
-            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
@@ -791,7 +791,7 @@ export default function Dashboard() {
         <div className="mb-8 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
           {/* Search Bar */}
           <div className="flex-1 relative group">
-            <div className="absolute inset-0 bg-gradient-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-300"></div>
+            <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-300"></div>
             <input
               type="text"
               placeholder="Search by name or enrollment number..."
@@ -838,7 +838,7 @@ export default function Dashboard() {
           {/* Add Member Button */}
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="group bg-gradient-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-8 py-4 rounded-2xl transition duration-300 font-bold shadow-xl hover:shadow-2xl hover:shadow-purple-500/40 whitespace-nowrap transform hover:-translate-y-1 flex items-center justify-center gap-2 text-base hover:scale-105"
+            className="group bg-linear-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-8 py-4 rounded-2xl transition duration-300 font-bold shadow-xl hover:shadow-2xl hover:shadow-purple-500/40 whitespace-nowrap transform hover:-translate-y-1 flex items-center justify-center gap-2 text-base hover:scale-105"
           >
             {showAddForm ? (
               <>
@@ -860,8 +860,8 @@ export default function Dashboard() {
 
         {/* Search Results Info */}
         {searchQuery && (
-          <div className="mb-6 p-4 bg-gradient-to-r from-purple-600/20 to-blue-600/20 border-2 border-purple-500/40 rounded-2xl backdrop-blur-sm flex items-center gap-3 animate-in fade-in">
-            <svg className="w-5 h-5 text-purple-300 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="mb-6 p-4 bg-linear-to-r from-purple-600/20 to-blue-600/20 border-2 border-purple-500/40 rounded-2xl backdrop-blur-sm flex items-center gap-3 animate-in fade-in">
+            <svg className="w-5 h-5 text-purple-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div className="text-sm text-gray-200">
@@ -876,9 +876,9 @@ export default function Dashboard() {
 
         {/* Add Member Form */}
         {showAddForm && (
-          <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition animate-in fade-in slide-in-from-top-2">
+          <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition animate-in fade-in slide-in-from-top-2">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+              <div className="p-3 bg-linear-to-br from-purple-500 to-blue-500 rounded-xl">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
@@ -922,7 +922,7 @@ export default function Dashboard() {
               />
               <button
                 type="submit"
-                className="w-full bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:from-green-800 active:to-green-900 text-white px-6 py-4 rounded-2xl transition font-bold shadow-lg hover:shadow-xl hover:shadow-green-500/40 transform hover:-translate-y-1 text-lg flex items-center justify-center gap-2"
+                className="w-full bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:from-green-800 active:to-green-900 text-white px-6 py-4 rounded-2xl transition font-bold shadow-lg hover:shadow-xl hover:shadow-green-500/40 transform hover:-translate-y-1 text-lg flex items-center justify-center gap-2"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -935,8 +935,8 @@ export default function Dashboard() {
 
         {/* Team Members List */}
         {members.length === 0 ? (
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-purple-500/30 hover:border-purple-500/60 transition">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-full mb-6">
+          <div className="bg-linear-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-purple-500/30 hover:border-purple-500/60 transition">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-purple-500/30 to-blue-500/30 rounded-full mb-6">
               <svg className="w-10 h-10 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
@@ -949,7 +949,7 @@ export default function Dashboard() {
             </p>
             <button
               onClick={() => setShowAddForm(true)}
-              className="bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
+              className="bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -958,8 +958,8 @@ export default function Dashboard() {
             </button>
           </div>
         ) : filteredMembers.length === 0 ? (
-          <div className="bg-gradient-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-amber-500/30 hover:border-amber-500/60 transition">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-gradient-to-br from-amber-500/30 to-orange-500/30 rounded-full mb-6">
+          <div className="bg-linear-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-amber-500/30 hover:border-amber-500/60 transition">
+            <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-amber-500/30 to-orange-500/30 rounded-full mb-6">
               <svg className="w-10 h-10 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
@@ -972,7 +972,7 @@ export default function Dashboard() {
             </p>
             <button
               onClick={() => setSearchQuery("")}
-              className="bg-gradient-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-amber-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
+              className="bg-linear-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-amber-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -988,12 +988,12 @@ export default function Dashboard() {
                 className="group bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-lg p-4 hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 border border-purple-500/30 hover:border-purple-500/70 transform hover:-translate-y-1 overflow-hidden relative"
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-gradient-to-br from-purple-600/0 to-blue-600/0 group-hover:from-purple-600/10 group-hover:to-blue-600/10 transition duration-300"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 to-blue-600/0 group-hover:from-purple-600/10 group-hover:to-blue-600/10 transition duration-300"></div>
 
                 <div className="relative z-10 mb-3">
                   <div className="flex items-start justify-between mb-2">
                     <div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-gradient-to-r group-hover:from-purple-200 group-hover:to-blue-200 group-hover:bg-clip-text transition duration-300">
+                      <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-purple-200 group-hover:to-blue-200 group-hover:bg-clip-text transition duration-300">
                         {member.name}
                       </h3>
                       <p className="text-xs text-gray-400 mt-0.5">
@@ -1003,7 +1003,7 @@ export default function Dashboard() {
                   </div>
 
                   {member.position && (
-                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-gradient-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 rounded-lg mb-3 hover:border-amber-500/70 transition">
+                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-linear-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 rounded-lg mb-3 hover:border-amber-500/70 transition">
                       <span className="text-sm">📍</span>
                       <p className="text-xs font-bold text-amber-300">
                         {member.position}
@@ -1032,7 +1032,7 @@ export default function Dashboard() {
 
                 {/* Stats Section */}
                 <div className="grid grid-cols-2 gap-3 mb-3 py-3 border-t border-b border-purple-500/30 relative z-10">
-                  <div className="text-center p-3 bg-gradient-to-br from-purple-500/30 to-blue-500/30 rounded-lg border border-purple-500/40 hover:border-purple-500/70 transition group-hover:shadow-lg group-hover:shadow-purple-500/20">
+                  <div className="text-center p-3 bg-linear-to-br from-purple-500/30 to-blue-500/30 rounded-lg border border-purple-500/40 hover:border-purple-500/70 transition group-hover:shadow-lg group-hover:shadow-purple-500/20">
                     <p className="text-2xl font-bold text-purple-300 drop-shadow-lg">
                       {member.points}
                     </p>
@@ -1040,7 +1040,7 @@ export default function Dashboard() {
                       ⭐ Task
                     </p>
                   </div>
-                  <div className="text-center p-3 bg-gradient-to-br from-green-500/30 to-emerald-500/30 rounded-lg border border-green-500/40 hover:border-green-500/70 transition group-hover:shadow-lg group-hover:shadow-green-500/20">
+                  <div className="text-center p-3 bg-linear-to-br from-green-500/30 to-emerald-500/30 rounded-lg border border-green-500/40 hover:border-green-500/70 transition group-hover:shadow-lg group-hover:shadow-green-500/20">
                     <p className="text-2xl font-bold text-green-300 drop-shadow-lg">
                       {member.hours}
                     </p>
@@ -1079,13 +1079,13 @@ export default function Dashboard() {
                 <div className="flex gap-2 relative z-10">
                   <button
                     onClick={() => openEditForm(member)}
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transform hover:-translate-y-0.5"
+                    className="flex-1 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transform hover:-translate-y-0.5"
                   >
                     ✏️ Edit
                   </button>
                   <button
                     onClick={() => openUpdateForm(member)}
-                    className="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
+                    className="flex-1 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
                   >
                     ⬆️ Update
                   </button>
@@ -1094,7 +1094,7 @@ export default function Dashboard() {
                       setSelectedMember(member);
                       setShowDeleteConfirm(true);
                     }}
-                    className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 active:from-red-800 active:to-red-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5"
+                    className="bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 active:from-red-800 active:to-red-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5"
                   >
                     🗑️
                   </button>
@@ -1172,7 +1172,7 @@ export default function Dashboard() {
                 <div className="flex flex-col sm:flex-row gap-2 pt-2 sm:pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-gradient-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base"
+                    className="flex-1 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base"
                   >
                     Save Changes
                   </button>
@@ -1281,7 +1281,7 @@ export default function Dashboard() {
                   <button
                     type="submit"
                     disabled={updateLoading}
-                    className="flex-1 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base flex items-center justify-center gap-2"
+                    className="flex-1 bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base flex items-center justify-center gap-2"
                   >
                     {updateLoading ? (
                       <>
@@ -1312,7 +1312,7 @@ export default function Dashboard() {
         {showDeleteConfirm && selectedMember && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 border-2 border-red-300">
-              <div className="flex items-center justify-center w-16 h-16 bg-gradient-to-br from-red-100 to-red-200 rounded-full mx-auto mb-4">
+              <div className="flex items-center justify-center w-16 h-16 bg-linear-to-br from-red-100 to-red-200 rounded-full mx-auto mb-4">
                 <svg
                   className="w-8 h-8 text-red-700"
                   fill="none"
@@ -1346,7 +1346,7 @@ export default function Dashboard() {
                     setShowDeleteConfirm(false);
                     setShowSecondDeleteConfirm(true);
                   }}
-                  className="flex-1 bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                  className="flex-1 bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
                 >
                   Yes, Delete
                 </button>
@@ -1368,7 +1368,7 @@ export default function Dashboard() {
         {showSecondDeleteConfirm && selectedMember && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
             <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 border-4 border-red-500">
-              <div className="flex items-center justify-center w-20 h-20 bg-gradient-to-br from-red-600 to-red-700 rounded-full mx-auto mb-4">
+              <div className="flex items-center justify-center w-20 h-20 bg-linear-to-br from-red-600 to-red-700 rounded-full mx-auto mb-4">
                 <svg
                   className="w-10 h-10 text-white"
                   fill="none"
@@ -1400,7 +1400,7 @@ export default function Dashboard() {
               <div className="flex gap-3">
                 <button
                   onClick={handleDeleteMember}
-                  className="flex-1 bg-gradient-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                  className="flex-1 bg-linear-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
                 >
                   Permanently Delete
                 </button>
@@ -1421,10 +1421,10 @@ export default function Dashboard() {
         {/* Club Settings Modal */}
         {showClubSettings && (
           <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-            <div className="bg-gradient-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 border-2 border-blue-500/30 max-h-[90vh] overflow-y-auto">
+            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 border-2 border-blue-500/30 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-cyan-500 rounded-2xl">
+                  <div className="p-3 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
@@ -1628,7 +1628,7 @@ export default function Dashboard() {
                 <button
                   onClick={handleSaveClubSettings}
                   disabled={savingSettings}
-                  className="flex-1 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-600 disabled:to-gray-700 text-white px-6 py-3 rounded-2xl transition font-bold shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-2"
+                  className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-600 disabled:to-gray-700 text-white px-6 py-3 rounded-2xl transition font-bold shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-2"
                 >
                   {savingSettings ? (
                     <>

@@ -82,7 +82,7 @@ export default function Performers() {
     return (
       <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
         <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
           <div className="absolute inset-0">
             {[...Array(100)].map((_, i) => {
               const size = Math.random() * 2;
@@ -123,7 +123,7 @@ export default function Performers() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => (
             <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
@@ -137,7 +137,7 @@ export default function Performers() {
 
       {/* Content */}
       <div className="relative z-10">       {/* Header */}
-      <div className="relative z-10 bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
+      <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-6">
             <div className="space-y-2">
@@ -148,7 +148,7 @@ export default function Performers() {
                   className="w-20 h-20 rounded-2xl shadow-lg"
                 />
                 <div>
-                  <h1 className="text-3xl sm:text-5xl font-bold bg-gradient-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  <h1 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                     Performance
                   </h1>
                   <p className="text-purple-200 text-sm font-semibold">
@@ -191,7 +191,7 @@ export default function Performers() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-gradient-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
+                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
@@ -231,7 +231,7 @@ export default function Performers() {
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-14">
         {error && (
           <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-4 sm:px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
-            <svg className="w-6 h-6 mt-0.5 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
             <div>
@@ -244,7 +244,7 @@ export default function Performers() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 sm:gap-8">
           {/* Top Performers */}
           <div>
-            <div className="bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 shadow-2xl border-t-4 border-green-400">
+            <div className="bg-linear-to-r from-green-600 to-emerald-600 text-white rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 shadow-2xl border-t-4 border-green-400">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="p-2 sm:p-3 bg-white/20 rounded-xl">
                   <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -257,7 +257,7 @@ export default function Performers() {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-2xl sm:rounded-b-3xl shadow-2xl p-4 sm:p-6 border-2 border-green-500/30">
+            <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-2xl sm:rounded-b-3xl shadow-2xl p-4 sm:p-6 border-2 border-green-500/30">
               {topPerformers.length === 0 ? (
                 <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
               ) : (
@@ -265,18 +265,18 @@ export default function Performers() {
                   {topPerformers.map((member, index) => (
                     <div
                       key={member._id}
-                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/40 hover:border-green-500/70 hover:shadow-lg hover:shadow-green-500/20 transition group"
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-linear-to-r from-green-600/20 to-emerald-600/20 border-2 border-green-500/40 hover:border-green-500/70 hover:shadow-lg hover:shadow-green-500/20 transition group"
                     >
-                      <div className="flex-shrink-0">
+                      <div className="shrink-0">
                         <div
                           className={`w-10 h-10 sm:w-12 sm:h-12 rounded-full flex items-center justify-center font-bold text-white text-sm sm:text-lg shadow-lg ${
                             index === 0
-                              ? "bg-gradient-to-br from-yellow-400 to-yellow-600"
+                              ? "bg-linear-to-br from-yellow-400 to-yellow-600"
                               : index === 1
-                              ? "bg-gradient-to-br from-gray-300 to-gray-500"
+                              ? "bg-linear-to-br from-gray-300 to-gray-500"
                               : index === 2
-                              ? "bg-gradient-to-br from-orange-400 to-orange-600"
-                              : "bg-gradient-to-br from-green-500 to-green-700"
+                              ? "bg-linear-to-br from-orange-400 to-orange-600"
+                              : "bg-linear-to-br from-green-500 to-green-700"
                           }`}
                         >
                           {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1}
@@ -290,7 +290,7 @@ export default function Performers() {
                           {member.enrollmentNumber}
                         </p>
                       </div>
-                      <div className="text-right flex-shrink-0">
+                      <div className="text-right shrink-0">
                         <p className="text-xl sm:text-3xl font-bold text-green-300 drop-shadow-lg">
                           {member.hours}
                         </p>
@@ -308,7 +308,7 @@ export default function Performers() {
 
           {/* Bottom Performers */}
           <div>
-            <div className="bg-gradient-to-r from-orange-600 to-red-600 text-white rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 shadow-2xl border-t-4 border-orange-400">
+            <div className="bg-linear-to-r from-orange-600 to-red-600 text-white rounded-t-2xl sm:rounded-t-3xl px-4 sm:px-6 py-4 sm:py-5 shadow-2xl border-t-4 border-orange-400">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="p-2 sm:p-3 bg-white/20 rounded-xl">
                   <svg className="w-5 h-5 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -321,7 +321,7 @@ export default function Performers() {
                 </div>
               </div>
             </div>
-            <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-2xl sm:rounded-b-3xl shadow-2xl p-4 sm:p-6 border-2 border-orange-500/30">
+            <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-b-2xl sm:rounded-b-3xl shadow-2xl p-4 sm:p-6 border-2 border-orange-500/30">
               {bottomPerformers.length === 0 ? (
                 <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
               ) : (
@@ -329,10 +329,10 @@ export default function Performers() {
                   {bottomPerformers.map((member, index) => (
                     <div
                       key={member._id}
-                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-gradient-to-r from-orange-600/20 to-red-600/20 border-2 border-orange-500/40 hover:border-orange-500/70 hover:shadow-lg hover:shadow-orange-500/20 transition group"
+                      className="flex items-center gap-2 sm:gap-3 p-3 sm:p-4 rounded-xl sm:rounded-2xl bg-linear-to-r from-orange-600/20 to-red-600/20 border-2 border-orange-500/40 hover:border-orange-500/70 hover:shadow-lg hover:shadow-orange-500/20 transition group"
                     >
-                      <div className="flex-shrink-0">
-                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-gradient-to-br from-orange-500 to-red-700 flex items-center justify-center font-bold text-white text-sm sm:text-lg shadow-lg">
+                      <div className="shrink-0">
+                        <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full bg-linear-to-br from-orange-500 to-red-700 flex items-center justify-center font-bold text-white text-sm sm:text-lg shadow-lg">
                           {index + 1}
                         </div>
                       </div>
@@ -344,7 +344,7 @@ export default function Performers() {
                           {member.enrollmentNumber}
                         </p>
                       </div>
-                      <div className="text-right flex-shrink-0">
+                      <div className="text-right shrink-0">
                         <p className="text-xl sm:text-3xl font-bold text-orange-300 drop-shadow-lg">
                           {member.hours}
                         </p>
@@ -366,7 +366,7 @@ export default function Performers() {
           {!showAllPerformers ? (
             <button
               onClick={() => setShowAllPerformers(true)}
-              className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border border-blue-500/50 hover:border-blue-500/80 flex items-center justify-center gap-3"
+              className="w-full bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-3xl shadow-lg hover:shadow-2xl transition duration-300 border border-blue-500/50 hover:border-blue-500/80 flex items-center justify-center gap-3"
             >
               <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
@@ -377,7 +377,7 @@ export default function Performers() {
             <div>
               <div className="flex items-center justify-between mb-6">
                 <div className="flex items-center gap-3">
-                  <div className="p-3 bg-gradient-to-br from-blue-500 to-purple-500 rounded-xl">
+                  <div className="p-3 bg-linear-to-br from-blue-500 to-purple-500 rounded-xl">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                     </svg>
@@ -392,7 +392,7 @@ export default function Performers() {
                 </button>
               </div>
 
-              <div className="bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border-2 border-blue-500/30">
+              <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border-2 border-blue-500/30">
                 {members.length === 0 ? (
                   <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
                 ) : (
@@ -402,20 +402,20 @@ export default function Performers() {
                       .map((member, index) => (
                         <div
                           key={member._id}
-                          className="flex items-center gap-3 p-4 rounded-2xl bg-gradient-to-r from-blue-600/20 to-purple-600/20 border-2 border-blue-500/40 hover:border-blue-500/70 hover:shadow-lg hover:shadow-blue-500/20 transition group"
+                          className="flex items-center gap-3 p-4 rounded-2xl bg-linear-to-r from-blue-600/20 to-purple-600/20 border-2 border-blue-500/40 hover:border-blue-500/70 hover:shadow-lg hover:shadow-blue-500/20 transition group"
                         >
-                          <div className="flex-shrink-0">
+                          <div className="shrink-0">
                             <div
                               className={`w-12 h-12 rounded-full flex items-center justify-center font-bold text-white text-lg shadow-lg ${
                                 index === 0
-                                  ? "bg-gradient-to-br from-yellow-400 to-yellow-600"
+                                  ? "bg-linear-to-br from-yellow-400 to-yellow-600"
                                   : index === 1
-                                  ? "bg-gradient-to-br from-gray-300 to-gray-500"
+                                  ? "bg-linear-to-br from-gray-300 to-gray-500"
                                   : index === 2
-                                  ? "bg-gradient-to-br from-orange-400 to-orange-600"
+                                  ? "bg-linear-to-br from-orange-400 to-orange-600"
                                   : index < 10
-                                  ? "bg-gradient-to-br from-blue-500 to-blue-700"
-                                  : "bg-gradient-to-br from-purple-500 to-purple-700"
+                                  ? "bg-linear-to-br from-blue-500 to-blue-700"
+                                  : "bg-linear-to-br from-purple-500 to-purple-700"
                               }`}
                             >
                               {index === 0 ? "🥇" : index === 1 ? "🥈" : index === 2 ? "🥉" : index + 1}
@@ -429,7 +429,7 @@ export default function Performers() {
                               {member.enrollmentNumber}
                             </p>
                           </div>
-                          <div className="text-right flex-shrink-0">
+                          <div className="text-right shrink-0">
                             <p className="text-3xl font-bold text-blue-300 drop-shadow-lg">
                               {member.hours}
                             </p>
@@ -446,9 +446,9 @@ export default function Performers() {
             </div>
           )}
         </div>
-        <div className="mt-10 bg-gradient-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition">
+        <div className="mt-10 bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition">
           <div className="flex items-center gap-3 mb-6">
-            <div className="p-3 bg-gradient-to-br from-purple-500 to-blue-500 rounded-xl">
+            <div className="p-3 bg-linear-to-br from-purple-500 to-blue-500 rounded-xl">
               <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
               </svg>
@@ -456,13 +456,13 @@ export default function Performers() {
             <h3 className="text-2xl font-bold text-white">Overall Statistics</h3>
           </div>
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-            <div className="text-center p-5 bg-gradient-to-br from-blue-600/30 to-blue-500/20 rounded-2xl border-2 border-blue-500/40 hover:border-blue-500/70 transition hover:shadow-lg hover:shadow-blue-500/20">
+            <div className="text-center p-5 bg-linear-to-br from-blue-600/30 to-blue-500/20 rounded-2xl border-2 border-blue-500/40 hover:border-blue-500/70 transition hover:shadow-lg hover:shadow-blue-500/20">
               <p className="text-sm text-gray-300 mb-2 font-semibold">Total Members</p>
               <p className="text-4xl font-bold text-blue-300 drop-shadow-lg">
                 {members.length}
               </p>
             </div>
-            <div className="text-center p-5 bg-gradient-to-br from-green-600/30 to-green-500/20 rounded-2xl border-2 border-green-500/40 hover:border-green-500/70 transition hover:shadow-lg hover:shadow-green-500/20">
+            <div className="text-center p-5 bg-linear-to-br from-green-600/30 to-green-500/20 rounded-2xl border-2 border-green-500/40 hover:border-green-500/70 transition hover:shadow-lg hover:shadow-green-500/20">
               <p className="text-sm text-gray-300 mb-2 font-semibold">Avg Hours</p>
               <p className="text-4xl font-bold text-green-300 drop-shadow-lg">
                 {members.length > 0
@@ -473,13 +473,13 @@ export default function Performers() {
                   : 0}
               </p>
             </div>
-            <div className="text-center p-5 bg-gradient-to-br from-purple-600/30 to-purple-500/20 rounded-2xl border-2 border-purple-500/40 hover:border-purple-500/70 transition hover:shadow-lg hover:shadow-purple-500/20">
+            <div className="text-center p-5 bg-linear-to-br from-purple-600/30 to-purple-500/20 rounded-2xl border-2 border-purple-500/40 hover:border-purple-500/70 transition hover:shadow-lg hover:shadow-purple-500/20">
               <p className="text-sm text-gray-300 mb-2 font-semibold">Total Hours</p>
               <p className="text-4xl font-bold text-purple-300 drop-shadow-lg">
                 {members.reduce((sum, m) => sum + m.hours, 0)}
               </p>
             </div>
-            <div className="text-center p-5 bg-gradient-to-br from-amber-600/30 to-amber-500/20 rounded-2xl border-2 border-amber-500/40 hover:border-amber-500/70 transition hover:shadow-lg hover:shadow-amber-500/20">
+            <div className="text-center p-5 bg-linear-to-br from-amber-600/30 to-amber-500/20 rounded-2xl border-2 border-amber-500/40 hover:border-amber-500/70 transition hover:shadow-lg hover:shadow-amber-500/20">
               <p className="text-sm text-gray-300 mb-2 font-semibold">Total Points</p>
               <p className="text-4xl font-bold text-amber-300 drop-shadow-lg">
                 {members.reduce((sum, m) => sum + m.points, 0)}

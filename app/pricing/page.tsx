@@ -38,7 +38,7 @@ export default function Pricing() {
     <div className="min-h-screen bg-black relative overflow-hidden">
       {/* Galaxy Background */}
       <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-gradient-to-b from-indigo-950 via-black to-purple-950"></div>
+        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
         <div className="absolute inset-0">
           {[...Array(100)].map((_, i) => {
             const size = Math.random() * 2;
@@ -99,9 +99,9 @@ export default function Pricing() {
         </div>
 
         {/* Early Access Notice */}
-        <div className="bg-gradient-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/50 rounded-2xl p-6 mb-8 backdrop-blur-xl">
+        <div className="bg-linear-to-r from-yellow-500/20 to-orange-500/20 border border-yellow-500/50 rounded-2xl p-6 mb-8 backdrop-blur-xl">
           <div className="flex items-start gap-4">
-            <span className="text-3xl flex-shrink-0">⏰</span>
+            <span className="text-3xl shrink-0">⏰</span>
             <div>
               <h3 className="text-lg font-bold text-yellow-300 mb-2">Limited Free Offer</h3>
               <p className="text-gray-300">
@@ -121,7 +121,7 @@ export default function Pricing() {
               }`}
             >
               {plan.highlighted && (
-                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-gradient-to-r from-purple-500 to-blue-600 px-4 py-1 rounded-full text-white text-sm font-bold">
+                <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-linear-to-r from-purple-500 to-blue-600 px-4 py-1 rounded-full text-white text-sm font-bold">
                   Most Popular
                 </div>
               )}
@@ -138,7 +138,7 @@ export default function Pricing() {
                 <button
                   className={`w-full py-3 rounded-lg font-bold mb-8 transition ${
                     plan.highlighted
-                      ? "bg-gradient-to-r from-purple-500 to-blue-600 text-white hover:shadow-lg"
+                      ? "bg-linear-to-r from-purple-500 to-blue-600 text-white hover:shadow-lg"
                       : "border-2 border-white/20 text-white hover:bg-white/10"
                   }`}
                 >
@@ -185,7 +185,7 @@ export default function Pricing() {
         <div className="text-center mt-16">
           <h3 className="text-2xl font-bold text-white mb-4">Ready to get started?</h3>
           <Link href="/register">
-            <button className="bg-gradient-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
+            <button className="bg-linear-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
               Start Free Today
             </button>
           </Link>
