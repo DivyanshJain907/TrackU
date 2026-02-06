@@ -788,7 +788,7 @@ export default function Dashboard() {
         )}
 
         {/* Search Bar and Add Member Button */}
-        <div className="mb-8 flex flex-col sm:flex-row gap-4 items-stretch sm:items-center">
+        <div className="mb-8 flex gap-2 items-center">
           {/* Search Bar */}
           <div className="flex-1 relative group">
             <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-300"></div>
@@ -838,21 +838,21 @@ export default function Dashboard() {
           {/* Add Member Button */}
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="group bg-linear-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-8 py-4 rounded-2xl transition duration-300 font-bold shadow-xl hover:shadow-2xl hover:shadow-purple-500/40 whitespace-nowrap transform hover:-translate-y-1 flex items-center justify-center gap-2 text-base hover:scale-105"
+            className="group bg-linear-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-3 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-2xl transition duration-300 font-bold shadow-lg sm:shadow-xl hover:shadow-lg sm:hover:shadow-2xl hover:shadow-purple-500/40 whitespace-nowrap transform hover:-translate-y-1 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-base hover:scale-105 flex-shrink-0"
           >
             {showAddForm ? (
               <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                Cancel
+                <span className="hidden sm:inline">Cancel</span>
               </>
             ) : (
               <>
-                <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                Add Member
+                <span className="hidden sm:inline">Add Member</span>
               </>
             )}
           </button>
