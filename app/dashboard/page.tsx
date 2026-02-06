@@ -561,21 +561,21 @@ export default function Dashboard() {
       <div className="relative z-10">
       {/* Header */}
       <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4">
+          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
                 <img
                   src="/image2.png"
                   alt="TrackU Logo"
-                  className="w-20 h-20 rounded-2xl shadow-lg"
+                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl shadow-lg"
                 />
-                <h1 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                <h1 className="text-2xl sm:text-4xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                   TrackU
                 </h1>
               </div>
-              <p className="text-purple-200 text-sm ml-16 font-semibold">
-                Manage Your Team with Excellence
+              <p className="text-purple-200 text-xs sm:text-sm ml-14 sm:ml-16 font-semibold">
+                Manage Your Team
               </p>
             </div>
 
