@@ -169,3 +169,30 @@ button {
 .animation-delay-4000 {
   animation-delay: 4s;
 }
+
+/* Custom Scrollbar Styling */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(100, 116, 139, 0.2);
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #a855f7, #3b82f6);
+  border-radius: 10px;
+  border: 2px solid rgba(100, 116, 139, 0.2);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(to bottom, #9333ea, #2563eb);
+}
+
+/* Firefox Scrollbar */
+* {
+  scrollbar-color: #a855f7 rgba(100, 116, 139, 0.2);
+  scrollbar-width: thin;
+}
