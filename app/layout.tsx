@@ -16,7 +16,13 @@ export const metadata: Metadata = {
   title: "TrackU - Team Activity Tracker",
   description: "Track team member activities, points, and hours worked",
   icons: {
-    icon: "/image.png",
+    icon: [
+      {
+        url: "/image2.png",
+        sizes: "any",
+        type: "image/png",
+      },
+    ],
   },
 };
 
