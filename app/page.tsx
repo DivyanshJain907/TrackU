@@ -77,12 +77,20 @@ export default function Home() {
                 className="w-14 h-14 rounded-lg"
               />
             </div>
-            <Link
-              href="/login"
-              className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition"
-            >
-              Login
-            </Link>
+            <div className="flex gap-4">
+              <Link
+                href="/register"
+                className="border border-purple-500 hover:bg-purple-600/20 text-white px-6 py-2 rounded-lg font-semibold transition"
+              >
+                Sign Up
+              </Link>
+              <Link
+                href="/login"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-6 py-2 rounded-lg font-semibold transition"
+              >
+                Sign In
+              </Link>
+            </div>
           </div>
         </div>
       </nav>
