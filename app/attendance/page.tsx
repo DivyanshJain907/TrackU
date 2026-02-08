@@ -443,20 +443,20 @@ export default function Attendance() {
       <div className="relative z-10">
       {/* Header */}
       <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-6 sm:py-8">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4 sm:gap-6">
-            <div className="space-y-2">
-              <div className="flex items-center gap-3">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-8">
+          <div className="flex justify-between items-start sm:items-center gap-3 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2 flex-1">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <img
                   src="/image2.png"
                   alt="TrackU Logo"
-                  className="w-20 h-20 rounded-2xl shadow-lg"
+                  className="w-12 sm:w-20 h-12 sm:h-20 rounded-xl sm:rounded-2xl shadow-lg"
                 />
                 <div>
-                  <h1 className="text-3xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  <h1 className="text-xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
                     Attendance
                   </h1>
-                  <p className="text-purple-200 text-sm font-semibold">
+                  <p className="text-purple-200 text-xs sm:text-sm font-semibold hidden sm:block">
                     Track Meeting Attendance
                   </p>
                 </div>
@@ -464,26 +464,24 @@ export default function Attendance() {
             </div>
 
             {/* Navigation - Mobile and Desktop */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
+            <div className="flex items-center gap-2 sm:gap-4">
               {/* Mobile Layout */}
               <div className="flex sm:hidden gap-2">
                 <Link
                   href="/dashboard"
-                  className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur text-white px-3 py-2 rounded-xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 text-sm"
+                  className="bg-white/10 hover:bg-white/20 backdrop-blur text-white w-10 h-10 rounded-lg font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 hover:shadow-lg hover:shadow-white/20"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
                   </svg>
-                  Dashboard
                 </Link>
                 <Link
                   href="/performers"
-                  className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur text-white px-3 py-2 rounded-xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 text-sm"
+                  className="bg-white/10 hover:bg-white/20 backdrop-blur text-white w-10 h-10 rounded-lg font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 hover:shadow-lg hover:shadow-white/20"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
-                  Performers
                 </Link>
               </div>
 
@@ -514,12 +512,11 @@ export default function Attendance() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
+                    className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-purple-400 to-blue-400 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
                     </svg>
-                    <span className="sm:hidden">Profile</span>
                   </button>
                   
                   {/* Dropdown Menu */}

@@ -561,54 +561,46 @@ export default function Dashboard() {
       <div className="relative z-10">
       {/* Header */}
       <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-4">
-          <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-2 sm:gap-4">
-            <div className="space-y-1">
-              <div className="flex items-center gap-2">
+        <div className="max-w-7xl mx-auto px-4 py-3 sm:py-8">
+          <div className="flex justify-between items-start sm:items-center gap-3 sm:gap-6">
+            <div className="space-y-1 sm:space-y-2 flex-1">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <img
                   src="/image2.png"
                   alt="TrackU Logo"
-                  className="w-12 h-12 sm:w-14 sm:h-14 rounded-xl sm:rounded-2xl shadow-lg"
+                  className="w-12 sm:w-20 h-12 sm:h-20 rounded-xl sm:rounded-2xl shadow-lg"
                 />
-                <h1 className="text-2xl sm:text-4xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
-                  TrackU
-                </h1>
+                <div>
+                  <h1 className="text-xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                    TrackU
+                  </h1>
+                  <p className="text-purple-200 text-xs sm:text-sm font-semibold hidden sm:block">
+                    Manage Your Team
+                  </p>
+                </div>
               </div>
-              <p className="text-purple-200 text-xs sm:text-sm ml-14 sm:ml-16 font-semibold">
-                Manage Your Team
-              </p>
             </div>
 
             {/* Navigation - Mobile and Desktop */}
-            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-stretch sm:items-center">
-              {/* Mobile Layout */}
+            <div className="flex items-center gap-2 sm:gap-4">
+              {/* Mobile Layout - Icon buttons */}
               <div className="flex sm:hidden gap-2">
                 <Link
                   href="/performers"
-                  className="flex-1 bg-white/10 hover:bg-white/20 backdrop-blur text-white px-3 py-2 rounded-xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 text-sm"
+                  className="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur text-white rounded-lg font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center hover:shadow-lg hover:shadow-white/20"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
                   </svg>
-                  Performers
                 </Link>
                 <Link
                   href="/attendance"
-                  className="flex-1 bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white px-3 py-2 rounded-xl font-semibold transition duration-300 flex items-center justify-center gap-1 text-sm"
+                  className="w-10 h-10 bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg font-semibold transition duration-300 flex items-center justify-center hover:shadow-lg hover:shadow-blue-500/20"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  Attendance
                 </Link>
-              </div>
-
-              {/* Members Badge - Mobile and Desktop */}
-              <div className="flex items-center gap-2 px-3 sm:px-4 py-2 bg-blue-500/20 border border-blue-500/40 rounded-2xl hover:border-blue-500/60 hover:bg-blue-500/30 transition w-full sm:w-auto justify-center sm:justify-start">
-                <svg className="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-                <span className="text-blue-200 font-bold text-sm sm:text-base">{members.length} Members</span>
               </div>
 
               {/* Desktop Navigation */}
@@ -651,34 +643,38 @@ export default function Dashboard() {
                   </svg>
                   Attendance
                 </Link>
+
+                {/* Members Badge */}
+                <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/40 rounded-2xl hover:border-blue-500/60 hover:bg-blue-500/30 transition">
+                  <svg className="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                  </svg>
+                  <span className="text-blue-200 font-bold text-base">{members.length} Members</span>
+                </div>
               </div>
 
-              {/* Settings and Profile Section */}
-              <div className="flex items-center gap-2 sm:gap-3">
-                {/* Settings Button */}
-                <button
-                  onClick={openClubSettings}
-                  className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-blue-400 to-cyan-400 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white text-sm sm:text-base"
-                  title="Club Settings"
-                >
-                  <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
-                  </svg>
-                  <span className="sm:hidden">Settings</span>
-                </button>
+              {/* Settings Button */}
+              <button
+                onClick={openClubSettings}
+                className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-linear-to-br from-blue-400 to-cyan-400 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-110"
+                title="Club Settings"
+              >
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </button>
 
-                {/* User Profile Dropdown - Mobile and Desktop */}
+              {/* User Profile Dropdown */}
               {username && (
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center justify-center w-full sm:w-10 sm:h-10 bg-linear-to-br from-purple-400 to-blue-400 rounded-full sm:rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 py-2 sm:py-0 px-4 sm:px-0 gap-2 sm:gap-0 font-semibold text-white sm:text-white text-sm sm:text-base"
+                    className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-linear-to-br from-purple-400 to-blue-400 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
                     </svg>
-                    <span className="sm:hidden">Profile</span>
                   </button>
                   
                   {/* Dropdown Menu */}
@@ -714,7 +710,6 @@ export default function Dashboard() {
                   )}
                 </div>
               )}
-              </div>
             </div>
           </div>
         </div>
