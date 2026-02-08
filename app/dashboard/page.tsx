@@ -1210,6 +1210,7 @@ export default function Dashboard() {
                   </label>
                   <input
                     type="number"
+                    min="0"
                     value={updateData.points}
                     onChange={(e) =>
                       setUpdateData({
