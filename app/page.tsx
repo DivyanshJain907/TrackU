@@ -129,23 +129,11 @@ export default function Home() {
 
             {/* Right Visual */}
             <div className="hidden md:flex justify-center">
-              <div className="relative">
-                <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur-3xl"></div>
-                <div className="relative bg-linear-to-br from-slate-800 to-slate-900 border border-purple-500/20 rounded-2xl p-8">
-                  <div className="space-y-4">
-                    <div className="h-8 bg-linear-to-r from-purple-600 to-blue-600 rounded-lg w-3/4"></div>
-                    <div className="space-y-3">
-                      <div className="h-4 bg-gray-700 rounded w-full"></div>
-                      <div className="h-4 bg-gray-700 rounded w-5/6"></div>
-                      <div className="h-4 bg-gray-700 rounded w-4/6"></div>
-                    </div>
-                    <div className="grid grid-cols-2 gap-3 pt-4">
-                      <div className="h-12 bg-purple-600/20 border border-purple-500/30 rounded-lg"></div>
-                      <div className="h-12 bg-blue-600/20 border border-blue-500/30 rounded-lg"></div>
-                    </div>
-                  </div>
-                </div>
-              </div>
+              <img 
+                src="/image2.png" 
+                alt="TrackU Logo" 
+                className="w-96 h-96 rounded-3xl"
+              />
             </div>
           </div>
         </div>
