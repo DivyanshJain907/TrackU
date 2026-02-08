@@ -991,7 +991,8 @@ export default function Dashboard() {
                 <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 to-blue-600/0 group-hover:from-purple-600/10 group-hover:to-blue-600/10 transition duration-300"></div>
 
                 <div className="relative z-10 mb-3">
-                  <div className="flex items-start justify-between mb-2">
+                  <div className="flex items-start justify-between mb-3 gap-4">
+                    {/* Member Name and ID - Left side */}
                     <div>
                       <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-purple-200 group-hover:to-blue-200 group-hover:bg-clip-text transition duration-300">
                         {member.name}
@@ -999,6 +1000,26 @@ export default function Dashboard() {
                       <p className="text-xs text-gray-400 mt-0.5">
                         ID: {member.enrollmentNumber}
                       </p>
+                    </div>
+
+                    {/* Creator Info - Right side */}
+                    <div className="text-right">
+                      {member.createdBy && (
+                        <p className="text-xs text-gray-400 mb-1">
+                          Added by:{" "}
+                          <span className="font-semibold text-blue-400">
+                            {member.createdBy.username}
+                          </span>
+                        </p>
+                      )}
+                      {member.lastUpdatedBy && (
+                        <p className="text-xs text-gray-400">
+                          Last updated by:{" "}
+                          <span className="font-semibold text-green-400">
+                            {member.lastUpdatedBy.username}
+                          </span>
+                        </p>
+                      )}
                     </div>
                   </div>
 
@@ -1009,24 +1030,6 @@ export default function Dashboard() {
                         {member.position}
                       </p>
                     </div>
-                  )}
-
-                  {/* Creator Info */}
-                  {member.createdBy && (
-                    <p className="text-xs text-gray-500 mb-1">
-                      Added by:{" "}
-                      <span className="font-semibold text-blue-400">
-                        {member.createdBy.username}
-                      </span>
-                    </p>
-                  )}
-                  {member.lastUpdatedBy && (
-                    <p className="text-xs text-gray-500">
-                      Last updated by:{" "}
-                      <span className="font-semibold text-green-400">
-                        {member.lastUpdatedBy.username}
-                      </span>
-                    </p>
                   )}
                 </div>
 
