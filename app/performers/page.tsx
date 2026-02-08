@@ -22,6 +22,7 @@ export default function Performers() {
   const [username, setUsername] = useState("");
   const [showAllPerformers, setShowAllPerformers] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
+  const [sortOption, setSortOption] = useState<"hoursHigh" | "hoursLow" | "pointsHigh" | "pointsLow">("hoursHigh");
   const router = useRouter();
 
   useEffect(() => {
@@ -73,7 +74,23 @@ export default function Performers() {
     router.replace("/");
   };
 
-  // Sort members by hours
+  // Sort members by hours and points
+  const getSortedMembers = () => {
+    const sorted = [...members];
+    switch (sortOption) {
+      case "hoursHigh":
+        return sorted.sort((a, b) => b.hours - a.hours);
+      case "hoursLow":
+        return sorted.sort((a, b) => a.hours - b.hours);
+      case "pointsHigh":
+        return sorted.sort((a, b) => b.points - a.points);
+      case "pointsLow":
+        return sorted.sort((a, b) => a.points - b.points);
+      default:
+        return sorted.sort((a, b) => b.hours - a.hours);
+    }
+  };
+
   const sortedByHours = [...members].sort((a, b) => b.hours - a.hours);
   const topPerformers = sortedByHours.slice(0, 5);
   const bottomPerformers = sortedByHours.slice(-5).reverse();
@@ -375,7 +392,7 @@ export default function Performers() {
             </button>
           ) : (
             <div>
-              <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center justify-between mb-6 flex-col sm:flex-row gap-4">
                 <div className="flex items-center gap-3">
                   <div className="p-3 bg-linear-to-br from-blue-500 to-purple-500 rounded-xl">
                     <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -384,12 +401,61 @@ export default function Performers() {
                   </div>
                   <h3 className="text-2xl font-bold text-white">All Performers</h3>
                 </div>
-                <button
-                  onClick={() => setShowAllPerformers(false)}
-                  className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-xl font-semibold transition"
-                >
-                  Close
-                </button>
+                <div className="flex items-center gap-2">
+                  <button
+                    onClick={() => setShowAllPerformers(false)}
+                    className="bg-red-600 hover:bg-red-700 text-white px-6 py-2 rounded-xl font-semibold transition"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+
+              {/* Sorting Controls */}
+              <div className="mb-6 p-4 bg-slate-800/30 rounded-2xl border border-purple-500/30">
+                <p className="text-sm font-semibold text-gray-300 mb-3">Sort by:</p>
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  <button
+                    onClick={() => setSortOption("hoursHigh")}
+                    className={`px-4 py-2 rounded-lg font-semibold transition text-sm ${
+                      sortOption === "hoursHigh"
+                        ? "bg-blue-600 text-white"
+                        : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                    }`}
+                  >
+                    Hours ↓
+                  </button>
+                  <button
+                    onClick={() => setSortOption("hoursLow")}
+                    className={`px-4 py-2 rounded-lg font-semibold transition text-sm ${
+                      sortOption === "hoursLow"
+                        ? "bg-blue-600 text-white"
+                        : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                    }`}
+                  >
+                    Hours ↑
+                  </button>
+                  <button
+                    onClick={() => setSortOption("pointsHigh")}
+                    className={`px-4 py-2 rounded-lg font-semibold transition text-sm ${
+                      sortOption === "pointsHigh"
+                        ? "bg-purple-600 text-white"
+                        : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                    }`}
+                  >
+                    Task ↓
+                  </button>
+                  <button
+                    onClick={() => setSortOption("pointsLow")}
+                    className={`px-4 py-2 rounded-lg font-semibold transition text-sm ${
+                      sortOption === "pointsLow"
+                        ? "bg-purple-600 text-white"
+                        : "bg-slate-700 text-gray-300 hover:bg-slate-600"
+                    }`}
+                  >
+                    Task ↑
+                  </button>
+                </div>
               </div>
 
               <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-6 border-2 border-blue-500/30">
@@ -397,9 +463,7 @@ export default function Performers() {
                   <p className="text-center text-gray-400 py-8 font-semibold">No members found</p>
                 ) : (
                   <div className="space-y-3">
-                    {[...members]
-                      .sort((a, b) => b.hours - a.hours)
-                      .map((member, index) => (
+                    {getSortedMembers().map((member, index) => (
                         <div
                           key={member._id}
                           className="flex items-center gap-3 p-4 rounded-2xl bg-linear-to-r from-blue-600/20 to-purple-600/20 border-2 border-blue-500/40 hover:border-blue-500/70 hover:shadow-lg hover:shadow-blue-500/20 transition group"
