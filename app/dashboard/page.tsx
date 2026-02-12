@@ -52,6 +52,17 @@ export default function Dashboard() {
   });
   const [savingSettings, setSavingSettings] = useState(false);
   const [imageLoadStatus, setImageLoadStatus] = useState(""); // For debugging
+  const [showClubUsers, setShowClubUsers] = useState(false);
+  const [clubUsers, setClubUsers] = useState<Array<{
+    id: string;
+    username: string;
+    email: string;
+    isClubLeader: boolean;
+    isApproved: boolean;
+    joinedAt: string;
+  }>>([]);
+  const [loadingClubUsers, setLoadingClubUsers] = useState(false);
+  const [clubMembersCount, setClubMembersCount] = useState(0);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -106,6 +117,7 @@ export default function Dashboard() {
     // Fetch club info and members
     fetchClubInfo(token);
     fetchMembers(token);
+    loadClubMembersCount(token);
 
   }, [router]);
 
@@ -406,6 +418,47 @@ export default function Dashboard() {
     }
   };
 
+  const fetchClubUsers = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    setLoadingClubUsers(true);
+    try {
+      const res = await fetch("/api/club/members", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch club members");
+      }
+
+      const data = await res.json();
+      setClubUsers(data.members);
+      setShowClubUsers(true);
+    } catch (err) {
+      setError("Failed to load club users");
+    } finally {
+      setLoadingClubUsers(false);
+    }
+  };
+
+  const loadClubMembersCount = async (token: string) => {
+    try {
+      const res = await fetch("/api/club/members", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch club members count");
+      }
+
+      const data = await res.json();
+      setClubMembersCount(data.members.length);
+    } catch (err) {
+      console.error("Failed to load club members count:", err);
+    }
+  };
+
   const handleLogout = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userId");
@@ -659,6 +712,18 @@ export default function Dashboard() {
                 </div>
               </div>
 
+              {/* Club Users Button */}
+              <button
+                onClick={fetchClubUsers}
+                disabled={loadingClubUsers}
+                className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-linear-to-br from-indigo-400 to-purple-500 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 disabled:opacity-60 disabled:cursor-not-allowed"
+                title="View club members"
+              >
+                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
+                </svg>
+              </button>
+
               {/* Settings Button */}
               <button
                 onClick={openClubSettings}
@@ -671,7 +736,7 @@ export default function Dashboard() {
                 </svg>
               </button>
 
-              {/* User Profile Dropdown */}
+              {/* User Profile Button */}
               {username && (
                 <div className="relative">
                   <button
@@ -688,7 +753,7 @@ export default function Dashboard() {
                     <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-purple-500/30 rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
                       <div className="px-4 py-3 border-b border-purple-500/20">
                         <p className="text-white font-semibold text-sm">{username}</p>
-                        <p className="text-purple-300 text-xs mt-1">Club Member</p>
+                        <p className="text-purple-300 text-xs mt-1">Club Members: <span className="font-bold text-purple-200">{clubMembersCount}</span></p>
                       </div>
                       <button
                         onClick={() => {
@@ -1324,6 +1389,84 @@ export default function Dashboard() {
                   </button>
                 </div>
               </form>
+            </div>
+          </div>
+        )}
+
+        {/* Club Users Modal */}
+        {showClubUsers && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
+            <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-sm w-full border border-purple-500/40 my-4 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-4">
+                <h2 className="text-lg sm:text-xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  Club Members ({clubUsers.length})
+                </h2>
+                <button
+                  onClick={() => setShowClubUsers(false)}
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {loadingClubUsers ? (
+                <div className="flex justify-center items-center py-8">
+                  <CloudLoader size="40px" />
+                </div>
+              ) : clubUsers.length === 0 ? (
+                <div className="text-center py-8">
+                  <p className="text-gray-400 text-sm">No members found</p>
+                </div>
+              ) : (
+                <div className="space-y-2">
+                  {clubUsers.map((user) => (
+                    <div
+                      key={user.id}
+                      className="bg-slate-700/50 border border-purple-500/30 rounded-lg p-3 hover:border-purple-500/50 transition"
+                    >
+                      <div className="flex items-start justify-between gap-2">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-2">
+                            <p className="text-white font-semibold text-sm truncate">
+                              {user.username}
+                            </p>
+                            {user.isClubLeader && (
+                              <span className="px-2 py-0.5 bg-linear-to-r from-yellow-500 to-orange-500 text-white text-[10px] font-bold rounded-full whitespace-nowrap">
+                                Leader
+                              </span>
+                            )}
+                            {user.isApproved && !user.isClubLeader && (
+                              <span className="px-2 py-0.5 bg-linear-to-r from-green-500 to-emerald-500 text-white text-[10px] font-bold rounded-full whitespace-nowrap">
+                                Approved
+                              </span>
+                            )}
+                            {!user.isApproved && (
+                              <span className="px-2 py-0.5 bg-slate-600 text-gray-300 text-[10px] font-bold rounded-full whitespace-nowrap">
+                                Pending
+                              </span>
+                            )}
+                          </div>
+                          <p className="text-gray-400 text-xs truncate mt-1">
+                            {user.email}
+                          </p>
+                          <p className="text-gray-500 text-[10px] mt-1">
+                            Joined: {new Date(user.joinedAt).toLocaleDateString()}
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => setShowClubUsers(false)}
+                className="w-full mt-4 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-semibold shadow-lg hover:shadow-xl text-sm"
+              >
+                Close
+              </button>
             </div>
           </div>
         )}
