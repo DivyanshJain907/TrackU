@@ -259,6 +259,12 @@ export default function Dashboard() {
 
     const token = localStorage.getItem("token");
 
+    // Check if remark is provided
+    if (!updateData.remark || updateData.remark.trim() === "") {
+      setError("Remarks are required to update member details");
+      return;
+    }
+
     // Build update object - add new values to existing values
     const updatePayload: any = {};
     if (updateData.points !== "") {
@@ -1192,19 +1198,20 @@ export default function Dashboard() {
 
         {/* Update Member Modal */}
         {showUpdateForm && selectedMember && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
-            <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 max-w-md w-full border-2 border-amber-200 my-4 max-h-[95vh] overflow-y-auto">
-              <h2 className="text-xl sm:text-2xl font-bold text-amber-700 mb-3 sm:mb-4">
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
+            <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-sm w-full border border-purple-500/40 my-4 max-h-[90vh] overflow-y-auto">
+              <h2 className="text-xl sm:text-2xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
                 Update {selectedMember.name}
               </h2>
 
               <form
                 onSubmit={handleUpdateMember}
-                className="space-y-3 sm:space-y-4"
+                className="space-y-3"
               >
+                {/* Task Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
-                    Add Task (Current: {selectedMember.points})
+                  <label className="block text-xs sm:text-sm font-semibold text-purple-300 mb-1">
+                    Add Task <span className="text-purple-400">(Current: {selectedMember.points})</span>
                   </label>
                   <input
                     type="number"
@@ -1217,33 +1224,36 @@ export default function Dashboard() {
                           e.target.value === "" ? "" : parseInt(e.target.value),
                       })
                     }
-                    placeholder="Enter task to add"
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    placeholder="Enter task points"
+                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500/50 placeholder-gray-500 font-medium transition"
                   />
                 </div>
 
+                {/* Hours Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
-                    Add Hours of Work (Current: {selectedMember.hours})
+                  <label className="block text-xs sm:text-sm font-semibold text-blue-300 mb-1">
+                    Add Hours <span className="text-blue-400">(Current: {selectedMember.hours.toFixed(1)})</span>
                   </label>
                   <input
                     type="number"
                     min="0"
+                    step="0.1"
                     value={updateData.hours}
                     onChange={(e) =>
                       setUpdateData({
                         ...updateData,
                         hours:
-                          e.target.value === "" ? "" : parseInt(e.target.value),
+                          e.target.value === "" ? "" : parseFloat(e.target.value),
                       })
                     }
-                    placeholder="Enter hours to add"
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    placeholder="Enter hours (e.g., 5.4)"
+                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-blue-500/40 hover:border-blue-500/70 focus:border-blue-500 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500/50 placeholder-gray-500 font-medium transition"
                   />
                 </div>
 
+                {/* Date Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
+                  <label className="block text-xs sm:text-sm font-semibold text-indigo-300 mb-1">
                     Record Date
                   </label>
                   <input
@@ -1254,41 +1264,49 @@ export default function Dashboard() {
                     }
                     max={new Date().toISOString().split("T")[0]}
                     aria-label="Record date for this entry"
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500"
+                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-indigo-500/40 hover:border-indigo-500/70 focus:border-indigo-500 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500/50 placeholder-gray-500 font-medium transition"
                   />
-                  <p className="text-[10px] sm:text-xs text-gray-500 mt-1">
-                    Select the date for this record (defaults to today)
+                  <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
+                    Defaults to today
                   </p>
                 </div>
 
+                {/* Remark Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
-                    Add Remark
+                  <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-1">
+                    Add Remark <span className="text-red-400 font-bold">*</span>
                   </label>
                   <textarea
+                    required
                     value={updateData.remark}
                     onChange={(e) =>
                       setUpdateData({ ...updateData, remark: e.target.value })
                     }
-                    placeholder="Add a note or remark..."
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-amber-50 border-2 border-amber-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-amber-500 placeholder-gray-500"
-                    rows={3}
+                    placeholder="Add a note or remark... (Required)"
+                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-gray-500/40 hover:border-gray-500/70 focus:border-gray-400 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-500/50 placeholder-gray-500 font-medium transition resize-none"
+                    rows={2}
                   />
                 </div>
 
-                <div className="flex flex-col sm:flex-row gap-2 pt-2 sm:pt-4">
+                {/* Buttons */}
+                <div className="flex gap-2 pt-3 border-t border-purple-500/20 mt-4">
                   <button
                     type="submit"
                     disabled={updateLoading}
-                    className="flex-1 bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-400 disabled:to-gray-500 disabled:cursor-not-allowed text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base flex items-center justify-center gap-2"
+                    className="flex-1 bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white px-3 py-2 rounded-lg transition font-bold shadow-lg hover:shadow-xl hover:shadow-green-500/30 text-xs sm:text-sm flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5 disabled:hover:scale-100 disabled:opacity-60"
                   >
                     {updateLoading ? (
                       <>
-                        <CloudLoader size="20px" />
-                        Updating...
+                        <CloudLoader size="14px" />
+                        <span>Updating...</span>
                       </>
                     ) : (
-                      "Save Changes"
+                      <>
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                        </svg>
+                        <span>Save</span>
+                      </>
                     )}
                   </button>
                   <button
@@ -1297,9 +1315,12 @@ export default function Dashboard() {
                       setShowUpdateForm(false);
                       setSelectedMember(null);
                     }}
-                    className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base"
+                    className="flex-1 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-bold shadow-lg hover:shadow-xl text-xs sm:text-sm flex items-center justify-center gap-1.5"
                   >
-                    Cancel
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                    <span>Cancel</span>
                   </button>
                 </div>
               </form>
