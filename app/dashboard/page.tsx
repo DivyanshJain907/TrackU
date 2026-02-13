@@ -712,18 +712,6 @@ export default function Dashboard() {
                 </div>
               </div>
 
-              {/* Club Users Button */}
-              <button
-                onClick={fetchClubUsers}
-                disabled={loadingClubUsers}
-                className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-linear-to-br from-indigo-400 to-purple-500 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110 disabled:opacity-60 disabled:cursor-not-allowed"
-                title="View club members"
-              >
-                <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
-                </svg>
-              </button>
-
               {/* Settings Button */}
               <button
                 onClick={openClubSettings}
@@ -750,11 +738,33 @@ export default function Dashboard() {
                   
                   {/* Dropdown Menu */}
                   {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-purple-500/30 rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
+                    <div className="absolute right-0 mt-2 w-56 bg-slate-800 border border-purple-500/30 rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
                       <div className="px-4 py-3 border-b border-purple-500/20">
                         <p className="text-white font-semibold text-sm">{username}</p>
-                        <p className="text-purple-300 text-xs mt-1">Club Members: <span className="font-bold text-purple-200">{clubMembersCount}</span></p>
                       </div>
+                      <button
+                        onClick={() => {
+                          fetchClubUsers();
+                          setIsProfileMenuOpen(false);
+                        }}
+                        disabled={loadingClubUsers}
+                        className="w-full text-left px-4 py-3 text-purple-300 hover:text-purple-200 hover:bg-purple-700/20 transition flex items-center gap-2 font-semibold text-sm disabled:opacity-60 disabled:cursor-not-allowed border-b border-purple-500/20"
+                      >
+                        <svg
+                          className="w-4 h-4"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
+                          />
+                        </svg>
+                        View Logged Leaders
+                      </button>
                       <button
                         onClick={() => {
                           handleLogout();
@@ -1399,7 +1409,7 @@ export default function Dashboard() {
             <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-sm w-full border border-purple-500/40 my-4 max-h-[90vh] overflow-y-auto">
               <div className="flex items-center justify-between mb-4">
                 <h2 className="text-lg sm:text-xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
-                  Club Members ({clubUsers.length})
+                  Logged Club Leaders ({clubUsers.length})
                 </h2>
                 <button
                   onClick={() => setShowClubUsers(false)}
@@ -1583,69 +1593,69 @@ export default function Dashboard() {
 
         {/* Club Settings Modal */}
         {showClubSettings && (
-          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-2xl w-full p-6 sm:p-8 border-2 border-blue-500/30 max-h-[90vh] overflow-y-auto">
-              <div className="flex items-center justify-between mb-6">
-                <div className="flex items-center gap-3">
-                  <div className="p-3 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl">
-                    <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-3 sm:p-4 md:p-6">
+            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-2xl md:max-w-4xl w-full p-4 sm:p-6 md:p-8 border-2 border-blue-500/30 max-h-[95vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+                <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0">
+                  <div className="p-2 sm:p-3 md:p-4 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl flex-shrink-0">
+                    <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <h2 className="text-2xl sm:text-3xl font-bold text-white">Club Settings</h2>
+                  <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white truncate">Club Settings</h2>
                 </div>
                 <button
                   onClick={() => setShowClubSettings(false)}
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-gray-400 hover:text-white transition flex-shrink-0 ml-2"
                 >
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
                 </button>
               </div>
 
-              <div className="space-y-4">
+              <div className="space-y-3 sm:space-y-4 md:space-y-6">
                 {/* Club Name */}
                 <div>
-                  <label className="text-gray-300 text-sm font-semibold mb-2 block">Club Name</label>
+                  <label className="text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3 block">Club Name</label>
                   <input
                     type="text"
                     value={clubSettingsData.name}
                     onChange={(e) => setClubSettingsData({ ...clubSettingsData, name: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
+                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white text-sm md:text-base focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
                     placeholder="Enter club name"
                   />
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="text-gray-300 text-sm font-semibold mb-2 block">Description</label>
+                  <label className="text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3 block">Description</label>
                   <textarea
                     value={clubSettingsData.description}
                     onChange={(e) => setClubSettingsData({ ...clubSettingsData, description: e.target.value })}
-                    className="w-full px-4 py-3 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition resize-none"
+                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white text-sm md:text-base focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition resize-none"
                     placeholder="Enter club description"
-                    rows={4}
+                    rows={3}
                   />
                 </div>
 
                 {/* Banner Image - URL or Upload */}
                 <div>
-                  <label className="text-gray-300 text-sm font-semibold mb-3 block">Banner Image</label>
+                  <label className="text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-2 sm:mb-3 md:mb-4 block">Banner Image</label>
                   
                   {/* Image Upload Tabs */}
-                  <div className="flex gap-2 mb-4">
+                  <div className="flex gap-1.5 sm:gap-2 md:gap-3 mb-3 sm:mb-4 md:mb-5">
                     <button
                       type="button"
                       onClick={() => setClubSettingsData({ ...clubSettingsData, uploadMode: 'url' } as any)}
-                      className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                      className={`flex-1 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-lg font-semibold text-xs sm:text-sm md:text-base transition ${
                         (clubSettingsData as any).uploadMode !== 'upload'
                           ? 'bg-blue-600 text-white'
                           : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
                       }`}
                     >
-                      <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 inline mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.658 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
                       </svg>
                       URL
@@ -1653,13 +1663,13 @@ export default function Dashboard() {
                     <button
                       type="button"
                       onClick={() => setClubSettingsData({ ...clubSettingsData, uploadMode: 'upload' } as any)}
-                      className={`flex-1 px-4 py-2 rounded-lg font-semibold transition ${
+                      className={`flex-1 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-lg font-semibold text-xs sm:text-sm md:text-base transition ${
                         (clubSettingsData as any).uploadMode === 'upload'
                           ? 'bg-blue-600 text-white'
                           : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
                       }`}
                     >
-                      <svg className="w-4 h-4 inline mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 inline mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                       </svg>
                       Upload
@@ -1672,7 +1682,7 @@ export default function Dashboard() {
                       type="url"
                       value={clubSettingsData.imageUrl}
                       onChange={(e) => setClubSettingsData({ ...clubSettingsData, imageUrl: e.target.value })}
-                      className="w-full px-4 py-3 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
+                      className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white text-sm md:text-base focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
                       placeholder="https://example.com/image.jpg"
                     />
                   )}
@@ -1680,13 +1690,13 @@ export default function Dashboard() {
                   {/* File Upload Input */}
                   {(clubSettingsData as any).uploadMode === 'upload' && (
                     <div>
-                      <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-blue-500/30 rounded-2xl hover:border-blue-500/70 hover:bg-slate-700/50 transition cursor-pointer bg-slate-700/30">
+                      <label className="flex items-center justify-center w-full px-3 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12 border-2 border-dashed border-blue-500/30 rounded-2xl hover:border-blue-500/70 hover:bg-slate-700/50 transition cursor-pointer bg-slate-700/30">
                         <div className="text-center">
-                          <svg className="w-8 h-8 mx-auto mb-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 mx-auto mb-1.5 sm:mb-2 md:mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                           </svg>
-                          <p className="text-gray-300 font-semibold">Drop image here or click to upload</p>
-                          <p className="text-gray-400 text-xs mt-1">PNG, JPG, GIF up to 5MB</p>
+                          <p className="text-gray-300 font-semibold text-xs sm:text-sm md:text-base">Drop image or click to upload</p>
+                          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm mt-0.5 sm:mt-1 md:mt-2">PNG, JPG, GIF up to 5MB</p>
                         </div>
                         <input
                           type="file"
@@ -1751,11 +1761,11 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  <p className="text-gray-400 text-xs mt-2">Recommended size: 1200x400px or wider</p>
+                  <p className="text-gray-400 text-xs md:text-sm mt-1.5 sm:mt-2 md:mt-3">Recommended size: 1200x400px or wider</p>
                   {clubSettingsData.imageUrl && (
-                    <div className="mt-4">
-                      <p className="text-gray-300 text-xs font-semibold mb-2">Preview:</p>
-                      <div className="relative h-40 rounded-lg overflow-hidden border-2 border-blue-500/50 bg-slate-700/30 flex items-center justify-center">
+                    <div className="mt-2 sm:mt-4 md:mt-6">
+                      <p className="text-gray-300 text-xs md:text-sm font-semibold mb-1.5 sm:mb-2 md:mb-3">Preview:</p>
+                      <div className="relative h-32 sm:h-40 md:h-56 rounded-lg overflow-hidden border-2 border-blue-500/50 bg-slate-700/30 flex items-center justify-center">
                         <img
                           src={clubSettingsData.imageUrl}
                           alt="Banner preview"
@@ -1771,15 +1781,15 @@ export default function Dashboard() {
                         />
                         {!imageLoadStatus && (
                           <div className="absolute inset-0 flex items-center justify-center bg-slate-700/50">
-                            <p className="text-gray-400 text-sm">Loading image...</p>
+                            <p className="text-gray-400 text-xs sm:text-sm md:text-base">Loading image...</p>
                           </div>
                         )}
                       </div>
                       {imageLoadStatus === "loaded" && (
-                        <p className="text-green-400 text-xs mt-2">✓ Image ready - Click "Save Changes" to apply</p>
+                        <p className="text-green-400 text-xs md:text-sm mt-1.5 sm:mt-2 md:mt-3">✓ Image ready - Click "Save Changes" to apply</p>
                       )}
                       {imageLoadStatus === "error" && (
-                        <p className="text-orange-400 text-xs mt-2">⚠ Preview issue but will still save</p>
+                        <p className="text-orange-400 text-xs md:text-sm mt-1.5 sm:mt-2 md:mt-3">⚠ Preview issue but will still save</p>
                       )}
                     </div>
                   )}
@@ -1787,30 +1797,31 @@ export default function Dashboard() {
               </div>
 
               {/* Buttons */}
-              <div className="flex gap-3 mt-8">
+              <div className="flex gap-2 sm:gap-3 md:gap-4 mt-6 sm:mt-8 md:mt-10">
                 <button
                   onClick={handleSaveClubSettings}
                   disabled={savingSettings}
-                  className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-600 disabled:to-gray-700 text-white px-6 py-3 rounded-2xl transition font-bold shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-2"
+                  className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-600 disabled:to-gray-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-2xl transition font-bold shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-1 sm:gap-2 md:gap-3 text-xs sm:text-base md:text-lg"
                 >
                   {savingSettings ? (
                     <>
                       <CloudLoader />
-                      Saving...
+                      <span className="hidden sm:inline">Saving...</span>
                     </>
                   ) : (
                     <>
-                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-4 sm:w-5 md:w-6 h-4 sm:h-5 md:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
                       </svg>
-                      Save Changes
+                      <span className="hidden sm:inline">Save Changes</span>
+                      <span className="sm:hidden">Save</span>
                     </>
                   )}
                 </button>
                 <button
                   onClick={() => setShowClubSettings(false)}
                   disabled={savingSettings}
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-700 text-white px-6 py-3 rounded-2xl transition font-bold shadow-md"
+                  className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-2xl transition font-bold shadow-md text-xs sm:text-base md:text-lg"
                 >
                   Cancel
                 </button>
