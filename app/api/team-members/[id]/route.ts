@@ -43,11 +43,28 @@ export async function PUT(
     const updatingUser = await User.findById(userId);
     const updaterName = updatingUser?.username || "Unknown";
 
+    // Prepare update history entry
+    const updateEntry: any = {
+      points: points || 0,
+      hours: hours || 0,
+      remark: remark || "",
+      date: date ? new Date(date) : new Date(),
+      addedBy: userId,
+      addedAt: new Date(),
+    };
+
+    // Add to update history
+    if (!Array.isArray((member as any).updateHistory)) {
+      (member as any).updateHistory = [];
+    }
+    (member as any).updateHistory.push(updateEntry);
+
+    // Add incremental values to totals (not set them)
     if (points !== undefined) {
-      member.points = points;
+      member.points = member.points + points;
     }
     if (hours !== undefined) {
-      member.hours = hours;
+      member.hours = member.hours + hours;
     }
     if (remark) {
       // ensure remarks is an array (defensive in case of malformed documents)

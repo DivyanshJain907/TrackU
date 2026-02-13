@@ -5,6 +5,34 @@ const remarksSchema = new mongoose.Schema({
   date: { type: Date, default: Date.now },
 });
 
+const updateHistorySchema = new mongoose.Schema({
+  points: {
+    type: Number,
+    default: 0,
+  },
+  hours: {
+    type: Number,
+    default: 0,
+  },
+  remark: {
+    type: String,
+    default: "",
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  addedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  addedAt: {
+    type: Date,
+    default: Date.now,
+  },
+});
+
 const teamMemberSchema = new mongoose.Schema(
   {
     name: {
@@ -32,6 +60,7 @@ const teamMemberSchema = new mongoose.Schema(
       default: 0,
     },
     remarks: [remarksSchema],
+    updateHistory: [updateHistorySchema],
     createdBy: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",

@@ -63,6 +63,17 @@ export default function Dashboard() {
   }>>([]);
   const [loadingClubUsers, setLoadingClubUsers] = useState(false);
   const [clubMembersCount, setClubMembersCount] = useState(0);
+  const [showUpdateHistory, setShowUpdateHistory] = useState(false);
+  const [updateHistory, setUpdateHistory] = useState<Array<{
+    _id: string;
+    points: number;
+    hours: number;
+    remark: string;
+    date: string;
+    addedBy: { username: string; email: string };
+    addedAt: string;
+  }>>([]);
+  const [loadingHistory, setLoadingHistory] = useState(false);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -277,13 +288,13 @@ export default function Dashboard() {
       return;
     }
 
-    // Build update object - add new values to existing values
+    // Build update object - send incremental values
     const updatePayload: any = {};
     if (updateData.points !== "") {
-      updatePayload.points = selectedMember.points + Number(updateData.points);
+      updatePayload.points = Number(updateData.points); // Send just the new points
     }
     if (updateData.hours !== "") {
-      updatePayload.hours = selectedMember.hours + Number(updateData.hours);
+      updatePayload.hours = Number(updateData.hours); // Send just the new hours
     }
     if (updateData.remark) {
       updatePayload.remark = updateData.remark;
@@ -456,6 +467,83 @@ export default function Dashboard() {
       setClubMembersCount(data.members.length);
     } catch (err) {
       console.error("Failed to load club members count:", err);
+    }
+  };
+
+  const fetchUpdateHistory = async (memberId: string) => {
+    try {
+      setLoadingHistory(true);
+      setError("");
+      const token = localStorage.getItem("token");
+      
+      console.log("Fetching update history for member:", memberId);
+      console.log("API URL:", `/api/team-members/${memberId}/activity`);
+      
+      const res = await fetch(`/api/team-members/${memberId}/activity`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      console.log("Response status:", res.status);
+      console.log("Response ok:", res.ok);
+      
+      const data = await res.json();
+      console.log("Response data:", data);
+      
+      if (!res.ok) {
+        console.error("API Error:", data);
+        throw new Error(data.error || data.details || "Failed to fetch update history");
+      }
+
+      setUpdateHistory(data.updateHistory || []);
+      setShowUpdateHistory(true);
+    } catch (err) {
+      console.error("Fetch error:", err);
+      const errorMsg = err instanceof Error ? err.message : "Failed to load update history";
+      setError(errorMsg);
+      alert(`Error details: ${errorMsg}`); // Temporary alert to see error
+    } finally {
+      setLoadingHistory(false);
+    }
+  };
+
+  const deleteUpdate = async (memberId: string, updateId: string) => {
+    if (!confirm("Are you sure you want to delete this update? The totals will be recalculated.")) {
+      return;
+    }
+
+    try {
+      const token = localStorage.getItem("token");
+      const res = await fetch(
+        `/api/team-members/${memberId}/activity?updateId=${updateId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!res.ok) {
+        throw new Error("Failed to delete update");
+      }
+
+      const data = await res.json();
+      
+      // Update the member in the list
+      setMembers((prevMembers) =>
+        prevMembers.map((m) => (m._id === memberId ? data.member : m))
+      );
+
+      // Refresh the history
+      await fetchUpdateHistory(memberId);
+      
+      setSuccessMessage("Update deleted successfully!");
+      setTimeout(() => setSuccessMessage(""), 3000);
+    } catch (err) {
+      setError("Failed to delete update");
+      setTimeout(() => setError(""), 3000);
     }
   };
 
@@ -1155,25 +1243,34 @@ export default function Dashboard() {
                 )}
 
                 {/* Action Buttons */}
-                <div className="flex gap-2 relative z-10">
+                <div className="grid grid-cols-6 gap-2 relative z-10">
                   <button
                     onClick={() => openEditForm(member)}
-                    className="flex-1 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transform hover:-translate-y-0.5"
+                    className="bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 active:from-blue-800 active:to-blue-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-blue-500/40 transform hover:-translate-y-0.5"
                   >
                     ✏️ Edit
                   </button>
                   <button
                     onClick={() => openUpdateForm(member)}
-                    className="flex-1 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
+                    className="col-span-3 bg-linear-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 active:from-purple-800 active:to-purple-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-0.5"
                   >
                     ⬆️ Update
                   </button>
                   <button
                     onClick={() => {
                       setSelectedMember(member);
+                      fetchUpdateHistory(member._id);
+                    }}
+                    className="bg-linear-to-r from-cyan-600 to-cyan-700 hover:from-cyan-700 hover:to-cyan-800 active:from-cyan-800 active:to-cyan-900 text-white px-3 py-2 rounded-lg transition duration-200 font-bold shadow-lg hover:shadow-xl hover:shadow-cyan-500/40 transform hover:-translate-y-0.5 text-lg"
+                  >
+                    ⚙️
+                  </button>
+                  <button
+                    onClick={() => {
+                      setSelectedMember(member);
                       setShowDeleteConfirm(true);
                     }}
-                    className="bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 active:from-red-800 active:to-red-900 text-white px-3 py-2 rounded-lg transition duration-200 text-xs font-bold shadow-lg hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5"
+                    className="bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 active:from-red-800 active:to-red-900 text-white px-2 py-2 rounded-lg transition duration-200 font-bold shadow-lg hover:shadow-xl hover:shadow-red-500/40 transform hover:-translate-y-0.5 w-12 mx-auto text-lg"
                   >
                     🗑️
                   </button>
@@ -1473,6 +1570,104 @@ export default function Dashboard() {
 
               <button
                 onClick={() => setShowClubUsers(false)}
+                className="w-full mt-4 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-semibold shadow-lg hover:shadow-xl text-sm"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
+        {/* Update History Modal */}
+        {showUpdateHistory && selectedMember && (
+          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
+            <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-2xl w-full border border-cyan-500/40 my-4 max-h-[90vh] overflow-y-auto">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h2 className="text-lg sm:text-xl font-bold bg-linear-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent">
+                    Update History
+                  </h2>
+                  <p className="text-gray-400 text-sm mt-1">{selectedMember.name} - {updateHistory.length} updates</p>
+                </div>
+                <button
+                  onClick={() => {
+                    setShowUpdateHistory(false);
+                    setUpdateHistory([]);
+                  }}
+                  className="text-gray-400 hover:text-white transition"
+                >
+                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                </button>
+              </div>
+
+              {loadingHistory ? (
+                <div className="flex justify-center items-center py-8">
+                  <CloudLoader size="40px" />
+                </div>
+              ) : updateHistory.length === 0 ? (
+                <div className="text-center py-8">
+                  <div className="inline-flex items-center justify-center w-16 h-16 bg-cyan-500/20 rounded-full mb-4">
+                    <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    </svg>
+                  </div>
+                  <p className="text-gray-400 text-sm">No update history found</p>
+                  <p className="text-gray-500 text-xs mt-2">Updates will appear here once you start tracking member progress</p>
+                </div>
+              ) : (
+                <div className="space-y-3">
+                  {updateHistory.map((update) => (
+                    <div
+                      key={update._id}
+                      className="bg-slate-700/50 border border-cyan-500/30 rounded-lg p-4 hover:border-cyan-500/50 transition"
+                    >
+                      <div className="flex items-start justify-between gap-3 mb-3">
+                        <div className="flex-1">
+                          <div className="flex items-center gap-2 mb-2">
+                            <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/40 rounded text-purple-300 text-xs font-bold">
+                              ⭐ {update.points} Tasks
+                            </span>
+                            <span className="px-2 py-1 bg-green-500/20 border border-green-500/40 rounded text-green-300 text-xs font-bold">
+                              ⏱️ {update.hours} Hours
+                            </span>
+                          </div>
+                          <p className="text-gray-300 text-sm mb-1">
+                            <span className="text-cyan-300 font-semibold">📅 Record Date:</span>{" "}
+                            {new Date(update.date).toLocaleDateString()}
+                          </p>
+                          {update.remark && (
+                            <p className="text-gray-400 text-sm italic mb-1">
+                              💬 "{update.remark}"
+                            </p>
+                          )}
+                          <p className="text-gray-500 text-xs mt-2">
+                            Added by <span className="text-blue-400 font-semibold">{update.addedBy.username}</span> on{" "}
+                            {new Date(update.addedAt).toLocaleDateString()} at{" "}
+                            {new Date(update.addedAt).toLocaleTimeString()}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => deleteUpdate(selectedMember._id, update._id)}
+                          className="bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white p-2 rounded-lg transition text-xs font-bold shadow-lg hover:shadow-red-500/40 flex-shrink-0"
+                          title="Delete this update"
+                        >
+                          <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                          </svg>
+                        </button>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              <button
+                onClick={() => {
+                  setShowUpdateHistory(false);
+                  setUpdateHistory([]);
+                }}
                 className="w-full mt-4 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-semibold shadow-lg hover:shadow-xl text-sm"
               >
                 Close
