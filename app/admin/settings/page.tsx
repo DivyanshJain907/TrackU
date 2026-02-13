@@ -185,7 +185,7 @@ export default function AdminSettings() {
           <div className="flex items-center gap-4 mb-8">
             <button
               onClick={() => router.push("/admin")}
-              className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors"
+              className="flex items-center gap-2 px-4 py-2 text-white bg-linear-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/50 rounded-lg hover:from-purple-600/60 hover:to-blue-600/60 hover:border-purple-500/70 transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/50"
             >
               <svg
                 className="w-5 h-5"
