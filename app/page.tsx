@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { ShootingStars } from '@/components/ui/shooting-stars';
+import { SplineScene } from '@/components/ui/splite';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -138,12 +139,11 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right Visual */}
-            <div className="hidden md:flex justify-center">
-              <img 
-                src="/image2.png" 
-                alt="TrackU Logo" 
-                className="w-96 h-96 rounded-3xl"
+            {/* Right Visual - 3D Spline Scene */}
+            <div className="hidden md:flex justify-center h-96 w-full">
+              <SplineScene 
+                scene="https://prod.spline.design/kZDDjO5HuC9GJUM2/scene.splinecode"
+                className="w-full h-full"
               />
             </div>
           </div>
