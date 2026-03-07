@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
+import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface Settings {
   maintenanceMode: boolean;
@@ -119,7 +120,28 @@ export default function AdminSettings() {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <div className="text-center">
+        <div className="fixed inset-0 z-0">
+          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
+          <div className="absolute inset-0">
+            {[...Array(100)].map((_, i) => (
+              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
+            ))}
+          </div>
+          {/* Shooting Stars Effect */}
+          <ShootingStars
+            starColor="#9E00FF"
+            trailColor="#2EB9DF"
+            minSpeed={15}
+            maxSpeed={35}
+            minDelay={1000}
+            maxDelay={3000}
+          />
+          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
+          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
+          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
+          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+        </div>
+        <div className="relative z-10 text-center">
           <CloudLoader />
           <p className="text-white text-lg mt-4">Loading settings...</p>
         </div>
@@ -149,6 +171,16 @@ export default function AdminSettings() {
             }}
           ></div>
         ))}
+
+        {/* Shooting Stars Effect */}
+        <ShootingStars
+          starColor="#9E00FF"
+          trailColor="#2EB9DF"
+          minSpeed={15}
+          maxSpeed={35}
+          minDelay={1000}
+          maxDelay={3000}
+        />
 
         {/* Floating Color Blobs */}
         <div className="absolute top-20 left-10 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>

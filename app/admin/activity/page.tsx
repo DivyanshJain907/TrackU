@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
+import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface ActivityLog {
   _id: string;
@@ -102,6 +103,15 @@ export default function AdminActivityLogs() {
               <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
             ))}
           </div>
+          {/* Shooting Stars Effect */}
+          <ShootingStars
+            starColor="#9E00FF"
+            trailColor="#2EB9DF"
+            minSpeed={15}
+            maxSpeed={35}
+            minDelay={1000}
+            maxDelay={3000}
+          />
           <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
           <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
           <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
@@ -143,6 +153,15 @@ export default function AdminActivityLogs() {
             );
           })}
         </div>
+        {/* Shooting Stars Effect */}
+        <ShootingStars
+          starColor="#9E00FF"
+          trailColor="#2EB9DF"
+          minSpeed={15}
+          maxSpeed={35}
+          minDelay={1000}
+          maxDelay={3000}
+        />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
         <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
         <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>

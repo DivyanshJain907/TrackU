@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CloudLoader from "@/app/components/CloudLoader";
+import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface AttendanceRecord {
   _id: string;

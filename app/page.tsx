@@ -2,6 +2,7 @@
 
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
+import { ShootingStars } from '@/components/ui/shooting-stars';
 
 export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
@@ -56,6 +57,16 @@ export default function Home() {
             ></div>
           ))}
         </div>
+
+        {/* Shooting Stars Effect */}
+        <ShootingStars
+          starColor="#9E00FF"
+          trailColor="#2EB9DF"
+          minSpeed={15}
+          maxSpeed={35}
+          minDelay={1000}
+          maxDelay={3000}
+        />
 
         {/* Nebula glow effects */}
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
