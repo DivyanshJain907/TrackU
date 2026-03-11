@@ -15,6 +15,27 @@ interface TeamMember {
   lastUpdatedBy?: { username: string; email: string };
 }
 
+interface AttendanceRecord {
+  _id: string;
+  meetingTitle: string;
+  meetingDate: string;
+  attendees: Array<{
+    memberId: string;
+    memberName: string;
+    enrollmentNumber: string;
+    status: "present" | "absent" | "late";
+  }>;
+}
+
+interface MemberAttendanceStats {
+  memberId: string;
+  present: number;
+  absent: number;
+  late: number;
+  total: number;
+  percentage: number;
+}
+
 export default function Performers() {
   const [members, setMembers] = useState<TeamMember[]>([]);
   const [loading, setLoading] = useState(true);
@@ -23,6 +44,7 @@ export default function Performers() {
   const [showAllPerformers, setShowAllPerformers] = useState(false);
   const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
   const [sortOption, setSortOption] = useState<"hoursHigh" | "hoursLow" | "pointsHigh" | "pointsLow">("hoursHigh");
+  const [attendanceStats, setAttendanceStats] = useState<Map<string, MemberAttendanceStats>>(new Map());
   const router = useRouter();
 
   useEffect(() => {
@@ -39,6 +61,7 @@ export default function Performers() {
     }
 
     fetchMembers(token);
+    fetchAttendance(token);
   }, [router]);
 
   const fetchMembers = async (token: string) => {
@@ -61,6 +84,52 @@ export default function Performers() {
       setError("Failed to load team members");
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchAttendance = async (token: string) => {
+    try {
+      const res = await fetch("/api/attendance", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      if (!res.ok) {
+        throw new Error("Failed to fetch attendance");
+      }
+
+      const data: AttendanceRecord[] = await res.json();
+      const statsMap = new Map<string, MemberAttendanceStats>();
+
+      // Calculate attendance stats for each member
+      data.forEach((record) => {
+        record.attendees.forEach((attendee) => {
+          const memberId = attendee.memberId;
+          const existing = statsMap.get(memberId) || {
+            memberId,
+            present: 0,
+            absent: 0,
+            late: 0,
+            total: 0,
+            percentage: 0,
+          };
+
+          existing.total += 1;
+          if (attendee.status === "present") {
+            existing.present += 1;
+          } else if (attendee.status === "absent") {
+            existing.absent += 1;
+          } else if (attendee.status === "late") {
+            existing.late += 1;
+          }
+
+          existing.percentage = existing.total > 0 ? Math.round((existing.present / existing.total) * 100) : 0;
+          statsMap.set(memberId, existing);
+        });
+      });
+
+      setAttendanceStats(statsMap);
+    } catch (err) {
+      console.error("Failed to load attendance:", err);
     }
   };
 
@@ -304,6 +373,19 @@ export default function Performers() {
                         <p className="text-xs text-gray-400 truncate">
                           {member.enrollmentNumber}
                         </p>
+                        {attendanceStats.has(member._id) && (
+                          <div className="mt-1 flex gap-2 text-xs">
+                            <span className="text-green-300 font-semibold">
+                              ✓ {attendanceStats.get(member._id)?.present}
+                            </span>
+                            <span className="text-red-300 font-semibold">
+                              ✗ {attendanceStats.get(member._id)?.absent}
+                            </span>
+                            <span className="text-yellow-300 font-semibold">
+                              ⏱ {attendanceStats.get(member._id)?.late}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-xl sm:text-3xl font-bold text-green-300 drop-shadow-lg">
@@ -313,6 +395,11 @@ export default function Performers() {
                         <p className="text-xs text-purple-300 font-bold mt-1">
                           ⭐ {member.points}
                         </p>
+                        {attendanceStats.has(member._id) && (
+                          <p className="text-xs font-bold text-emerald-400 mt-1">
+                            📊 {attendanceStats.get(member._id)?.percentage}%
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -358,6 +445,19 @@ export default function Performers() {
                         <p className="text-xs text-gray-400 truncate">
                           {member.enrollmentNumber}
                         </p>
+                        {attendanceStats.has(member._id) && (
+                          <div className="mt-1 flex gap-2 text-xs">
+                            <span className="text-green-300 font-semibold">
+                              ✓ {attendanceStats.get(member._id)?.present}
+                            </span>
+                            <span className="text-red-300 font-semibold">
+                              ✗ {attendanceStats.get(member._id)?.absent}
+                            </span>
+                            <span className="text-yellow-300 font-semibold">
+                              ⏱ {attendanceStats.get(member._id)?.late}
+                            </span>
+                          </div>
+                        )}
                       </div>
                       <div className="text-right shrink-0">
                         <p className="text-xl sm:text-3xl font-bold text-orange-300 drop-shadow-lg">
@@ -367,6 +467,11 @@ export default function Performers() {
                         <p className="text-xs text-purple-300 font-bold mt-1">
                           ⭐ {member.points}
                         </p>
+                        {attendanceStats.has(member._id) && (
+                          <p className="text-xs font-bold text-orange-400 mt-1">
+                            📊 {attendanceStats.get(member._id)?.percentage}%
+                          </p>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -490,6 +595,22 @@ export default function Performers() {
                             <p className="text-xs text-gray-400 truncate">
                               {member.enrollmentNumber}
                             </p>
+                            {attendanceStats.has(member._id) && (
+                              <div className="mt-2 flex gap-3 text-xs">
+                                <span className="px-2 py-1 bg-green-500/20 border border-green-500/40 rounded text-green-300 font-semibold">
+                                  ✓ {attendanceStats.get(member._id)?.present}
+                                </span>
+                                <span className="px-2 py-1 bg-red-500/20 border border-red-500/40 rounded text-red-300 font-semibold">
+                                  ✗ {attendanceStats.get(member._id)?.absent}
+                                </span>
+                                <span className="px-2 py-1 bg-yellow-500/20 border border-yellow-500/40 rounded text-yellow-300 font-semibold">
+                                  ⏱ {attendanceStats.get(member._id)?.late}
+                                </span>
+                                <span className="px-2 py-1 bg-blue-500/20 border border-blue-500/40 rounded text-blue-300 font-semibold">
+                                  📊 {attendanceStats.get(member._id)?.percentage}%
+                                </span>
+                              </div>
+                            )}
                           </div>
                           <div className="text-right shrink-0">
                             <p className="text-3xl font-bold text-blue-300 drop-shadow-lg">
