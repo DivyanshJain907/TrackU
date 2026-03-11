@@ -14,10 +14,19 @@ export async function GET(req: NextRequest) {
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
     await connectDB();
 
-    const attendance = await Attendance.find()
+    // Import User model
+    const { User } = await import("@/models/User");
+
+    // Get user's club
+    const user = await User.findById(decoded.userId);
+    if (!user || !user.club) {
+      return NextResponse.json({ error: "User not associated with a club" }, { status: 403 });
+    }
+
+    const attendance = await Attendance.find({ club: user.club })
       .populate("createdBy", "username email")
       .populate("lastUpdatedBy", "username email")
       .sort({ meetingDate: -1 });
@@ -49,6 +58,13 @@ export async function POST(req: NextRequest) {
     console.log("Connecting to database...");
     await connectDB();
     console.log("Database connected");
+
+    // Import User model and get user's club
+    const { User } = await import("@/models/User");
+    const user = await User.findById(decoded.userId);
+    if (!user || !user.club) {
+      return NextResponse.json({ error: "User not associated with a club" }, { status: 403 });
+    }
 
     const body = await req.json();
     console.log("Request body:", JSON.stringify(body, null, 2));
@@ -82,6 +98,7 @@ export async function POST(req: NextRequest) {
       attendees,
       createdBy: decoded.userId,
       lastUpdatedBy: decoded.userId,
+      club: user.club,
     });
 
     console.log("Saving to database...");

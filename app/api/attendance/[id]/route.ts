@@ -16,8 +16,15 @@ export async function GET(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
     await connectDB();
+
+    // Import User model to verify club access
+    const { User } = await import("@/models/User");
+    const user = await User.findById(decoded.userId);
+    if (!user || !user.club) {
+      return NextResponse.json({ error: "User not associated with a club" }, { status: 403 });
+    }
 
     const { id } = await params;
     const attendance = await Attendance.findById(id)
@@ -28,6 +35,14 @@ export async function GET(
       return NextResponse.json(
         { error: "Attendance record not found" },
         { status: 404 }
+      );
+    }
+
+    // Verify attendance belongs to user's club
+    if (attendance.club.toString() !== user.club.toString()) {
+      return NextResponse.json(
+        { error: "Access denied - attendance record is from another club" },
+        { status: 403 }
       );
     }
 
@@ -55,7 +70,31 @@ export async function PUT(
     const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
     await connectDB();
 
+    // Import User model to verify club access
+    const { User } = await import("@/models/User");
+    const user = await User.findById(decoded.userId);
+    if (!user || !user.club) {
+      return NextResponse.json({ error: "User not associated with a club" }, { status: 403 });
+    }
+
     const { id } = await params;
+
+    // Check if attendance belongs to user's club BEFORE updating
+    const existingAttendance = await Attendance.findById(id);
+    if (!existingAttendance) {
+      return NextResponse.json(
+        { error: "Attendance record not found" },
+        { status: 404 }
+      );
+    }
+
+    if (existingAttendance.club.toString() !== user.club.toString()) {
+      return NextResponse.json(
+        { error: "Access denied - attendance record is from another club" },
+        { status: 403 }
+      );
+    }
+
     const body = await req.json();
     const {
       meetingTitle,
@@ -84,13 +123,6 @@ export async function PUT(
       .populate("createdBy", "username email")
       .populate("lastUpdatedBy", "username email");
 
-    if (!attendance) {
-      return NextResponse.json(
-        { error: "Attendance record not found" },
-        { status: 404 }
-      );
-    }
-
     return NextResponse.json(attendance);
   } catch (error) {
     console.error("Error updating attendance:", error);
@@ -112,18 +144,35 @@ export async function DELETE(
       return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
     }
 
-    jwt.verify(token, JWT_SECRET);
+    const decoded = jwt.verify(token, JWT_SECRET) as { userId: string };
     await connectDB();
 
-    const { id } = await params;
-    const attendance = await Attendance.findByIdAndDelete(id);
+    // Import User model to verify club access
+    const { User } = await import("@/models/User");
+    const user = await User.findById(decoded.userId);
+    if (!user || !user.club) {
+      return NextResponse.json({ error: "User not associated with a club" }, { status: 403 });
+    }
 
+    const { id } = await params;
+
+    // Check if attendance belongs to user's club BEFORE deleting
+    const attendance = await Attendance.findById(id);
     if (!attendance) {
       return NextResponse.json(
         { error: "Attendance record not found" },
         { status: 404 }
       );
     }
+
+    if (attendance.club.toString() !== user.club.toString()) {
+      return NextResponse.json(
+        { error: "Access denied - attendance record is from another club" },
+        { status: 403 }
+      );
+    }
+
+    await Attendance.findByIdAndDelete(id);
 
     return NextResponse.json({
       message: "Attendance record deleted successfully",
