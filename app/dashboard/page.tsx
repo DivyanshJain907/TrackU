@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CloudLoader from "@/app/components/CloudLoader";
+import BulkActivityUpdate from "@/app/components/BulkActivityUpdate";
 import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface TeamMember {
@@ -75,6 +76,7 @@ export default function Dashboard() {
     addedAt: string;
   }>>([]);
   const [loadingHistory, setLoadingHistory] = useState(false);
+  const [showBulkUpdate, setShowBulkUpdate] = useState(false);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -1009,24 +1011,48 @@ export default function Dashboard() {
             )}
           </div>
 
-          {/* Add Member Button */}
+          {/* Bulk Activity Button */}
           <button
-            onClick={() => setShowAddForm(!showAddForm)}
-            className="group bg-linear-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-3 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-2xl transition duration-300 font-bold shadow-lg sm:shadow-xl hover:shadow-lg sm:hover:shadow-2xl hover:shadow-purple-500/40 whitespace-nowrap transform hover:-translate-y-1 flex items-center justify-center gap-1 sm:gap-2 text-xs sm:text-base hover:scale-105 flex-shrink-0"
+            onClick={() => setShowBulkUpdate(!showBulkUpdate)}
+            className="group bg-linear-to-r from-cyan-600 via-cyan-700 to-blue-600 hover:from-cyan-700 hover:via-cyan-800 hover:to-blue-700 active:from-cyan-800 active:via-cyan-900 active:to-blue-800 text-white px-2 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg sm:rounded-2xl transition duration-300 font-bold shadow-lg sm:shadow-xl hover:shadow-lg sm:hover:shadow-2xl hover:shadow-cyan-500/40 transform hover:-translate-y-1 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base hover:scale-105 flex-shrink-0 border-2 border-cyan-400/50 hover:border-cyan-300"
+            title="Bulk Activity Update"
           >
-            {showAddForm ? (
+            {showBulkUpdate ? (
               <>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
-                <span className="hidden sm:inline">Cancel</span>
+                <span>Close</span>
               </>
             ) : (
               <>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
-                <span className="hidden sm:inline">Add Member</span>
+                <span>Bulk</span>
+              </>
+            )}
+          </button>
+
+          {/* Add Member Button */}
+          <button
+            onClick={() => setShowAddForm(!showAddForm)}
+            className="group bg-linear-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-2 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg sm:rounded-2xl transition duration-300 font-bold shadow-lg sm:shadow-xl hover:shadow-lg sm:hover:shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base hover:scale-105 flex-shrink-0 border-2 border-purple-400/50 hover:border-purple-300"
+            title="Add New Member"
+          >
+            {showAddForm ? (
+              <>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+                <span>Close</span>
+              </>
+            ) : (
+              <>
+                <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Add Member</span>
               </>
             )}
           </button>
@@ -1104,6 +1130,13 @@ export default function Dashboard() {
                 Add Member
               </button>
             </form>
+          </div>
+        )}
+
+        {/* Bulk Activity Update Form */}
+        {showBulkUpdate && (
+          <div className="mb-8">
+            <BulkActivityUpdate />
           </div>
         )}
 
