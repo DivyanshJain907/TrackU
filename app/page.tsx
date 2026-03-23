@@ -291,6 +291,7 @@ export default function Home() {
           </div>
           <div className="border-t border-purple-500/20 pt-8 text-center text-gray-400 text-sm">
             <p>&copy; 2025 TrackU. All rights reserved.</p>
+            <p className="mt-2">Developed by <Link href="https://divyanshjainportfolio.vercel.app/" target="_blank" rel="noopener noreferrer" className="text-purple-400 hover:text-purple-300 transition">Jain Agency</Link></p>
           </div>
         </div>
       </footer>
