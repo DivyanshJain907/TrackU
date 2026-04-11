@@ -149,6 +149,60 @@ export default function Performers() {
     router.replace("/");
   };
 
+  const handleEditProfile = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      router.replace("/login");
+      return;
+    }
+
+    try {
+      const profileRes = await fetch("/api/auth/profile", {
+        headers: { Authorization: `Bearer ${token}` },
+      });
+
+      const profileData = profileRes.ok ? await profileRes.json() : null;
+      const currentUsername = profileData?.username || username || "";
+      const currentEmail = profileData?.email || "";
+      const currentPhone = profileData?.phone || "";
+
+      const newUsername = prompt("Enter your username", currentUsername);
+      if (newUsername === null) return;
+
+      const newEmail = prompt("Enter your email", currentEmail);
+      if (newEmail === null) return;
+
+      const newPhone = prompt("Enter your phone number (10 digits)", currentPhone);
+      if (newPhone === null) return;
+
+      const updateRes = await fetch("/api/auth/profile", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          username: newUsername,
+          email: newEmail,
+          phone: newPhone,
+        }),
+      });
+
+      const updateData = await updateRes.json();
+      if (!updateRes.ok) {
+        setError(updateData.error || "Failed to update profile");
+        return;
+      }
+
+      const updatedUsername = updateData?.user?.username || newUsername.trim();
+      setUsername(updatedUsername);
+      localStorage.setItem("username", updatedUsername);
+      alert("Profile updated successfully!");
+    } catch (err) {
+      setError("Failed to update profile");
+    }
+  };
+
   // Sort members by hours and points
   const getSortedMembers = () => {
     const sorted = [...members];
@@ -263,6 +317,18 @@ export default function Performers() {
                         <p className="text-emerald-900 font-semibold text-sm">{username}</p>
                         <p className="text-emerald-600 text-xs mt-1">Club Member</p>
                       </div>
+                      <button
+                        onClick={() => {
+                          handleEditProfile();
+                          setIsProfileMenuOpen(false);
+                        }}
+                        className="w-full text-left px-4 py-3 text-emerald-700 hover:text-emerald-800 hover:bg-emerald-50 transition flex items-center gap-2 font-semibold text-sm border-b border-emerald-100"
+                      >
+                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
+                        </svg>
+                        Edit Profile
+                      </button>
                       <button
                         onClick={() => {
                           handleLogout();

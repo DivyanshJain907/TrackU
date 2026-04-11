@@ -1,6 +1,9 @@
+"use client";
+
 import Link from 'next/link';
 import Image from 'next/image';
 import { Poppins } from 'next/font/google';
+import { useState } from 'react';
 
 const poppins = Poppins({
   subsets: ['latin'],
@@ -8,6 +11,8 @@ const poppins = Poppins({
 });
 
 export default function Home() {
+  const [billingCycle, setBillingCycle] = useState<'monthly' | 'yearly'>('yearly');
+
   return (
     <div className={`${poppins.className} min-h-screen bg-[#eaf6f1] text-[#1f2422]`}>
       <main>
@@ -179,19 +184,29 @@ export default function Home() {
           <div className="mx-auto max-w-6xl">
             <div className="text-center">
               <h2 className="text-3xl font-bold leading-[1.15] tracking-[-0.02em] text-[#181f1c] sm:text-4xl lg:text-5xl">Choose Plan That&apos;s Right For You</h2>
-              <p className="mt-7 text-sm text-[#9da5a2] sm:text-base">Choose plan that works best for you, feel free to contact us</p>
+              <p className="mt-7 text-sm text-[#9da5a2] sm:text-base">Choose plan that works best for you, feel free to contact us (India pricing, {billingCycle})</p>
             </div>
 
             <div className="mx-auto mt-10 flex w-fit rounded-xl bg-white p-1 shadow-sm">
-              <button className="rounded-lg px-8 py-3 text-[15px] font-semibold text-[#313835]">Bi Monthly</button>
-              <button className="rounded-lg bg-[#49c89f] px-8 py-3 text-[15px] font-semibold text-white">Bi Yearly</button>
+              <button
+                onClick={() => setBillingCycle('monthly')}
+                className={`rounded-lg px-8 py-3 text-[15px] font-semibold ${billingCycle === 'monthly' ? 'bg-[#49c89f] text-white' : 'text-[#313835]'}`}
+              >
+                Monthly
+              </button>
+              <button
+                onClick={() => setBillingCycle('yearly')}
+                className={`rounded-lg px-8 py-3 text-[15px] font-semibold ${billingCycle === 'yearly' ? 'bg-[#49c89f] text-white' : 'text-[#313835]'}`}
+              >
+                Yearly
+              </button>
             </div>
 
             <div className="mt-12 grid gap-6 md:grid-cols-3">
               <div className="rounded-3xl bg-white p-8 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <h3 className="text-3xl font-bold text-[#252c29] sm:text-4xl">Free</h3>
                 <p className="mt-2 text-[15px] text-[#a4aba8]">Have a go and test your superpowers</p>
-                <p className="mt-5 text-4xl font-bold text-[#222826] sm:text-5xl">$ 0</p>
+                <p className="mt-5 text-4xl font-bold text-[#222826] sm:text-5xl">Rs 0</p>
                 <ul className="mt-8 space-y-4 text-[16px] text-[#3e4844]">
                   <li>2 Users</li>
                   <li>2 Files</li>
@@ -209,8 +224,12 @@ export default function Home() {
                 <div className="relative z-10">
                   <h3 className="text-3xl font-bold sm:text-4xl">Pro</h3>
                   <p className="mt-2 text-[15px] text-[#e8fff6]">Experiment the power of infinitive possibilities</p>
-                  <p className="mt-5 text-4xl font-bold sm:text-5xl">$ 8</p>
-                  <span className="mt-2 inline-block rounded-md bg-[#7cd8ba] px-3 py-1 text-[12px] font-semibold">Save $50 a year</span>
+                  <p className="mt-5 text-4xl font-bold sm:text-5xl">{billingCycle === 'monthly' ? 'Rs 99' : 'Rs 800'}</p>
+                  {billingCycle === 'yearly' ? (
+                    <span className="mt-2 inline-block rounded-md bg-[#7cd8ba] px-3 py-1 text-[12px] font-semibold">Save Rs 388 a year</span>
+                  ) : (
+                    <span className="mt-2 inline-block rounded-md bg-[#7cd8ba] px-3 py-1 text-[12px] font-semibold">Billed monthly</span>
+                  )}
                   <ul className="mt-8 space-y-4 text-[16px] text-[#f5fffa]">
                     <li>4 Users</li>
                     <li>All apps</li>
@@ -219,7 +238,7 @@ export default function Home() {
                     <li>All incoming apps</li>
                   </ul>
                   <Link href="/register" className="mt-9 block rounded-xl bg-white py-3 text-center text-[16px] font-bold text-[#47bf97]">
-                    Go to pro
+                    Go to Pro
                   </Link>
                 </div>
               </div>
@@ -227,7 +246,7 @@ export default function Home() {
               <div className="rounded-3xl bg-white p-8 shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
                 <h3 className="text-3xl font-bold text-[#252c29] sm:text-4xl">Business</h3>
                 <p className="mt-2 text-[15px] text-[#a4aba8]">Unveil new superpowers and join the Design League</p>
-                <p className="mt-5 text-4xl font-bold text-[#222826] sm:text-5xl">$ 16</p>
+                <p className="mt-5 text-4xl font-bold text-[#222826] sm:text-5xl">{billingCycle === 'monthly' ? 'Rs 199' : 'Rs 1600'}</p>
                 <ul className="mt-8 space-y-4 text-[16px] text-[#3e4844]">
                   <li>All the features of pro plan</li>
                   <li>Account success Manager</li>
@@ -236,7 +255,7 @@ export default function Home() {
                   <li>Collaboration-Soon</li>
                 </ul>
                 <Link href="/register" className="mt-9 block rounded-xl bg-[#f5f7f6] py-3 text-center text-[16px] font-semibold text-[#43bf95]">
-                  Goto Business
+                  Go to Business
                 </Link>
               </div>
             </div>
