@@ -1,10 +1,9 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 export default function Register() {
   const [username, setUsername] = useState("");
@@ -20,27 +19,7 @@ export default function Register() {
   const [isClubLeader, setIsClubLeader] = useState(false);
   const [clubName, setClubName] = useState("");
   const [clubDescription, setClubDescription] = useState("");
-  const [stars, setStars] = useState<Array<{
-    size: number;
-    left: number;
-    top: number;
-    opacity: number;
-    duration: number;
-  }>>([]);
   const router = useRouter();
-
-  useEffect(() => {
-    // Generate stars on client side only
-    setStars(
-      [...Array(100)].map(() => ({
-        size: Math.random() * 2,
-        left: Math.random() * 100,
-        top: Math.random() * 100,
-        opacity: Math.random() * 0.7 + 0.3,
-        duration: Math.random() * 3 + 2,
-      }))
-    );
-  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -141,57 +120,26 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen relative flex items-center justify-center p-4 sm:p-6 lg:p-8 bg-black overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {stars.map((star, i) => (
-            <div
-              key={i}
-              className="absolute rounded-full bg-white"
-              style={{
-                width: `${star.size}px`,
-                height: `${star.size}px`,
-                left: `${star.left}%`,
-                top: `${star.top}%`,
-                opacity: star.opacity,
-                animation: `twinkle ${star.duration}s infinite`
-              }}
-            ></div>
-          ))}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
-      </div>
+    <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#eaf6f1] p-4 sm:p-6 lg:p-8">
+      <div className="pointer-events-none absolute -left-16 top-10 h-64 w-64 rounded-full bg-[#d4efe5] blur-3xl"></div>
+      <div className="pointer-events-none absolute -right-20 bottom-10 h-64 w-64 rounded-full bg-[#cfe9df] blur-3xl"></div>
 
-      <div className="relative w-full max-w-md z-10">
+      <div className="relative z-10 w-full max-w-lg">
         {/* Logo/Brand Section */}
         <div className="text-center mb-8">
-          <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-purple-500 to-blue-600 rounded-2xl mb-4 shadow-2xl transform hover:rotate-6 transition-transform overflow-hidden">
+          <div className="inline-flex h-20 w-20 items-center justify-center overflow-hidden rounded-2xl bg-[#49c89f] shadow-[0_12px_24px_rgba(73,200,159,0.35)]">
             <img
               src="/image2.png"
               alt="TrackU Logo"
               className="w-full h-full object-cover"
             />
           </div>
-          <h1 className="text-4xl font-bold text-white mb-2">Club Leader Registration</h1>
-          <p className="text-gray-400 text-sm">Create your club and manage members</p>
+          <h1 className="mb-2 mt-4 text-2xl font-bold text-[#1d2522] sm:text-3xl">Club Leader Registration</h1>
+          <p className="text-sm text-[#5f6b67]">Create your club and manage members</p>
         </div>
 
         {/* Card */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden border border-white/20">
+        <div className="overflow-hidden rounded-3xl border border-[#d7e9e1] bg-white shadow-[0_14px_30px_rgba(0,0,0,0.08)]">
           {/* Form Section */}
           <div className="px-6 sm:px-8 py-8">
             <form onSubmit={handleSubmit} className="space-y-4">
@@ -199,14 +147,14 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="username"
-                  className="block text-sm font-semibold text-white mb-2"
+                  className="mb-2 block text-sm font-semibold text-[#25302c]"
                 >
                   Username
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg
-                      className="h-5 w-5 text-gray-300"
+                      className="h-5 w-5 text-[#87a099]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -230,7 +178,7 @@ export default function Register() {
                     }}
                     placeholder="username"
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                    className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] py-3 pl-10 pr-4 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                   />
                 </div>
               </div>
@@ -239,14 +187,14 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="email"
-                  className="block text-sm font-semibold text-white mb-2"
+                  className="mb-2 block text-sm font-semibold text-[#25302c]"
                 >
                   Email Address
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg
-                      className="h-5 w-5 text-gray-300"
+                      className="h-5 w-5 text-[#87a099]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -266,7 +214,7 @@ export default function Register() {
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="you@example.com"
                     required
-                    className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                    className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] py-3 pl-10 pr-4 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                   />
                 </div>
               </div>
@@ -275,14 +223,14 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="phone"
-                  className="block text-sm font-semibold text-white mb-2"
+                  className="mb-2 block text-sm font-semibold text-[#25302c]"
                 >
                   Phone Number
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg
-                      className="h-5 w-5 text-gray-400"
+                      className="h-5 w-5 text-[#87a099]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -309,7 +257,7 @@ export default function Register() {
                       setPhone(value);
                     }}
                     placeholder="9XXXXXXXXX"
-                    className="w-full pl-10 pr-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                    className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] py-3 pl-10 pr-4 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                     maxLength={10}
                   />
                 </div>
@@ -319,14 +267,14 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="password"
-                  className="block text-sm font-semibold text-white mb-2"
+                  className="mb-2 block text-sm font-semibold text-[#25302c]"
                 >
                   Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg
-                      className="h-5 w-5 text-gray-300"
+                      className="h-5 w-5 text-[#87a099]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -346,7 +294,7 @@ export default function Register() {
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="••••••••"
                     required
-                    className="w-full pl-10 pr-12 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                    className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] py-3 pl-10 pr-12 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                   />
                   <button
                     type="button"
@@ -355,7 +303,7 @@ export default function Register() {
                   >
                     {showPassword ? (
                       <svg
-                        className="h-5 w-5 text-gray-300 hover:text-white transition"
+                        className="h-5 w-5 text-[#87a099] transition hover:text-[#2f8f71]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -369,7 +317,7 @@ export default function Register() {
                       </svg>
                     ) : (
                       <svg
-                        className="h-5 w-5 text-gray-300 hover:text-white transition"
+                        className="h-5 w-5 text-[#87a099] transition hover:text-[#2f8f71]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -396,14 +344,14 @@ export default function Register() {
               <div>
                 <label
                   htmlFor="confirmPassword"
-                  className="block text-sm font-semibold text-white mb-2"
+                  className="mb-2 block text-sm font-semibold text-[#25302c]"
                 >
                   Confirm Password
                 </label>
                 <div className="relative">
                   <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
                     <svg
-                      className="h-5 w-5 text-gray-300"
+                      className="h-5 w-5 text-[#87a099]"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -423,7 +371,7 @@ export default function Register() {
                     onChange={(e) => setConfirmPassword(e.target.value)}
                     placeholder="••••••••"
                     required
-                    className="w-full pl-10 pr-12 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                    className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] py-3 pl-10 pr-12 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                   />
                   <button
                     type="button"
@@ -432,7 +380,7 @@ export default function Register() {
                   >
                     {showConfirmPassword ? (
                       <svg
-                        className="h-5 w-5 text-gray-300 hover:text-white transition"
+                        className="h-5 w-5 text-[#87a099] transition hover:text-[#2f8f71]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -446,7 +394,7 @@ export default function Register() {
                       </svg>
                     ) : (
                       <svg
-                        className="h-5 w-5 text-gray-300 hover:text-white transition"
+                        className="h-5 w-5 text-[#87a099] transition hover:text-[#2f8f71]"
                         fill="none"
                         stroke="currentColor"
                         viewBox="0 0 24 24"
@@ -470,15 +418,15 @@ export default function Register() {
               </div>
 
               {/* Club Leader Toggle */}
-              <div className="bg-white/10 border border-white/20 rounded-xl p-4">
+              <div className="rounded-xl border border-[#d7e9e1] bg-[#f5fbf8] p-4">
                 <label className="flex items-center gap-3 cursor-pointer">
                   <input
                     type="checkbox"
                     checked={isClubLeader}
                     onChange={(e) => setIsClubLeader(e.target.checked)}
-                    className="w-4 h-4 rounded accent-purple-500"
+                    className="h-4 w-4 rounded accent-[#49c89f]"
                   />
-                  <span className="text-white font-semibold text-sm">
+                  <span className="text-sm font-semibold text-[#2a342f]">
                     I want to create a club
                   </span>
                 </label>
@@ -490,7 +438,7 @@ export default function Register() {
                   <div>
                     <label
                       htmlFor="clubName"
-                      className="block text-sm font-semibold text-white mb-2"
+                      className="mb-2 block text-sm font-semibold text-[#25302c]"
                     >
                       Club Name
                     </label>
@@ -500,14 +448,14 @@ export default function Register() {
                       value={clubName}
                       onChange={(e) => setClubName(e.target.value)}
                       placeholder="e.g., Music Club"
-                      className="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                      className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] px-4 py-3 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                     />
                   </div>
 
                   <div>
                     <label
                       htmlFor="clubDescription"
-                      className="block text-sm font-semibold text-white mb-2"
+                      className="mb-2 block text-sm font-semibold text-[#25302c]"
                     >
                       Club Description (Optional)
                     </label>
@@ -517,7 +465,7 @@ export default function Register() {
                       onChange={(e) => setClubDescription(e.target.value)}
                       placeholder="Describe your club..."
                       rows={3}
-                      className="w-full px-4 py-3 bg-white/10 border-2 border-white/20 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent transition text-white placeholder-gray-400 backdrop-blur-sm hover:bg-white/20"
+                      className="w-full rounded-xl border border-[#d7e9e1] bg-[#f6fcfa] px-4 py-3 text-[#1e2724] placeholder-[#8fa39d] outline-none transition focus:border-[#49c89f]"
                     />
                   </div>
                 </>
@@ -525,7 +473,7 @@ export default function Register() {
 
               {/* Error Message */}
               {error && (
-                <div className="bg-red-500/20 border-l-4 border-red-500 p-4 rounded-lg backdrop-blur-sm animate-shake">
+                <div className="rounded-lg border-l-4 border-red-500 bg-red-50 p-4">
                   <div className="flex items-center">
                     <svg
                       className="h-5 w-5 text-red-400 mr-2"
@@ -538,14 +486,14 @@ export default function Register() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <p className="text-sm font-medium text-white">{error}</p>
+                    <p className="text-sm font-medium text-red-700">{error}</p>
                   </div>
                 </div>
               )}
 
               {/* Success Message */}
               {success && (
-                <div className="bg-green-500/20 border-l-4 border-green-500 p-4 rounded-lg backdrop-blur-sm">
+                <div className="rounded-lg border-l-4 border-green-500 bg-green-50 p-4">
                   <div className="flex items-center">
                     <svg
                       className="h-5 w-5 text-green-400 mr-2"
@@ -558,7 +506,7 @@ export default function Register() {
                         clipRule="evenodd"
                       />
                     </svg>
-                    <p className="text-sm font-medium text-white">{success}</p>
+                    <p className="text-sm font-medium text-green-700">{success}</p>
                   </div>
                 </div>
               )}
@@ -567,7 +515,7 @@ export default function Register() {
               <button
                 type="submit"
                 disabled={loading}
-                className="w-full bg-linear-to-r from-purple-600 via-blue-600 to-purple-600 hover:from-purple-700 hover:via-blue-700 hover:to-purple-700 text-white font-bold py-3.5 px-4 rounded-xl transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg hover:shadow-2xl mt-2"
+                className="mt-2 w-full rounded-xl bg-[#49c89f] px-4 py-3.5 font-bold text-white transition hover:bg-[#3db58d] disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {loading ? (
                   <span className="flex items-center justify-center">
@@ -583,16 +531,16 @@ export default function Register() {
         </div>
 
         {/* Footer */}
-        <p className="text-center text-gray-400 text-sm mt-6 px-4 font-medium">
+        <p className="mt-6 px-4 text-center text-sm font-medium text-[#6d7874]">
           Already have an account?{" "}
           <Link
             href="/login"
-            className="text-purple-400 hover:text-purple-300 transition font-semibold"
+            className="font-semibold text-[#2f8f71] transition hover:text-[#25775d]"
           >
             Sign In
           </Link>
         </p>
-        <p className="text-center text-gray-400 text-xs mt-2 px-4">
+        <p className="mt-2 px-4 text-center text-xs text-[#8c9793]">
           TrackU Team Activity Tracker • Secure & Reliable
         </p>
       </div>
