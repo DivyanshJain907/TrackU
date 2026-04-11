@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface AccessRequest {
   _id: string;
@@ -138,46 +137,11 @@ export default function AdminAccessRequests() {
       : requests.filter((req) => req.status === activeTab);
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
@@ -187,7 +151,7 @@ export default function AdminAccessRequests() {
             {/* Back Button */}
             <button
               onClick={() => router.push("/admin")}
-              className="mb-6 flex items-center gap-2 px-4 py-2 text-white bg-linear-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/50 rounded-lg hover:from-purple-600/60 hover:to-blue-600/60 hover:border-purple-500/70 transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/50"
+              className="mb-6 flex items-center gap-2 px-4 py-2 text-emerald-900 bg-white border border-emerald-200 rounded-lg hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 font-semibold shadow-sm"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -198,13 +162,13 @@ export default function AdminAccessRequests() {
             {/* Header */}
             <div className="mb-6 sm:mb-8 flex flex-col sm:flex-row sm:justify-between sm:items-center gap-4">
               <div>
-                <h1 className="text-2xl sm:text-3xl font-bold text-white">Access Requests</h1>
-                <p className="text-gray-400 text-sm sm:text-base mt-1 sm:mt-2">Manage user access requests</p>
+                <h1 className="text-2xl sm:text-3xl font-bold text-emerald-900">Access Requests</h1>
+                <p className="text-emerald-700 text-sm sm:text-base mt-1 sm:mt-2">Manage user access requests</p>
               </div>
               <button
                 onClick={() => fetchRequests()}
                 disabled={refreshing}
-                className="px-4 py-2 bg-blue-600/20 border border-blue-500 hover:bg-blue-600/40 disabled:opacity-50 text-blue-400 rounded-lg font-medium transition-all flex items-center justify-center gap-2"
+                className="px-4 py-2 bg-emerald-700 border border-emerald-700 hover:bg-emerald-800 disabled:opacity-50 text-white rounded-lg font-medium transition-all flex items-center justify-center gap-2"
               >
                 {refreshing ? (
                   <>
@@ -230,8 +194,8 @@ export default function AdminAccessRequests() {
                   onClick={() => setActiveTab(tab as any)}
                   className={`px-3 sm:px-4 py-2 text-sm sm:text-base font-medium rounded-lg transition-all whitespace-nowrap ${
                     activeTab === tab
-                      ? "bg-blue-600 text-white"
-                      : "bg-white/10 border border-white/20 text-gray-300 hover:bg-white/20"
+                      ? "bg-emerald-700 text-white"
+                      : "bg-white border border-emerald-200 text-emerald-700 hover:bg-emerald-50"
                   }`}
                 >
                   {tab.charAt(0).toUpperCase() + tab.slice(1)}
@@ -241,7 +205,7 @@ export default function AdminAccessRequests() {
 
             {/* Error Message */}
             {error && (
-              <div className="mb-6 bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm">
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
@@ -252,7 +216,7 @@ export default function AdminAccessRequests() {
                 <CloudLoader size="50px" />
               </div>
             ) : filteredRequests.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-emerald-600">
                 <p>No {activeTab === "all" ? "requests" : `${activeTab} requests`} found</p>
               </div>
             ) : (
@@ -260,21 +224,21 @@ export default function AdminAccessRequests() {
                 {filteredRequests.map((request) => (
                   <div
                     key={request._id}
-                    className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition"
+                    className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-emerald-50 transition shadow-sm"
                   >
                     {/* Status Badge */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-white">{request.username}</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm mt-1">{request.email}</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-emerald-900">{request.username}</h3>
+                        <p className="text-emerald-600 text-xs sm:text-sm mt-1">{request.email}</p>
                       </div>
                       <span
                         className={`ml-2 px-3 py-1 text-xs font-semibold rounded-full whitespace-nowrap ${
                           request.status === "pending"
                             ? "bg-yellow-500/20 text-yellow-400"
                             : request.status === "approved"
-                            ? "bg-green-500/20 text-green-400"
-                            : "bg-red-500/20 text-red-400"
+                            ? "bg-green-100 text-green-700"
+                            : "bg-red-100 text-red-700"
                         }`}
                       >
                         {request.status.charAt(0).toUpperCase() + request.status.slice(1)}
@@ -285,17 +249,17 @@ export default function AdminAccessRequests() {
                     <div className="space-y-3 mb-4">
                       {request.user?.club?.name && (
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Club</p>
-                          <p className="text-white text-sm font-medium">{request.user.club.name}</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Club</p>
+                          <p className="text-emerald-900 text-sm font-medium">{request.user.club.name}</p>
                         </div>
                       )}
 
                       {request.phone && (
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Phone</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Phone</p>
                           <a
                             href={`tel:${request.phone}`}
-                            className="text-blue-400 hover:text-blue-300 text-sm"
+                            className="text-emerald-700 hover:text-emerald-800 text-sm"
                           >
                             {request.phone}
                           </a>
@@ -303,22 +267,22 @@ export default function AdminAccessRequests() {
                       )}
 
                       <div>
-                        <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Date</p>
-                        <p className="text-gray-300 text-sm">
+                        <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Date</p>
+                        <p className="text-emerald-700 text-sm">
                           {new Date(request.createdAt).toLocaleDateString()} {new Date(request.createdAt).toLocaleTimeString()}
                         </p>
                       </div>
 
                       {request.requestMessage && (
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Message</p>
-                          <p className="text-gray-300 text-sm line-clamp-2">{request.requestMessage}</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Message</p>
+                          <p className="text-emerald-700 text-sm line-clamp-2">{request.requestMessage}</p>
                         </div>
                       )}
 
                       {request.status === "rejected" && request.rejectionReason && (
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Rejection Reason</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Rejection Reason</p>
                           <p className="text-red-400 text-sm">{request.rejectionReason}</p>
                         </div>
                       )}
@@ -329,13 +293,13 @@ export default function AdminAccessRequests() {
                       <div className="flex gap-2">
                         <button
                           onClick={() => handleApprove(request._id)}
-                          className="flex-1 px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
+                          className="flex-1 px-3 py-2 bg-green-100 border border-green-200 hover:bg-green-200 text-green-700 text-sm font-medium rounded-lg transition-all"
                         >
                           Approve
                         </button>
                         <button
                           onClick={() => handleReject(request._id)}
-                          className="flex-1 px-3 py-2 bg-red-600/20 border border-red-500 hover:bg-red-600/40 text-red-400 text-sm font-medium rounded-lg transition-all"
+                          className="flex-1 px-3 py-2 bg-red-100 border border-red-200 hover:bg-red-200 text-red-700 text-sm font-medium rounded-lg transition-all"
                         >
                           Reject
                         </button>

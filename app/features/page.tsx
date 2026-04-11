@@ -1,4 +1,5 @@
 import Link from "next/link";
+import ThemedPageShell from "@/app/components/ThemedPageShell";
 
 export default function Features() {
   const features = [
@@ -50,117 +51,54 @@ export default function Features() {
   ];
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <ThemedPageShell
+      title="Powerful Features"
+      subtitle="Everything you need to effectively manage and track your club members."
+    >
+      <div className="grid gap-6 md:grid-cols-3">
+        {features.map((feature, index) => (
+          <div
+            key={index}
+            className="rounded-2xl border border-[#d7e9e1] bg-white p-6 shadow-[0_8px_24px_rgba(0,0,0,0.06)]"
+          >
+            <div className="mb-3 text-3xl">{feature.icon}</div>
+            <h3 className="text-xl font-bold text-[#1d2623]">{feature.title}</h3>
+            <p className="mt-2 text-sm text-[#5f6a66] md:text-base">{feature.description}</p>
+          </div>
+        ))}
       </div>
-      <div className="relative z-10">
-      {/* Navigation */}
-      <nav className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
-            <img
-              src="/image2.png"
-              alt="TrackU Logo"
-              className="w-14 h-14 rounded-lg"
-            />
-            <div className="hidden md:flex gap-8">
-              <Link href="/" className="text-gray-300 hover:text-white transition">
-                Home
-              </Link>
-              <Link href="/features" className="text-white border-b-2 border-purple-500">
-                Features
-              </Link>
-            </div>
+
+      <div className="rounded-3xl border border-[#d7e9e1] bg-white p-8 shadow-[0_10px_30px_rgba(0,0,0,0.06)] md:p-12">
+        <h2 className="text-center text-3xl font-bold text-[#19201d]">Why Choose TrackU Features?</h2>
+        <div className="mt-8 grid gap-6 md:grid-cols-2">
+          <div className="rounded-2xl border border-[#d7e9e1] bg-[#f7fffb] p-5">
+            <h4 className="text-lg font-bold text-[#1f2a26]">Easy to Use</h4>
+            <p className="mt-2 text-sm text-[#5f6a66]">Intuitive interface that requires minimal training. Start tracking in minutes.</p>
+          </div>
+          <div className="rounded-2xl border border-[#d7e9e1] bg-[#f7fffb] p-5">
+            <h4 className="text-lg font-bold text-[#1f2a26]">Real-Time Updates</h4>
+            <p className="mt-2 text-sm text-[#5f6a66]">Get instant notifications and updates on member activities as they happen.</p>
+          </div>
+          <div className="rounded-2xl border border-[#d7e9e1] bg-[#f7fffb] p-5">
+            <h4 className="text-lg font-bold text-[#1f2a26]">Data-Driven Insights</h4>
+            <p className="mt-2 text-sm text-[#5f6a66]">Make informed decisions with comprehensive analytics and visual reports.</p>
+          </div>
+          <div className="rounded-2xl border border-[#d7e9e1] bg-[#f7fffb] p-5">
+            <h4 className="text-lg font-bold text-[#1f2a26]">Fully Customizable</h4>
+            <p className="mt-2 text-sm text-[#5f6a66]">Tailor TrackU to your organization's specific needs and workflows.</p>
           </div>
         </div>
-      </nav>
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        {/* Hero Section */}
-        <div className="text-center mb-16">
-          <h1 className="text-5xl md:text-6xl font-bold text-white mb-6">Powerful Features</h1>
-          <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-            Everything you need to effectively manage and track your club members
-          </p>
-        </div>
-
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {features.map((feature, index) => (
-            <div
-              key={index}
-              className="bg-white/10 backdrop-blur-xl rounded-2xl border border-white/20 p-8 hover:border-purple-500/50 transition hover:shadow-2xl hover:shadow-purple-500/20"
-            >
-              <div className="text-4xl mb-4">{feature.icon}</div>
-              <h3 className="text-xl font-bold text-white mb-3">{feature.title}</h3>
-              <p className="text-gray-300">{feature.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Key Highlights */}
-        <div className="bg-white/10 backdrop-blur-xl rounded-3xl border border-white/20 p-8 md:p-12 mb-12">
-          <h2 className="text-3xl font-bold text-white mb-8 text-center">Why Choose TrackU Features?</h2>
-          <div className="grid md:grid-cols-2 gap-8">
-            <div>
-              <h4 className="text-lg font-bold text-purple-400 mb-2">✨ Easy to Use</h4>
-              <p className="text-gray-300">Intuitive interface that requires minimal training. Start tracking in minutes.</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-blue-400 mb-2">⚡ Real-Time Updates</h4>
-              <p className="text-gray-300">Get instant notifications and updates on member activities as they happen.</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-green-400 mb-2">📊 Data-Driven Insights</h4>
-              <p className="text-gray-300">Make informed decisions with comprehensive analytics and visual reports.</p>
-            </div>
-            <div>
-              <h4 className="text-lg font-bold text-pink-400 mb-2">🔄 Fully Customizable</h4>
-              <p className="text-gray-300">Tailor TrackU to your organization's specific needs and workflows.</p>
-            </div>
-          </div>
-        </div>
-
-        {/* CTA */}
-        <div className="text-center">
-          <h3 className="text-2xl font-bold text-white mb-4">Ready to track your organization?</h3>
-          <Link href="/register">
-            <button className="bg-linear-to-r from-purple-500 to-blue-600 text-white font-bold py-4 px-8 rounded-xl hover:shadow-2xl hover:shadow-purple-500/50 transition">
-              Get Started Now
-            </button>
-          </Link>
-        </div>
       </div>
+
+      <div className="rounded-3xl border border-[#d7e9e1] bg-white p-8 text-center shadow-[0_10px_30px_rgba(0,0,0,0.06)] md:p-12">
+        <h3 className="text-2xl font-bold text-[#1d2623]">Ready to track your organization?</h3>
+        <Link
+          href="/register"
+          className="mt-5 inline-block rounded-xl bg-[#49c89f] px-8 py-3 font-bold text-white transition hover:bg-[#3fb18d]"
+        >
+          Get Started Now
+        </Link>
       </div>
-    </div>
+    </ThemedPageShell>
   );
 }

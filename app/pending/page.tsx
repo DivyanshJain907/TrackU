@@ -2,7 +2,6 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 export const dynamic = "force-dynamic";
 
@@ -88,99 +87,68 @@ export default function PendingApprovalPage() {
 
   const isRejected = accessRequest?.status === "rejected";
 
-  return (
-    <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center p-4">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[#f3fff9] flex items-center justify-center p-4">
+        <div className="rounded-2xl border border-[#d7e9e1] bg-white px-8 py-6 text-[#1d2623] shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
+          Checking request status...
         </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
       </div>
-      <div className="relative z-10">
-      <div className={`rounded-lg shadow-lg p-8 max-w-md w-full text-center ${isRejected ? "bg-white border-2 border-red-200" : "bg-white"}`}>
+    );
+  }
+
+  return (
+    <div className="min-h-screen bg-[#f3fff9] flex items-center justify-center p-4">
+      <div className={`w-full max-w-md rounded-2xl border p-8 text-center shadow-[0_10px_30px_rgba(0,0,0,0.08)] ${isRejected ? "border-red-200 bg-red-50/40" : "border-[#d7e9e1] bg-white"}`}>
         <div className="mb-6">
-          <div className={`inline-block px-4 py-2 rounded-full text-sm font-semibold ${isRejected ? "bg-red-100 text-red-800" : "bg-yellow-100 text-yellow-800"}`}>
+          <div className={`inline-block rounded-full px-4 py-2 text-sm font-semibold ${isRejected ? "bg-red-100 text-red-800" : "bg-amber-100 text-amber-800"}`}>
             {isRejected ? "Access Denied" : "Pending Review"}
           </div>
         </div>
 
-        <h1 className={`text-2xl font-bold mb-4 ${isRejected ? "text-red-900" : "text-gray-900"}`}>
+        <h1 className={`mb-4 text-2xl font-bold ${isRejected ? "text-red-900" : "text-[#1d2623]"}`}>
           {isRejected ? "Access Request Rejected" : "Access Pending Approval"}
         </h1>
 
-        <p className={`mb-6 ${isRejected ? "text-red-700" : "text-gray-600"}`}>
+        <p className={`mb-6 ${isRejected ? "text-red-700" : "text-[#5f6a66]"}`}>
           {isRejected 
             ? "Unfortunately, your access request has been declined." 
             : "Thank you for registering! Your access request is currently being reviewed by our administrator."}
         </p>
 
-        <div className={`rounded-lg p-4 mb-8 ${isRejected ? "bg-red-50 border border-red-200" : "bg-blue-50 border border-blue-200"}`}>
+        <div className={`mb-8 rounded-xl border p-4 ${isRejected ? "border-red-200 bg-red-50" : "border-[#bde6d6] bg-[#f1fff8]"}`}>
           <p className={`text-sm ${isRejected ? "text-red-900" : "text-blue-900"}`}>
             <span className="font-semibold">Status:</span> {isRejected ? "Rejected" : "Awaiting Admin Review"}
           </p>
-          <p className={`text-sm mt-2 ${isRejected ? "text-red-900" : "text-blue-900"}`}>
+          <p className={`mt-2 text-sm ${isRejected ? "text-red-900" : "text-[#1d5a49]"}`}>
             {isRejected 
               ? accessRequest?.rejectionReason || "You have been found suspicious and are banned for now."
               : "An admin will review your request and approve your access shortly."}
           </p>
         </div>
 
-        <div className="bg-gray-50 rounded-lg p-4 mb-8">
-          <p className="text-sm text-gray-600 mb-3">
+        <div className="mb-8 rounded-xl border border-[#d7e9e1] bg-[#f8fffb] p-4">
+          <p className="mb-3 text-sm text-[#5f6a66]">
             <span className="font-semibold">{isRejected ? "For More Information:" : "Need Help?"}</span>
           </p>
           <div className="space-y-2">
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#5f6a66]">
               <span className="font-semibold">Administrator:</span> Divyansh Jain
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#5f6a66]">
               <span className="font-semibold">Email:</span>{" "}
               <a
                 href={`mailto:divyanshjain883@gmail.com`}
-                className="text-blue-600 hover:underline"
+                className="text-[#319b7a] hover:underline"
               >
                 divyanshjain883@gmail.com
               </a>
             </p>
-            <p className="text-sm text-gray-600">
+            <p className="text-sm text-[#5f6a66]">
               <span className="font-semibold">Contact:</span>{" "}
               <a
                 href="tel:9761854883"
-                className="text-blue-600 hover:underline"
+                className="text-[#319b7a] hover:underline"
               >
                 +91 9761854883
               </a>
@@ -190,14 +158,13 @@ export default function PendingApprovalPage() {
 
         <button
           onClick={handleLogout}
-          className={`w-full font-semibold py-3 px-4 rounded-xl transition duration-200 text-white flex items-center justify-center gap-2 hover:shadow-lg transform hover:-translate-y-0.5 ${isRejected ? "bg-red-600 hover:bg-red-700 hover:shadow-red-500/30" : "bg-blue-600 hover:bg-blue-700 hover:shadow-blue-500/30"}`}
+          className={`flex w-full items-center justify-center gap-2 rounded-xl px-4 py-3 font-semibold text-white transition duration-200 hover:-translate-y-0.5 hover:shadow-lg ${isRejected ? "bg-red-600 hover:bg-red-700 hover:shadow-red-500/30" : "bg-[#49c89f] hover:bg-[#3fb18d] hover:shadow-[#49c89f]/30"}`}
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
           </svg>
           {isRejected ? "Return to Login" : "Return to Login"}
         </button>
-      </div>
       </div>
     </div>
   );

@@ -845,11 +845,11 @@ export default function Dashboard() {
                   }}
                 ></div>
                 {/* Overlay for better text readability */}
-                <div className="absolute inset-0 bg-linear-to-br from-slate-900/40 via-purple-900/40 to-slate-900/40 backdrop-blur-sm" style={{ zIndex: 1 }}></div>
+                <div className="absolute inset-0 bg-linear-to-br from-[#102019]/45 via-[#1d5a49]/35 to-[#102019]/45 backdrop-blur-sm" style={{ zIndex: 1 }}></div>
               </>
             ) : (
               /* Fallback gradient when no image */
-              <div className="absolute inset-0 bg-linear-to-br from-slate-900/80 via-purple-900/80 to-slate-900/80 backdrop-blur-xl" style={{ zIndex: 0 }}></div>
+              <div className="absolute inset-0 bg-linear-to-br from-[#113123]/85 via-[#1e5c46]/80 to-[#113123]/85 backdrop-blur-xl" style={{ zIndex: 0 }}></div>
             )}
             {/* Content */}
             <div className="relative z-10 p-12">
@@ -860,7 +860,7 @@ export default function Dashboard() {
                   </h1>
                   <div className="flex items-center justify-center gap-2 mb-4">
                     <div className="h-1 w-12 bg-linear-to-r from-purple-400 to-blue-400 rounded-full"></div>
-                  <p className="text-purple-200 text-xl font-bold">Club Dashboard</p>
+                  <p className="text-[#dff7ec] text-xl font-bold">Club Dashboard</p>
                   <div className="h-1 w-12 bg-linear-to-r from-blue-400 to-purple-400 rounded-full"></div>
                 </div>
                 <p className="text-gray-100 text-lg sm:text-xl max-w-2xl mx-auto drop-shadow-lg leading-relaxed">

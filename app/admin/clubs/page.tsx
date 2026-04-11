@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface Club {
   _id: string;
@@ -148,77 +147,26 @@ export default function AdminClubs() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-            ))}
-          </div>
-          {/* Shooting Stars Effect */}
-          <ShootingStars
-            starColor="#9E00FF"
-            trailColor="#2EB9DF"
-            minSpeed={15}
-            maxSpeed={35}
-            minDelay={1000}
-            maxDelay={3000}
-          />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
         </div>
         <div className="relative z-10 text-center">
           <CloudLoader />
-          <p className="text-white text-lg font-semibold mt-4">Loading clubs...</p>
+          <p className="text-emerald-700 text-lg font-semibold mt-4">Loading clubs...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
@@ -228,7 +176,7 @@ export default function AdminClubs() {
             {/* Back Button */}
             <button
               onClick={() => router.push("/admin")}
-              className="mb-6 flex items-center gap-2 px-4 py-2 text-white bg-linear-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/50 rounded-lg hover:from-purple-600/60 hover:to-blue-600/60 hover:border-purple-500/70 transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/50"
+              className="mb-6 flex items-center gap-2 px-4 py-2 text-emerald-900 bg-white border border-emerald-200 rounded-lg hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 font-semibold shadow-sm"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -238,8 +186,8 @@ export default function AdminClubs() {
 
             {/* Header */}
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">Club Management</h1>
-              <p className="text-gray-400 text-sm sm:text-base mt-1 sm:mt-2">Total Clubs: {clubs.length}</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-emerald-900">Club Management</h1>
+              <p className="text-emerald-700 text-sm sm:text-base mt-1 sm:mt-2">Total Clubs: {clubs.length}</p>
             </div>
 
             {/* Search */}
@@ -249,20 +197,20 @@ export default function AdminClubs() {
                 placeholder="Search clubs..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-white/40 transition"
+                className="w-full px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 placeholder-emerald-400 focus:outline-none focus:border-emerald-400 transition"
               />
             </div>
 
             {/* Error */}
             {error && (
-              <div className="mb-6 bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm">
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
             {/* Clubs Grid */}
             {filteredClubs.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-emerald-600">
                 <p>No clubs found matching your search.</p>
               </div>
             ) : (
@@ -270,71 +218,71 @@ export default function AdminClubs() {
                 {filteredClubs.map((club) => (
                   <div
                     key={club._id}
-                    className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition"
+                    className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-emerald-50 transition shadow-sm"
                   >
                     {editingId === club._id ? (
                       <div className="space-y-3 mb-4">
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide mb-2">Club Name</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide mb-2">Club Name</p>
                           <input
                             type="text"
                             value={editData.name}
                             onChange={(e) => setEditData({ ...editData, name: e.target.value })}
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                            className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 text-sm focus:outline-none focus:border-emerald-400"
                             placeholder="Club name"
                           />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide mb-2">Description</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide mb-2">Description</p>
                           <textarea
                             value={editData.description}
                             onChange={(e) => setEditData({ ...editData, description: e.target.value })}
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40 resize-none"
+                            className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 text-sm focus:outline-none focus:border-emerald-400 resize-none"
                             placeholder="Club description"
                             rows={3}
                           />
                         </div>
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide mb-2">Banner Image URL</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide mb-2">Banner Image URL</p>
                           <input
                             type="url"
                             value={editData.imageUrl}
                             onChange={(e) => setEditData({ ...editData, imageUrl: e.target.value })}
-                            className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                            className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 text-sm focus:outline-none focus:border-emerald-400"
                             placeholder="https://example.com/image.jpg"
                           />
                           {editData.imageUrl && (
-                            <p className="text-gray-400 text-xs mt-2">Preview: Image will be used as dashboard background</p>
+                            <p className="text-emerald-500 text-xs mt-2">Preview: Image will be used as dashboard background</p>
                           )}
                         </div>
                       </div>
                     ) : (
                       <div className="mb-4">
-                        <h3 className="text-lg sm:text-xl font-bold text-white mb-2">{club.name}</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm mb-4 line-clamp-2">
+                        <h3 className="text-lg sm:text-xl font-bold text-emerald-900 mb-2">{club.name}</h3>
+                        <p className="text-emerald-600 text-xs sm:text-sm mb-4 line-clamp-2">
                           {club.description || "No description provided"}
                         </p>
 
-                        <div className="space-y-2 text-xs sm:text-sm text-gray-300">
+                        <div className="space-y-2 text-xs sm:text-sm text-emerald-700">
                           <div>
-                            <p className="text-gray-400 font-medium">Leader</p>
-                            <p className="text-white">{club.leader?.username || "Unknown"}</p>
+                            <p className="text-emerald-500 font-medium">Leader</p>
+                            <p className="text-emerald-900">{club.leader?.username || "Unknown"}</p>
                           </div>
                           <div>
-                            <p className="text-gray-400 font-medium">Email</p>
-                            <a href={`mailto:${club.leader?.email}`} className="text-blue-400 hover:text-blue-300">
+                            <p className="text-emerald-500 font-medium">Email</p>
+                            <a href={`mailto:${club.leader?.email}`} className="text-emerald-700 hover:text-emerald-800">
                               {club.leader?.email || "N/A"}
                             </a>
                           </div>
                           <div>
-                            <p className="text-gray-400 font-medium">Members</p>
-                            <span className="inline-block px-2 py-1 bg-purple-500/20 text-purple-300 rounded-full text-xs font-bold mt-1">
+                            <p className="text-emerald-500 font-medium">Members</p>
+                            <span className="inline-block px-2 py-1 bg-emerald-100 text-emerald-700 rounded-full text-xs font-bold mt-1">
                               {club.teamMembersCount || 0} member{club.teamMembersCount !== 1 ? "s" : ""}
                             </span>
                           </div>
                           <div>
-                            <p className="text-gray-400 font-medium">Created</p>
-                            <p className="text-white">{new Date(club.createdAt).toLocaleDateString()}</p>
+                            <p className="text-emerald-500 font-medium">Created</p>
+                            <p className="text-emerald-900">{new Date(club.createdAt).toLocaleDateString()}</p>
                           </div>
                         </div>
                       </div>
@@ -346,13 +294,13 @@ export default function AdminClubs() {
                         <>
                           <button
                             onClick={() => handleSaveEdit(club._id)}
-                            className="w-full px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
+                            className="w-full px-3 py-2 bg-green-100 border border-green-200 hover:bg-green-200 text-green-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditingId(null)}
-                            className="w-full px-3 py-2 bg-gray-600/20 border border-gray-500 hover:bg-gray-600/40 text-gray-300 text-sm font-medium rounded-lg transition-all"
+                            className="w-full px-3 py-2 bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Cancel
                           </button>
@@ -361,13 +309,13 @@ export default function AdminClubs() {
                         <>
                           <button
                             onClick={() => handleEditClub(club)}
-                            className="w-full px-3 py-2 bg-blue-600/20 border border-blue-500 hover:bg-blue-600/40 text-blue-400 text-sm font-medium rounded-lg transition-all"
+                            className="w-full px-3 py-2 bg-emerald-100 border border-emerald-200 hover:bg-emerald-200 text-emerald-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Edit
                           </button>
                           <button
                             onClick={() => handleDeleteClub(club._id)}
-                            className="w-full px-3 py-2 bg-red-600/20 border border-red-500 hover:bg-red-600/40 text-red-400 text-sm font-medium rounded-lg transition-all"
+                            className="w-full px-3 py-2 bg-red-100 border border-red-200 hover:bg-red-200 text-red-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Delete
                           </button>

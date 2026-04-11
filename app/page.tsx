@@ -257,9 +257,14 @@ export default function Home() {
               </p>
               <p className="mt-5 text-base font-bold text-[#131918] sm:text-lg">Club Cordinator, University Society</p>
               <div className="mt-7 flex items-center gap-3">
-                {[1, 2, 3, 4].map((i) => (
+                {[
+                  "https://i.pravatar.cc/120?img=12",
+                  "https://i.pravatar.cc/120?img=24",
+                  "https://i.pravatar.cc/120?img=36",
+                  "https://i.pravatar.cc/120?img=48",
+                ].map((avatarUrl, i) => (
                   <div key={i} className="h-12 w-12 overflow-hidden rounded-full border-2 border-white shadow-sm">
-                    <Image src="/image2.png" alt="avatar" width={60} height={60} className="h-full w-full object-cover" />
+                    <img src={avatarUrl} alt={`avatar-${i + 1}`} className="h-full w-full object-cover" />
                   </div>
                 ))}
                 <button type="button" className="ml-2 inline-flex h-11 w-11 items-center justify-center rounded-full border border-[#2a322f] text-[#2a322f]">

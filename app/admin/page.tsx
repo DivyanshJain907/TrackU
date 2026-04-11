@@ -1,11 +1,10 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useRouter, usePathname } from "next/navigation";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useStats } from "@/lib/useStats";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface StatsData {
   users: {
@@ -30,7 +29,6 @@ export default function AdminPage() {
   const [error, setError] = useState("");
   const [token, setToken] = useState<string | null>(null);
   const router = useRouter();
-  const pathname = usePathname();
   const { data: stats, loading: statsLoading, refetch: refetchStats, isFromCache } = useStats(token);
 
   useEffect(() => {
@@ -71,33 +69,17 @@ export default function AdminPage() {
 
   if (verifyLoading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-            ))}
-          </div>
-          {/* Shooting Stars Effect */}
-          <ShootingStars
-            starColor="#9E00FF"
-            trailColor="#2EB9DF"
-            minSpeed={15}
-            maxSpeed={35}
-            minDelay={1000}
-            maxDelay={3000}
-          />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
         </div>
         <div className="relative z-10 text-center">
           <div className="mb-4">
             <CloudLoader />
           </div>
-          <p className="text-white text-lg font-semibold">Verifying access...</p>
+          <p className="text-[#1f6f58] text-lg font-semibold">Verifying access...</p>
         </div>
       </div>
     );
@@ -105,33 +87,17 @@ export default function AdminPage() {
 
   if (error) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center p-4">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-            ))}
-          </div>
-          {/* Shooting Stars Effect */}
-          <ShootingStars
-            starColor="#9E00FF"
-            trailColor="#2EB9DF"
-            minSpeed={15}
-            maxSpeed={35}
-            minDelay={1000}
-            maxDelay={3000}
-          />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
         </div>
         <div className="relative z-10 text-center">
-          <div className="bg-red-500/20 border-2 border-red-500 rounded-lg p-6 max-w-md">
-            <h1 className="text-2xl font-bold text-red-400 mb-2">Access Denied</h1>
-            <p className="text-white mb-4">{error}</p>
-            <p className="text-gray-300 text-sm">Redirecting to dashboard...</p>
+          <div className="bg-red-50 border-2 border-red-200 rounded-2xl p-6 max-w-md shadow-sm">
+            <h1 className="text-2xl font-bold text-red-700 mb-2">Access Denied</h1>
+            <p className="text-red-600 mb-4">{error}</p>
+            <p className="text-red-500 text-sm">Redirecting to dashboard...</p>
           </div>
         </div>
       </div>
@@ -143,57 +109,22 @@ export default function AdminPage() {
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
       <div className="relative z-10">
       {/* Header */}
-      <div className="bg-linear-to-r from-purple-700 via-blue-700 to-purple-700 text-white shadow-lg">
+      <div className="bg-white/85 backdrop-blur-xl border-b border-emerald-100 text-emerald-900 shadow-[0_8px_30px_rgba(16,65,53,0.08)] sticky top-0 z-50">
         <div className="max-w-7xl mx-auto px-3 sm:px-4 py-4 sm:py-8">
           <div className="flex justify-between items-center">
             <div>
-              <h1 className="text-2xl sm:text-4xl font-bold">Admin Dashboard</h1>
-              <p className="text-purple-100 text-sm sm:text-base mt-1 sm:mt-2">Manage the application</p>
+              <h1 className="text-2xl sm:text-4xl font-bold bg-linear-to-r from-emerald-900 to-emerald-600 bg-clip-text text-transparent">Admin Dashboard</h1>
+              <p className="text-emerald-700 text-sm sm:text-base mt-1 sm:mt-2">Manage the application</p>
             </div>
             <button
               onClick={() => {
@@ -205,7 +136,7 @@ export default function AdminPage() {
                 localStorage.removeItem("isApproved");
                 window.location.href = "/";
               }}
-              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white p-2 sm:p-3 rounded-lg transition hover:shadow-lg hover:shadow-red-500/30 flex items-center justify-center shrink-0"
+              className="bg-red-600 hover:bg-red-700 active:bg-red-800 text-white p-2 sm:p-3 rounded-lg transition hover:shadow-lg hover:shadow-red-200 flex items-center justify-center shrink-0"
               title="Logout"
             >
               <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -222,26 +153,26 @@ export default function AdminPage() {
         <div className="mb-6 flex items-center justify-between">
           <div className="flex items-center gap-2 text-sm">
             {statsLoading && (
-              <div className="flex items-center gap-2 text-blue-400">
-                <div className="w-2 h-2 bg-blue-400 rounded-full animate-pulse"></div>
+              <div className="flex items-center gap-2 text-emerald-600">
+                <div className="w-2 h-2 bg-emerald-500 rounded-full animate-pulse"></div>
                 <span>Loading stats...</span>
               </div>
             )}
             {!statsLoading && isFromCache && (
-              <div className="flex items-center gap-2 text-yellow-400">
-                <div className="w-2 h-2 bg-yellow-400 rounded-full"></div>
+              <div className="flex items-center gap-2 text-amber-600">
+                <div className="w-2 h-2 bg-amber-500 rounded-full"></div>
                 <span>Showing cached data</span>
               </div>
             )}
             {!statsLoading && !isFromCache && stats && (
-              <div className="flex items-center gap-2 text-green-400">
-                <div className="w-2 h-2 bg-green-400 rounded-full"></div>
+              <div className="flex items-center gap-2 text-emerald-700">
+                <div className="w-2 h-2 bg-emerald-600 rounded-full"></div>
                 <span>Fresh data</span>
               </div>
             )}
             {statsLoading === false && !stats && (
-              <div className="flex items-center gap-2 text-red-400">
-                <div className="w-2 h-2 bg-red-400 rounded-full"></div>
+              <div className="flex items-center gap-2 text-red-600">
+                <div className="w-2 h-2 bg-red-500 rounded-full"></div>
                 <span>Failed to load stats</span>
               </div>
             )}
@@ -249,7 +180,7 @@ export default function AdminPage() {
           <button
             onClick={refetchStats}
             disabled={statsLoading}
-            className="bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2"
+            className="bg-emerald-700 hover:bg-emerald-800 disabled:bg-emerald-300 text-white px-4 py-2 rounded-lg text-sm font-semibold transition flex items-center gap-2"
           >
             <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
@@ -260,10 +191,10 @@ export default function AdminPage() {
 
         <div className="grid grid-cols-3 gap-3 sm:gap-4">
           {/* Total Users */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-white/20 p-4 hover:bg-white/20 transition text-center">
-            <div className="bg-blue-500/20 p-2.5 rounded-lg w-fit mx-auto mb-3">
+          <div className="bg-white/90 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-emerald-100 p-4 hover:border-emerald-200 transition text-center shadow-sm">
+            <div className="bg-emerald-100 p-2.5 rounded-lg w-fit mx-auto mb-3">
               <svg
-                className="w-6 h-6 text-blue-400"
+                className="w-6 h-6 text-emerald-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -276,18 +207,18 @@ export default function AdminPage() {
                 />
               </svg>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white">{stats?.users.total || 0}</h3>
-            <p className="text-gray-300 text-xs sm:text-sm font-medium mt-2">Total Users</p>
-            <p className="text-gray-400 text-xs mt-2">
+            <h3 className="text-2xl sm:text-3xl font-bold text-emerald-900">{stats?.users.total || 0}</h3>
+            <p className="text-emerald-700 text-xs sm:text-sm font-medium mt-2">Total Users</p>
+            <p className="text-emerald-500 text-xs mt-2">
               {stats?.users.approved || 0} approved, {stats?.users.pending || 0} pending
             </p>
           </div>
 
           {/* Team Members */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-white/20 p-4 hover:bg-white/20 transition text-center">
-            <div className="bg-green-500/20 p-2.5 rounded-lg w-fit mx-auto mb-3">
+          <div className="bg-white/90 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-emerald-100 p-4 hover:border-emerald-200 transition text-center shadow-sm">
+            <div className="bg-emerald-100 p-2.5 rounded-lg w-fit mx-auto mb-3">
               <svg
-                className="w-6 h-6 text-green-400"
+                className="w-6 h-6 text-emerald-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -300,16 +231,16 @@ export default function AdminPage() {
                 />
               </svg>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white">{stats?.teamMembers || 0}</h3>
-            <p className="text-gray-300 text-xs sm:text-sm font-medium mt-2">Team Members</p>
-            <p className="text-gray-400 text-xs mt-2">Active members</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-emerald-900">{stats?.teamMembers || 0}</h3>
+            <p className="text-emerald-700 text-xs sm:text-sm font-medium mt-2">Team Members</p>
+            <p className="text-emerald-500 text-xs mt-2">Active members</p>
           </div>
 
           {/* Total Clubs */}
-          <div className="bg-white/10 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-white/20 p-4 hover:bg-white/20 transition text-center">
-            <div className="bg-purple-500/20 p-2.5 rounded-lg w-fit mx-auto mb-3">
+          <div className="bg-white/90 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-emerald-100 p-4 hover:border-emerald-200 transition text-center shadow-sm">
+            <div className="bg-emerald-100 p-2.5 rounded-lg w-fit mx-auto mb-3">
               <svg
-                className="w-6 h-6 text-purple-400"
+                className="w-6 h-6 text-emerald-700"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"
@@ -322,20 +253,20 @@ export default function AdminPage() {
                 />
               </svg>
             </div>
-            <h3 className="text-2xl sm:text-3xl font-bold text-white">{stats?.clubs || 0}</h3>
-            <p className="text-gray-300 text-xs sm:text-sm font-medium mt-2">Clubs</p>
-            <p className="text-gray-400 text-xs mt-2">Active clubs</p>
+            <h3 className="text-2xl sm:text-3xl font-bold text-emerald-900">{stats?.clubs || 0}</h3>
+            <p className="text-emerald-700 text-xs sm:text-sm font-medium mt-2">Clubs</p>
+            <p className="text-emerald-500 text-xs mt-2">Active clubs</p>
           </div>
         </div>
 
         {/* Admin Controls Section */}
-        <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-white/20 p-4 sm:p-6">
-          <h2 className="text-xl sm:text-2xl font-bold text-white mb-4 sm:mb-6">Admin Controls</h2>
+        <div className="mt-6 sm:mt-8 bg-white/90 backdrop-blur-xl rounded-lg sm:rounded-2xl border border-emerald-100 p-4 sm:p-6 shadow-sm">
+          <h2 className="text-xl sm:text-2xl font-bold text-emerald-900 mb-4 sm:mb-6">Admin Controls</h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4">
             <Link
               href="/admin/access-requests"
-              className="bg-blue-500/20 hover:bg-blue-500/30 border border-blue-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-blue-500/50"
+              className="bg-[#f7fff9] hover:bg-emerald-50 border border-emerald-100 text-emerald-900 p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-100"
             >
               <svg
                 className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
@@ -352,13 +283,13 @@ export default function AdminPage() {
               </svg>
               <div className="text-center sm:text-left">
                 <div className="font-semibold">Access Requests</div>
-                <div className="text-xs text-blue-100">Manage pending requests</div>
+                <div className="text-xs text-emerald-600">Manage pending requests</div>
               </div>
             </Link>
 
             <Link
               href="/admin/users"
-              className="bg-cyan-500/20 hover:bg-cyan-500/30 border border-cyan-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-cyan-500/50"
+              className="bg-[#f7fff9] hover:bg-emerald-50 border border-emerald-100 text-emerald-900 p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-100"
             >
               <svg
                 className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
@@ -375,13 +306,13 @@ export default function AdminPage() {
               </svg>
               <div className="text-center sm:text-left">
                 <div className="font-semibold">Manage Users</div>
-                <div className="text-xs text-cyan-100">Edit & approve users</div>
+                <div className="text-xs text-emerald-600">Edit & approve users</div>
               </div>
             </Link>
 
             <Link
               href="/admin/clubs"
-              className="bg-emerald-500/20 hover:bg-emerald-500/30 border border-emerald-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-500/50"
+              className="bg-[#f7fff9] hover:bg-emerald-50 border border-emerald-100 text-emerald-900 p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-100"
             >
               <svg
                 className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
@@ -398,13 +329,13 @@ export default function AdminPage() {
               </svg>
               <div className="text-center sm:text-left">
                 <div className="font-semibold">Club Management</div>
-                <div className="text-xs text-emerald-100">View & manage clubs</div>
+                <div className="text-xs text-emerald-600">View & manage clubs</div>
               </div>
             </Link>
 
             <Link
               href="/admin/activity"
-              className="bg-violet-500/20 hover:bg-violet-500/30 border border-violet-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-violet-500/50"
+              className="bg-[#f7fff9] hover:bg-emerald-50 border border-emerald-100 text-emerald-900 p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-100"
             >
               <svg
                 className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
@@ -421,13 +352,13 @@ export default function AdminPage() {
               </svg>
               <div className="text-center sm:text-left">
                 <div className="font-semibold">Activity Logs</div>
-                <div className="text-xs text-violet-100">View system activity</div>
+                <div className="text-xs text-emerald-600">View system activity</div>
               </div>
             </Link>
 
             <Link
               href="/admin/settings"
-              className="bg-amber-500/20 hover:bg-amber-500/30 border border-amber-400/50 text-white p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-amber-500/50"
+              className="bg-[#f7fff9] hover:bg-emerald-50 border border-emerald-100 text-emerald-900 p-4 sm:p-5 rounded-xl font-semibold transition backdrop-blur-xl flex flex-col items-center sm:items-start gap-3 text-sm sm:text-base hover:shadow-lg hover:shadow-emerald-100"
             >
               <svg
                 className="w-5 sm:w-6 h-5 sm:h-6 shrink-0"
@@ -450,7 +381,7 @@ export default function AdminPage() {
               </svg>
               <div className="text-center sm:text-left">
                 <div className="font-semibold">System Settings</div>
-                <div className="text-xs text-amber-100">Configure settings</div>
+                <div className="text-xs text-emerald-600">Configure settings</div>
               </div>
             </Link>
           </div>
@@ -460,9 +391,9 @@ export default function AdminPage() {
         <RecentActivityWidget token={token} />
 
         {/* Welcome Message */}
-        <div className="mt-6 sm:mt-8 bg-linear-to-r from-purple-500/20 to-blue-500/20 border border-purple-500/50 rounded-lg sm:rounded-2xl p-4 sm:p-6">
-          <h3 className="text-lg sm:text-xl font-bold text-white mb-2">Welcome Admin</h3>
-          <p className="text-gray-300 text-sm sm:text-base">
+        <div className="mt-6 sm:mt-8 bg-white/90 border border-emerald-100 rounded-lg sm:rounded-2xl p-4 sm:p-6 shadow-sm">
+          <h3 className="text-lg sm:text-xl font-bold text-emerald-900 mb-2">Welcome Admin</h3>
+          <p className="text-emerald-700 text-sm sm:text-base">
             You have exclusive access to the admin dashboard. Use this area to manage users, view analytics, and configure system settings.
           </p>
         </div>
@@ -529,51 +460,51 @@ function RecentActivityWidget({ token }: { token: string | null }) {
   const getActionColor = (action: string) => {
     switch (action) {
       case "create":
-        return "border-l-green-400";
+        return "border-l-emerald-500";
       case "update":
-        return "border-l-blue-400";
+        return "border-l-sky-500";
       case "delete":
-        return "border-l-red-400";
+        return "border-l-red-500";
       case "approve":
-        return "border-l-purple-400";
+        return "border-l-violet-500";
       default:
-        return "border-l-gray-400";
+        return "border-l-slate-400";
     }
   };
 
   return (
-    <div className="mt-6 sm:mt-8 bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl sm:rounded-2xl p-4 sm:p-6">
+    <div className="mt-6 sm:mt-8 bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-xl sm:rounded-2xl p-4 sm:p-6 shadow-sm">
       <div className="flex flex-col sm:flex-row sm:justify-between sm:items-center gap-3 sm:gap-0 mb-6">
-        <h2 className="text-xl sm:text-2xl font-bold text-white">Recent Activity</h2>
-        <Link href="/admin/activity" className="text-blue-400 hover:text-blue-300 text-xs sm:text-sm font-semibold transition">
+        <h2 className="text-xl sm:text-2xl font-bold text-emerald-900">Recent Activity</h2>
+        <Link href="/admin/activity" className="text-emerald-700 hover:text-emerald-900 text-xs sm:text-sm font-semibold transition">
           View All →
         </Link>
       </div>
 
       {loading ? (
         <div className="text-center py-8">
-          <p className="text-gray-300">Loading activities...</p>
+          <p className="text-emerald-600">Loading activities...</p>
         </div>
       ) : error ? (
         <div className="text-center py-8">
-          <p className="text-red-400 text-sm">{error}</p>
+          <p className="text-red-600 text-sm">{error}</p>
         </div>
       ) : activities.length > 0 ? (
         <div className="space-y-3">
           {activities.map((activity) => (
             <div
               key={activity._id}
-              className={`p-4 bg-white/5 border-l-4 ${getActionColor(
+              className={`p-4 bg-[#f7fff9] border border-emerald-100 border-l-4 ${getActionColor(
                 activity.action
-              )} rounded-lg hover:bg-white/10 transition`}
+              )} rounded-lg hover:bg-emerald-50 transition`}
             >
               <div className="flex items-start gap-3">
                 <span className="text-lg">{getActionIcon(activity.action)}</span>
                 <div className="flex-1 min-w-0">
-                  <p className="text-white text-sm font-semibold wrap">
+                  <p className="text-emerald-900 text-sm font-semibold wrap">
                     {activity.description}
                   </p>
-                  <p className="text-gray-400 text-xs mt-1">
+                  <p className="text-emerald-600 text-xs mt-1">
                     By {activity.performedBy?.username || "Unknown"} • {" "}
                     {new Date(activity.timestamp).toLocaleTimeString()}
                   </p>
@@ -583,7 +514,7 @@ function RecentActivityWidget({ token }: { token: string | null }) {
           ))}
         </div>
       ) : (
-        <p className="text-gray-400 text-center py-8">No activities yet</p>
+        <p className="text-emerald-600 text-center py-8">No activities yet</p>
       )}
     </div>
   );

@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface User {
   _id: string;
@@ -175,77 +174,26 @@ export default function AdminUsers() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-            ))}
-          </div>
-          {/* Shooting Stars Effect */}
-          <ShootingStars
-            starColor="#9E00FF"
-            trailColor="#2EB9DF"
-            minSpeed={15}
-            maxSpeed={35}
-            minDelay={1000}
-            maxDelay={3000}
-          />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
         </div>
         <div className="relative z-10 text-center">
           <CloudLoader />
-          <p className="text-white text-lg font-semibold mt-4">Loading users...</p>
+          <p className="text-emerald-700 text-lg font-semibold mt-4">Loading users...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
@@ -255,7 +203,7 @@ export default function AdminUsers() {
             {/* Back Button */}
             <button
               onClick={() => router.push("/admin")}
-              className="mb-6 flex items-center gap-2 px-4 py-2 text-white bg-linear-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/50 rounded-lg hover:from-purple-600/60 hover:to-blue-600/60 hover:border-purple-500/70 transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/50"
+              className="mb-6 flex items-center gap-2 px-4 py-2 text-emerald-900 bg-white border border-emerald-200 rounded-lg hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 font-semibold shadow-sm"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -265,8 +213,8 @@ export default function AdminUsers() {
 
             {/* Header */}
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">User Management</h1>
-              <p className="text-gray-400 text-sm sm:text-base mt-1 sm:mt-2">Total Users: {users.length}</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-emerald-900">User Management</h1>
+              <p className="text-emerald-700 text-sm sm:text-base mt-1 sm:mt-2">Total Users: {users.length}</p>
             </div>
 
             {/* Search and Filter */}
@@ -276,12 +224,12 @@ export default function AdminUsers() {
                 placeholder="Search by username or email..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-white/40 transition"
+                className="flex-1 px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 placeholder-emerald-400 focus:outline-none focus:border-emerald-400 transition"
               />
               <select
                 value={filterType}
                 onChange={(e) => setFilterType(e.target.value as any)}
-                className="px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition"
+                className="px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 focus:outline-none focus:border-emerald-400 transition"
               >
                 <option value="all">All Users</option>
                 <option value="approved">Approved</option>
@@ -292,14 +240,14 @@ export default function AdminUsers() {
 
             {/* Error Message */}
             {error && (
-              <div className="mb-6 bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm">
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
 
             {/* Users Grid */}
             {filteredUsers.length === 0 ? (
-              <div className="text-center py-12 text-gray-400">
+              <div className="text-center py-12 text-emerald-600">
                 <p>No users found matching your criteria.</p>
               </div>
             ) : (
@@ -307,23 +255,23 @@ export default function AdminUsers() {
                 {filteredUsers.map((user) => (
                   <div
                     key={user._id}
-                    className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition"
+                    className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-emerald-50 transition shadow-sm"
                   >
                     {/* Header with badges */}
                     <div className="flex items-start justify-between mb-4">
                       <div className="flex-1">
-                        <h3 className="text-lg sm:text-xl font-bold text-white">{user.username}</h3>
-                        <p className="text-gray-400 text-xs sm:text-sm mt-1">{user.email}</p>
+                        <h3 className="text-lg sm:text-xl font-bold text-emerald-900">{user.username}</h3>
+                        <p className="text-emerald-600 text-xs sm:text-sm mt-1">{user.email}</p>
                       </div>
                       <div className="ml-2 flex flex-col gap-1">
-                        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-blue-500/20 text-blue-400 text-center">
+                        <span className="px-2 py-1 text-xs font-semibold rounded-full bg-emerald-100 text-emerald-700 text-center">
                           {user.isClubLeader ? "Leader" : "Member"}
                         </span>
                         <span
                           className={`px-2 py-1 text-xs font-semibold rounded-full text-center ${
                             user.isApproved
-                              ? "bg-green-500/20 text-green-400"
-                              : "bg-yellow-500/20 text-yellow-400"
+                              ? "bg-green-100 text-green-700"
+                              : "bg-amber-100 text-amber-700"
                           }`}
                         >
                           {user.isApproved ? "Approved" : "Pending"}
@@ -335,7 +283,7 @@ export default function AdminUsers() {
                     <div className="space-y-3 mb-4">
                       {user.phone && (
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Phone</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Phone</p>
                           {editingId === user._id ? (
                             <input
                               type="tel"
@@ -350,10 +298,10 @@ export default function AdminUsers() {
                               }}
                               placeholder="9XXXXXXXXX"
                               maxLength={10}
-                              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                              className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 text-sm focus:outline-none focus:border-emerald-400"
                             />
                           ) : (
-                            <a href={`tel:${user.phone}`} className="text-blue-400 hover:text-blue-300 text-sm">
+                            <a href={`tel:${user.phone}`} className="text-emerald-700 hover:text-emerald-800 text-sm">
                               {user.phone}
                             </a>
                           )}
@@ -362,29 +310,29 @@ export default function AdminUsers() {
 
                       {user.club?.name && (
                         <div>
-                          <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Club</p>
-                          <p className="text-white text-sm">{user.club.name}</p>
+                          <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Club</p>
+                          <p className="text-emerald-900 text-sm">{user.club.name}</p>
                         </div>
                       )}
 
                       {editingId === user._id && (
                         <>
                           <div>
-                            <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Username</p>
+                            <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Username</p>
                             <input
                               type="text"
                               value={editData.username}
                               onChange={(e) => setEditData({ ...editData, username: e.target.value })}
-                              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                              className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 text-sm focus:outline-none focus:border-emerald-400"
                             />
                           </div>
                           <div>
-                            <p className="text-gray-400 text-xs font-medium uppercase tracking-wide">Email</p>
+                            <p className="text-emerald-500 text-xs font-medium uppercase tracking-wide">Email</p>
                             <input
                               type="email"
                               value={editData.email}
                               onChange={(e) => setEditData({ ...editData, email: e.target.value })}
-                              className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white text-sm focus:outline-none focus:border-white/40"
+                              className="w-full px-3 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 text-sm focus:outline-none focus:border-emerald-400"
                             />
                           </div>
                         </>
@@ -397,13 +345,13 @@ export default function AdminUsers() {
                         <div className="flex gap-2">
                           <button
                             onClick={() => handleSaveEdit(user._id)}
-                            className="flex-1 px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
+                            className="flex-1 px-3 py-2 bg-green-100 border border-green-200 hover:bg-green-200 text-green-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Save
                           </button>
                           <button
                             onClick={() => setEditingId(null)}
-                            className="flex-1 px-3 py-2 bg-gray-600/20 border border-gray-500 hover:bg-gray-600/40 text-gray-300 text-sm font-medium rounded-lg transition-all"
+                            className="flex-1 px-3 py-2 bg-slate-100 border border-slate-200 hover:bg-slate-200 text-slate-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Cancel
                           </button>
@@ -412,21 +360,21 @@ export default function AdminUsers() {
                         <>
                           <button
                             onClick={() => handleEditUser(user)}
-                            className="w-full px-3 py-2 bg-blue-600/20 border border-blue-500 hover:bg-blue-600/40 text-blue-400 text-sm font-medium rounded-lg transition-all"
+                            className="w-full px-3 py-2 bg-emerald-100 border border-emerald-200 hover:bg-emerald-200 text-emerald-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Edit
                           </button>
                           {!user.isApproved && (
                             <button
                               onClick={() => handleApproveUser(user._id)}
-                              className="w-full px-3 py-2 bg-green-600/20 border border-green-500 hover:bg-green-600/40 text-green-400 text-sm font-medium rounded-lg transition-all"
+                              className="w-full px-3 py-2 bg-green-100 border border-green-200 hover:bg-green-200 text-green-700 text-sm font-medium rounded-lg transition-all"
                             >
                               Approve
                             </button>
                           )}
                           <button
                             onClick={() => handleDeleteUser(user._id)}
-                            className="w-full px-3 py-2 bg-red-600/20 border border-red-500 hover:bg-red-600/40 text-red-400 text-sm font-medium rounded-lg transition-all"
+                            className="w-full px-3 py-2 bg-red-100 border border-red-200 hover:bg-red-200 text-red-700 text-sm font-medium rounded-lg transition-all"
                           >
                             Delete
                           </button>

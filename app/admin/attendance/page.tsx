@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface AttendanceRecord {
   _id: string;
@@ -49,7 +48,7 @@ export default function AdminAttendance() {
 
       const data = await res.json();
       setRecords(data);
-    } catch (err) {
+    } catch (_err) {
       setError("An error occurred");
     } finally {
       setLoading(false);
@@ -81,27 +80,27 @@ export default function AdminAttendance() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-linear-to-br from-slate-900 via-purple-900 to-slate-900">
+      <div className="min-h-screen flex items-center justify-center bg-[#f3fff9]">
         <div className="text-center">
           <CloudLoader />
-          <p className="text-white text-lg mt-4">Loading attendance records...</p>
+          <p className="mt-4 text-lg text-[#1d2623]">Loading attendance records...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-900 via-purple-900 to-slate-900 p-4">
+    <div className="min-h-screen bg-[#f3fff9] p-4 md:p-6">
       <div className="max-w-7xl mx-auto">
         {/* Header */}
-        <div className="flex justify-between items-center mb-8">
+        <div className="mb-8 flex flex-col items-start justify-between gap-4 md:flex-row md:items-center">
           <div>
-            <h1 className="text-3xl font-bold text-white">Attendance Reports</h1>
-            <p className="text-purple-200">Total Records: {records.length}</p>
+            <h1 className="text-3xl font-bold text-[#1d2623]">Attendance Reports</h1>
+            <p className="text-[#5f6a66]">Total Records: {records.length}</p>
           </div>
           <Link
             href="/admin"
-            className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg"
+            className="rounded-lg bg-[#49c89f] px-4 py-2 font-semibold text-white transition hover:bg-[#3fb18d]"
           >
             Back to Dashboard
           </Link>
@@ -109,49 +108,49 @@ export default function AdminAttendance() {
 
         {/* Statistics Cards */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
-          <div className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg p-4">
-            <p className="text-gray-400 text-sm">Total Records</p>
-            <p className="text-3xl font-bold text-white">{stats.total}</p>
+          <div className="rounded-xl border border-[#d7e9e1] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,0.05)]">
+            <p className="text-sm text-[#5f6a66]">Total Records</p>
+            <p className="text-3xl font-bold text-[#1d2623]">{stats.total}</p>
           </div>
-          <div className="bg-green-500/10 backdrop-blur border border-green-500/30 rounded-lg p-4">
-            <p className="text-gray-400 text-sm">Present</p>
-            <p className="text-3xl font-bold text-green-400">{stats.present}</p>
+          <div className="rounded-xl border border-emerald-200 bg-emerald-50 p-4 shadow-[0_6px_18px_rgba(0,0,0,0.04)]">
+            <p className="text-sm text-emerald-700">Present</p>
+            <p className="text-3xl font-bold text-emerald-700">{stats.present}</p>
           </div>
-          <div className="bg-red-500/10 backdrop-blur border border-red-500/30 rounded-lg p-4">
-            <p className="text-gray-400 text-sm">Absent</p>
-            <p className="text-3xl font-bold text-red-400">{stats.absent}</p>
+          <div className="rounded-xl border border-red-200 bg-red-50 p-4 shadow-[0_6px_18px_rgba(0,0,0,0.04)]">
+            <p className="text-sm text-red-700">Absent</p>
+            <p className="text-3xl font-bold text-red-700">{stats.absent}</p>
           </div>
-          <div className="bg-yellow-500/10 backdrop-blur border border-yellow-500/30 rounded-lg p-4">
-            <p className="text-gray-400 text-sm">Excused</p>
-            <p className="text-3xl font-bold text-yellow-400">{stats.excused}</p>
+          <div className="rounded-xl border border-amber-200 bg-amber-50 p-4 shadow-[0_6px_18px_rgba(0,0,0,0.04)]">
+            <p className="text-sm text-amber-700">Excused</p>
+            <p className="text-3xl font-bold text-amber-700">{stats.excused}</p>
           </div>
         </div>
 
         {/* Attendance Rate */}
-        <div className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg p-4 mb-6">
-          <p className="text-gray-400 text-sm mb-2">Overall Attendance Rate</p>
-          <div className="w-full bg-slate-700 rounded-full h-4">
+        <div className="mb-6 rounded-xl border border-[#d7e9e1] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,0.05)]">
+          <p className="mb-2 text-sm text-[#5f6a66]">Overall Attendance Rate</p>
+          <div className="h-4 w-full rounded-full bg-[#e6f4ee]">
             <div
-              className="bg-linear-to-r from-green-500 to-blue-500 h-4 rounded-full transition-all"
+              className="h-4 rounded-full bg-linear-to-r from-[#49c89f] to-[#2f9f7c] transition-all"
               style={{ width: `${presentPercentage}%` }}
             ></div>
           </div>
-          <p className="text-white font-semibold mt-2">{presentPercentage}%</p>
+          <p className="mt-2 font-semibold text-[#1d2623]">{presentPercentage}%</p>
         </div>
 
         {/* Filters */}
-        <div className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg p-4 mb-6">
+        <div className="mb-6 rounded-xl border border-[#d7e9e1] bg-white p-4 shadow-[0_6px_18px_rgba(0,0,0,0.05)]">
           <div className="flex flex-col sm:flex-row gap-4">
             <input
               type="date"
               value={dateFilter}
               onChange={(e) => setDateFilter(e.target.value)}
-              className="flex-1 px-4 py-2 bg-slate-900 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:border-purple-500"
+              className="flex-1 rounded-lg border border-[#cfe5dc] bg-[#f8fffb] px-4 py-2 text-[#1d2623] focus:border-[#49c89f] focus:outline-none"
             />
             <select
               value={filterStatus}
               onChange={(e) => setFilterStatus(e.target.value as any)}
-              className="px-4 py-2 bg-slate-900 border border-purple-500/30 rounded-lg text-white focus:outline-none focus:border-purple-500"
+              className="rounded-lg border border-[#cfe5dc] bg-[#f8fffb] px-4 py-2 text-[#1d2623] focus:border-[#49c89f] focus:outline-none"
             >
               <option value="all">All Status</option>
               <option value="present">Present</option>
@@ -168,43 +167,43 @@ export default function AdminAttendance() {
         )}
 
         {/* Records Table */}
-        <div className="bg-slate-800/50 backdrop-blur border border-purple-500/20 rounded-lg overflow-hidden">
+        <div className="overflow-hidden rounded-xl border border-[#d7e9e1] bg-white shadow-[0_8px_24px_rgba(0,0,0,0.06)]">
           <div className="overflow-x-auto">
             <table className="w-full">
               <thead>
-                <tr className="bg-purple-600/20 border-b border-purple-500/20">
-                  <th className="px-6 py-3 text-left text-white font-semibold">Member</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Date</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Status</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Event</th>
-                  <th className="px-6 py-3 text-left text-white font-semibold">Remarks</th>
+                <tr className="border-b border-[#d7e9e1] bg-[#f1fff8]">
+                  <th className="px-6 py-3 text-left font-semibold text-[#1d2623]">Member</th>
+                  <th className="px-6 py-3 text-left font-semibold text-[#1d2623]">Date</th>
+                  <th className="px-6 py-3 text-left font-semibold text-[#1d2623]">Status</th>
+                  <th className="px-6 py-3 text-left font-semibold text-[#1d2623]">Event</th>
+                  <th className="px-6 py-3 text-left font-semibold text-[#1d2623]">Remarks</th>
                 </tr>
               </thead>
               <tbody>
                 {filteredRecords.map((record) => (
                   <tr
                     key={record._id}
-                    className="border-b border-purple-500/10 hover:bg-purple-600/10 transition"
+                    className="border-b border-[#edf6f2] transition hover:bg-[#f8fffb]"
                   >
-                    <td className="px-6 py-4 text-white">{record.member?.name || "Unknown"}</td>
-                    <td className="px-6 py-4 text-gray-300">
+                    <td className="px-6 py-4 text-[#1d2623]">{record.member?.name || "Unknown"}</td>
+                    <td className="px-6 py-4 text-[#5f6a66]">
                       {new Date(record.date).toLocaleDateString()}
                     </td>
                     <td className="px-6 py-4">
                       <span
                         className={`inline-block px-3 py-1 rounded-full text-xs font-semibold ${
                           record.status === "present"
-                            ? "bg-green-500/20 text-green-400"
+                            ? "bg-emerald-100 text-emerald-700"
                             : record.status === "absent"
-                            ? "bg-red-500/20 text-red-400"
-                            : "bg-yellow-500/20 text-yellow-400"
+                            ? "bg-red-100 text-red-700"
+                            : "bg-amber-100 text-amber-700"
                         }`}
                       >
                         {record.status.charAt(0).toUpperCase() + record.status.slice(1)}
                       </span>
                     </td>
-                    <td className="px-6 py-4 text-gray-300">{record.event?.name || "-"}</td>
-                    <td className="px-6 py-4 text-gray-300">{record.remarks || "-"}</td>
+                    <td className="px-6 py-4 text-[#5f6a66]">{record.event?.name || "-"}</td>
+                    <td className="px-6 py-4 text-[#5f6a66]">{record.remarks || "-"}</td>
                   </tr>
                 ))}
               </tbody>
@@ -212,7 +211,7 @@ export default function AdminAttendance() {
           </div>
 
           {filteredRecords.length === 0 && (
-            <div className="text-center py-8 text-gray-400">
+            <div className="py-8 text-center text-[#7b8782]">
               No attendance records found.
             </div>
           )}

@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface Settings {
   maintenanceMode: boolean;
@@ -119,95 +118,26 @@ export default function AdminSettings() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-black text-white">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-            ))}
-          </div>
-          {/* Shooting Stars Effect */}
-          <ShootingStars
-            starColor="#9E00FF"
-            trailColor="#2EB9DF"
-            minSpeed={15}
-            maxSpeed={35}
-            minDelay={1000}
-            maxDelay={3000}
-          />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen flex items-center justify-center bg-[#f4fff9] text-emerald-900 relative overflow-hidden">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
         </div>
         <div className="relative z-10 text-center">
           <CloudLoader />
-          <p className="text-white text-lg mt-4">Loading settings...</p>
+          <p className="text-emerald-700 text-lg mt-4">Loading settings...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black text-white overflow-hidden relative">
-      {/* Galaxy Background */}
+    <div className="min-h-screen bg-[#f4fff9] text-emerald-900 overflow-hidden relative">
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
-        {/* Gradient Base */}
-        <div className="absolute inset-0 bg-linear-to-br from-indigo-950 via-black to-purple-950"></div>
-
-        {/* Stars */}
-        {[...Array(100)].map((_, i) => (
-          <div
-            key={i}
-            className="absolute rounded-full bg-white opacity-70"
-            style={{
-              width: Math.random() * 2 + "px",
-              height: Math.random() * 2 + "px",
-              left: Math.random() * 100 + "%",
-              top: Math.random() * 100 + "%",
-              animation: `twinkle ${Math.random() * 3 + 2}s infinite`,
-              animationDelay: Math.random() * 2 + "s",
-            }}
-          ></div>
-        ))}
-
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-
-        {/* Floating Color Blobs */}
-        <div className="absolute top-20 left-10 w-96 h-96 bg-purple-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-40 right-10 w-96 h-96 bg-blue-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-20 left-1/2 w-96 h-96 bg-indigo-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute -bottom-32 right-1/3 w-96 h-96 bg-pink-600/20 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-
-        <style>{`
-          @keyframes twinkle {
-            0%, 100% { opacity: 0.3; }
-            50% { opacity: 1; }
-          }
-          @keyframes blob {
-            0%, 100% { transform: translate(0, 0) scale(1); }
-            33% { transform: translate(30px, -50px) scale(1.1); }
-            66% { transform: translate(-20px, 20px) scale(0.9); }
-          }
-          .animate-blob {
-            animation: blob 7s infinite;
-          }
-          .animation-delay-2000 {
-            animation-delay: 2s;
-          }
-          .animation-delay-4000 {
-            animation-delay: 4s;
-          }
-        `}</style>
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
@@ -217,7 +147,7 @@ export default function AdminSettings() {
           <div className="flex items-center gap-4 mb-8">
             <button
               onClick={() => router.push("/admin")}
-              className="flex items-center gap-2 px-4 py-2 text-white bg-linear-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/50 rounded-lg hover:from-purple-600/60 hover:to-blue-600/60 hover:border-purple-500/70 transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/50"
+              className="flex items-center gap-2 px-4 py-2 text-emerald-900 bg-white border border-emerald-200 rounded-lg hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 font-semibold shadow-sm"
             >
               <svg
                 className="w-5 h-5"
@@ -235,20 +165,20 @@ export default function AdminSettings() {
               Back to Admin
             </button>
           </div>
-          <h1 className="text-4xl font-bold mb-2">System Settings</h1>
-          <p className="text-gray-400">Configure application settings</p>
+          <h1 className="text-4xl font-bold mb-2 text-emerald-900">System Settings</h1>
+          <p className="text-emerald-700">Configure application settings</p>
         </div>
 
         {/* Main Content */}
         <div className="px-4 sm:px-6 lg:px-8 py-8">
           {/* Messages */}
           {error && (
-            <div className="mb-6 p-4 rounded-lg bg-red-500/20 border border-red-500/50 text-red-200">
+            <div className="mb-6 p-4 rounded-lg bg-red-50 border border-red-200 text-red-700">
               {error}
             </div>
           )}
           {success && (
-            <div className="mb-6 p-4 rounded-lg bg-green-500/20 border border-green-500/50 text-green-200">
+            <div className="mb-6 p-4 rounded-lg bg-green-50 border border-green-200 text-green-700">
               {success}
             </div>
           )}
@@ -256,11 +186,11 @@ export default function AdminSettings() {
           {/* Settings Grid */}
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             {/* Maintenance Mode */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors">
+            <div className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-xl p-6 hover:bg-emerald-50 transition-colors shadow-sm">
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
-                  <p className="text-lg font-semibold text-white">Maintenance Mode</p>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-lg font-semibold text-emerald-900">Maintenance Mode</p>
+                  <p className="text-sm text-emerald-600 mt-1">
                     Enable to prevent new user access
                   </p>
                 </div>
@@ -273,19 +203,19 @@ export default function AdminSettings() {
                       maintenanceMode: e.target.checked,
                     })
                   }
-                  className="w-6 h-6 rounded accent-blue-500"
+                  className="w-6 h-6 rounded accent-emerald-600"
                 />
               </label>
             </div>
 
             {/* Allow New Registrations */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors">
+            <div className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-xl p-6 hover:bg-emerald-50 transition-colors shadow-sm">
               <label className="flex items-center justify-between cursor-pointer">
                 <div>
-                  <p className="text-lg font-semibold text-white">
+                  <p className="text-lg font-semibold text-emerald-900">
                     Allow New Registrations
                   </p>
-                  <p className="text-sm text-gray-400 mt-1">
+                  <p className="text-sm text-emerald-600 mt-1">
                     Allow new users to sign up
                   </p>
                 </div>
@@ -298,18 +228,18 @@ export default function AdminSettings() {
                       allowNewRegistrations: e.target.checked,
                     })
                   }
-                  className="w-6 h-6 rounded accent-blue-500"
+                  className="w-6 h-6 rounded accent-emerald-600"
                 />
               </label>
             </div>
 
             {/* Max Users Per Club */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors">
+            <div className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-xl p-6 hover:bg-emerald-50 transition-colors shadow-sm">
               <label className="block">
-                <p className="text-lg font-semibold text-white mb-2">
+                <p className="text-lg font-semibold text-emerald-900 mb-2">
                   Max Users Per Club
                 </p>
-                <p className="text-sm text-gray-400 mb-4">
+                <p className="text-sm text-emerald-600 mb-4">
                   Maximum members allowed per club
                 </p>
                 <input
@@ -322,18 +252,18 @@ export default function AdminSettings() {
                       maxUsersPerClub: parseInt(e.target.value) || 1,
                     })
                   }
-                  className="w-full px-4 py-2 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 placeholder-emerald-400 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </label>
             </div>
 
             {/* Default User Role */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors">
+            <div className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-xl p-6 hover:bg-emerald-50 transition-colors shadow-sm">
               <label className="block">
-                <p className="text-lg font-semibold text-white mb-2">
+                <p className="text-lg font-semibold text-emerald-900 mb-2">
                   Default User Role
                 </p>
-                <p className="text-sm text-gray-400 mb-4">
+                <p className="text-sm text-emerald-600 mb-4">
                   Role assigned to new members
                 </p>
                 <select
@@ -344,12 +274,12 @@ export default function AdminSettings() {
                       defaultUserRole: e.target.value as "member" | "leader",
                     })
                   }
-                  className="w-full px-4 py-2 bg-white/5 border border-white/20 rounded-lg text-white focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 focus:outline-none focus:border-emerald-500 transition-colors"
                 >
-                  <option value="member" className="bg-slate-900">
+                  <option value="member">
                     Member
                   </option>
-                  <option value="leader" className="bg-slate-900">
+                  <option value="leader">
                     Leader
                   </option>
                 </select>
@@ -357,12 +287,12 @@ export default function AdminSettings() {
             </div>
 
             {/* Max Attendance Records */}
-            <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-xl p-6 hover:bg-white/20 transition-colors lg:col-span-2">
+            <div className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-xl p-6 hover:bg-emerald-50 transition-colors lg:col-span-2 shadow-sm">
               <label className="block">
-                <p className="text-lg font-semibold text-white mb-2">
+                <p className="text-lg font-semibold text-emerald-900 mb-2">
                   Max Attendance Records Display
                 </p>
-                <p className="text-sm text-gray-400 mb-4">
+                <p className="text-sm text-emerald-600 mb-4">
                   Maximum records shown in attendance page
                 </p>
                 <input
@@ -375,7 +305,7 @@ export default function AdminSettings() {
                       maxAttendanceRecordsDisplay: parseInt(e.target.value) || 1,
                     })
                   }
-                  className="w-full px-4 py-2 bg-white/5 border border-white/20 rounded-lg text-white placeholder-gray-500 focus:outline-none focus:border-blue-500 transition-colors"
+                  className="w-full px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 placeholder-emerald-400 focus:outline-none focus:border-emerald-500 transition-colors"
                 />
               </label>
             </div>
@@ -386,7 +316,7 @@ export default function AdminSettings() {
             <button
               onClick={handleSaveSettings}
               disabled={loading}
-              className="px-6 py-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-50 rounded-lg font-medium transition-colors"
+              className="px-6 py-2 bg-emerald-700 text-white hover:bg-emerald-800 disabled:opacity-50 rounded-lg font-medium transition-colors"
             >
               {loading ? "Saving..." : "Save Settings"}
             </button>
@@ -400,7 +330,7 @@ export default function AdminSettings() {
                   maxAttendanceRecordsDisplay: 100,
                 })
               }
-              className="px-6 py-2 bg-gray-600 hover:bg-gray-700 rounded-lg font-medium transition-colors"
+              className="px-6 py-2 bg-slate-200 text-slate-700 hover:bg-slate-300 rounded-lg font-medium transition-colors"
             >
               Reset
             </button>

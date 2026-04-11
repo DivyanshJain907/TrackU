@@ -3,7 +3,6 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface ActivityLog {
   _id: string;
@@ -79,93 +78,42 @@ export default function AdminActivityLogs() {
   const getActionBadgeColor = (action: string) => {
     switch (action) {
       case "create":
-        return "bg-green-500/20 text-green-400";
+        return "bg-green-100 text-green-700";
       case "update":
-        return "bg-blue-500/20 text-blue-400";
+        return "bg-sky-100 text-sky-700";
       case "delete":
-        return "bg-red-500/20 text-red-400";
+        return "bg-red-100 text-red-700";
       case "approve":
-        return "bg-purple-500/20 text-purple-400";
+        return "bg-violet-100 text-violet-700";
       case "login":
-        return "bg-yellow-500/20 text-yellow-400";
+        return "bg-amber-100 text-amber-700";
       default:
-        return "bg-gray-500/20 text-gray-400";
+        return "bg-slate-100 text-slate-700";
     }
   };
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => (
-              <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-            ))}
-          </div>
-          {/* Shooting Stars Effect */}
-          <ShootingStars
-            starColor="#9E00FF"
-            trailColor="#2EB9DF"
-            minSpeed={15}
-            maxSpeed={35}
-            minDelay={1000}
-            maxDelay={3000}
-          />
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
         </div>
         <div className="relative z-10 text-center">
           <CloudLoader />
-          <p className="text-white text-lg font-semibold mt-4">Loading activity logs...</p>
+          <p className="text-emerald-700 text-lg font-semibold mt-4">Loading activity logs...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-24 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
@@ -175,7 +123,7 @@ export default function AdminActivityLogs() {
             {/* Back Button */}
             <button
               onClick={() => router.push("/admin")}
-              className="mb-6 flex items-center gap-2 px-4 py-2 text-white bg-linear-to-r from-purple-600/40 to-blue-600/40 border border-purple-500/50 rounded-lg hover:from-purple-600/60 hover:to-blue-600/60 hover:border-purple-500/70 transition-all duration-200 font-semibold shadow-lg hover:shadow-purple-500/50"
+              className="mb-6 flex items-center gap-2 px-4 py-2 text-emerald-900 bg-white border border-emerald-200 rounded-lg hover:bg-emerald-50 hover:border-emerald-300 transition-all duration-200 font-semibold shadow-sm"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -185,31 +133,31 @@ export default function AdminActivityLogs() {
 
             {/* Header */}
             <div className="mb-6 sm:mb-8">
-              <h1 className="text-2xl sm:text-3xl font-bold text-white">Activity Logs</h1>
-              <p className="text-gray-400 text-sm sm:text-base mt-1 sm:mt-2">Total Activities: {logs.length}</p>
+              <h1 className="text-2xl sm:text-3xl font-bold text-emerald-900">Activity Logs</h1>
+              <p className="text-emerald-700 text-sm sm:text-base mt-1 sm:mt-2">Total Activities: {logs.length}</p>
             </div>
 
             {/* Statistics Cards */}
             <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 mb-6">
-              <div className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition text-center">
-                <p className="text-gray-400 text-xs sm:text-sm font-medium uppercase tracking-wide">Total Activities</p>
-                <p className="text-2xl sm:text-3xl font-bold text-white mt-2">{logs.length}</p>
+              <div className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-emerald-50 transition text-center shadow-sm">
+                <p className="text-emerald-600 text-xs sm:text-sm font-medium uppercase tracking-wide">Total Activities</p>
+                <p className="text-2xl sm:text-3xl font-bold text-emerald-900 mt-2">{logs.length}</p>
               </div>
-              <div className="bg-green-500/20 backdrop-blur-xl border border-green-500/30 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-green-500/30 transition text-center">
-                <p className="text-green-300 text-xs sm:text-sm font-medium uppercase tracking-wide">Created</p>
-                <p className="text-2xl sm:text-3xl font-bold text-green-400 mt-2">
+              <div className="bg-green-50 backdrop-blur-xl border border-green-200 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-green-100 transition text-center">
+                <p className="text-green-700 text-xs sm:text-sm font-medium uppercase tracking-wide">Created</p>
+                <p className="text-2xl sm:text-3xl font-bold text-green-700 mt-2">
                   {logs.filter((l) => l.action === "create").length}
                 </p>
               </div>
-              <div className="bg-blue-500/20 backdrop-blur-xl border border-blue-500/30 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-blue-500/30 transition text-center">
-                <p className="text-blue-300 text-xs sm:text-sm font-medium uppercase tracking-wide">Updated</p>
-                <p className="text-2xl sm:text-3xl font-bold text-blue-400 mt-2">
+              <div className="bg-sky-50 backdrop-blur-xl border border-sky-200 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-sky-100 transition text-center">
+                <p className="text-sky-700 text-xs sm:text-sm font-medium uppercase tracking-wide">Updated</p>
+                <p className="text-2xl sm:text-3xl font-bold text-sky-700 mt-2">
                   {logs.filter((l) => l.action === "update").length}
                 </p>
               </div>
-              <div className="bg-red-500/20 backdrop-blur-xl border border-red-500/30 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-red-500/30 transition text-center">
-                <p className="text-red-300 text-xs sm:text-sm font-medium uppercase tracking-wide">Deleted</p>
-                <p className="text-2xl sm:text-3xl font-bold text-red-400 mt-2">
+              <div className="bg-red-50 backdrop-blur-xl border border-red-200 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-red-100 transition text-center">
+                <p className="text-red-700 text-xs sm:text-sm font-medium uppercase tracking-wide">Deleted</p>
+                <p className="text-2xl sm:text-3xl font-bold text-red-700 mt-2">
                   {logs.filter((l) => l.action === "delete").length}
                 </p>
               </div>
@@ -220,7 +168,7 @@ export default function AdminActivityLogs() {
               <select
                 value={filterAction}
                 onChange={(e) => setFilterAction(e.target.value)}
-                className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition"
+                className="flex-1 px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 focus:outline-none focus:border-emerald-400 transition"
               >
                 <option value="all">All Actions</option>
                 {Array.from(new Set(logs.map((log) => log.action))).map((action) => (
@@ -233,19 +181,19 @@ export default function AdminActivityLogs() {
                 type="date"
                 value={startDate}
                 onChange={(e) => setStartDate(e.target.value)}
-                className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition"
+                className="flex-1 px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 focus:outline-none focus:border-emerald-400 transition"
               />
               <input
                 type="date"
                 value={endDate}
                 onChange={(e) => setEndDate(e.target.value)}
-                className="flex-1 px-4 py-2 bg-white/10 border border-white/20 rounded-lg text-white focus:outline-none focus:border-white/40 transition"
+                className="flex-1 px-4 py-2 bg-white border border-emerald-200 rounded-lg text-emerald-900 focus:outline-none focus:border-emerald-400 transition"
               />
             </div>
 
             {/* Error */}
             {error && (
-              <div className="mb-6 bg-red-500/20 border border-red-500 text-red-200 px-4 py-3 rounded-lg text-sm">
+              <div className="mb-6 bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm">
                 {error}
               </div>
             )}
@@ -256,7 +204,7 @@ export default function AdminActivityLogs() {
                 filteredLogs.map((log) => (
                   <div
                     key={log._id}
-                    className="bg-white/10 backdrop-blur-xl border border-white/20 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-white/20 transition"
+                    className="bg-white/90 backdrop-blur-xl border border-emerald-100 rounded-lg sm:rounded-2xl p-4 sm:p-5 hover:bg-emerald-50 transition shadow-sm"
                   >
                     <div className="flex items-start justify-between gap-3">
                       <div className="flex-1 min-w-0">
@@ -268,22 +216,22 @@ export default function AdminActivityLogs() {
                           >
                             {log.action.toUpperCase()}
                           </span>
-                          <span className="text-gray-400 text-xs sm:text-sm">
+                          <span className="text-emerald-600 text-xs sm:text-sm">
                             by {log.performedBy?.username || "Unknown"}
                           </span>
                         </div>
-                        <p className="text-white font-semibold text-sm sm:text-base mb-2">
+                        <p className="text-emerald-900 font-semibold text-sm sm:text-base mb-2">
                           {log.description}
                         </p>
-                        <p className="text-gray-400 text-xs">
+                        <p className="text-emerald-600 text-xs">
                           📅 {new Date(log.timestamp).toLocaleString()}
                         </p>
                         {log.details && Object.keys(log.details).length > 0 && (
                           <details className="mt-3 cursor-pointer">
-                            <summary className="text-blue-400 hover:text-blue-300 text-xs font-semibold">
+                            <summary className="text-emerald-700 hover:text-emerald-800 text-xs font-semibold">
                               View Details
                             </summary>
-                            <pre className="mt-2 p-2 bg-black/50 rounded text-xs text-gray-300 overflow-auto max-h-40 border border-white/10">
+                            <pre className="mt-2 p-2 bg-emerald-50 rounded text-xs text-emerald-700 overflow-auto max-h-40 border border-emerald-100">
                               {JSON.stringify(log.details, null, 2)}
                             </pre>
                           </details>
@@ -293,7 +241,7 @@ export default function AdminActivityLogs() {
                   </div>
                 ))
               ) : (
-                <div className="text-center py-12 text-gray-400">
+                <div className="text-center py-12 text-emerald-600">
                   No activity logs found.
                 </div>
               )}
