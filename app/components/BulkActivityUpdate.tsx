@@ -151,27 +151,27 @@ export default function BulkActivityUpdate() {
 
   if (loading) {
     return (
-      <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 border-2 border-cyan-500/30">
+      <div className="rounded-2xl border-2 border-[#cde4da] bg-white p-4 shadow-2xl sm:rounded-3xl sm:p-6 md:p-8">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-10 w-10 sm:h-12 sm:w-12 border-b-2 border-cyan-500 mx-auto mb-3 sm:mb-4"></div>
-          <p className="text-gray-400 text-sm sm:text-base">Loading team members...</p>
+          <div className="mx-auto mb-3 h-10 w-10 animate-spin rounded-full border-b-2 border-[#49c89f] sm:mb-4 sm:h-12 sm:w-12"></div>
+          <p className="text-sm text-[#6d7874] sm:text-base">Loading team members...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-2xl sm:rounded-3xl shadow-2xl p-4 sm:p-6 md:p-8 border-2 border-cyan-500/30 hover:border-cyan-500/60 transition animate-in fade-in slide-in-from-top-2">
+    <div className="animate-in fade-in slide-in-from-top-2 rounded-2xl border-2 border-[#cde4da] bg-white p-4 shadow-2xl transition hover:border-[#9fd4bf] sm:rounded-3xl sm:p-6 md:p-8">
       {/* Header */}
       <div className="flex items-start sm:items-center gap-2 sm:gap-3 mb-6">
-        <div className="p-2 sm:p-3 bg-linear-to-br from-cyan-500 to-blue-500 rounded-lg sm:rounded-xl shrink-0">
+        <div className="shrink-0 rounded-lg bg-[#49c89f] p-2 sm:rounded-xl sm:p-3">
           <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
           </svg>
         </div>
         <div className="min-w-0 flex-1">
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-white break-words">Bulk Activity Update</h2>
-          <p className="text-gray-400 text-xs sm:text-sm mt-0.5 sm:mt-1">Add points/hours to multiple members</p>
+          <h2 className="wrap-break-word text-xl font-bold text-[#1f2623] sm:text-2xl md:text-3xl">Bulk Activity Update</h2>
+          <p className="mt-0.5 text-xs text-[#6d7874] sm:mt-1 sm:text-sm">Add points/hours to multiple members</p>
         </div>
       </div>
 
@@ -179,19 +179,19 @@ export default function BulkActivityUpdate() {
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
         {/* Members List */}
         <div className="md:col-span-2 order-2 md:order-1">
-          <div className="bg-slate-800 rounded-lg border border-slate-700 p-4 sm:p-6">
+          <div className="rounded-lg border border-[#d7e9e1] bg-[#f7fcfa] p-4 sm:p-6">
             <div className="mb-4">
               <input
                 type="text"
                 placeholder="Search members..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 sm:px-4 py-2 bg-slate-700 border border-slate-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 text-sm sm:text-base"
+                className="w-full rounded border border-[#d7e9e1] bg-white px-3 py-2 text-sm text-[#1f2623] placeholder-[#8fa39d] focus:border-[#49c89f] focus:outline-none sm:px-4 sm:text-base"
               />
             </div>
 
             {/* Select all */}
-            <div className="mb-4 p-3 bg-slate-700 rounded border border-slate-600 flex items-center gap-2">
+            <div className="mb-4 flex items-center gap-2 rounded border border-[#d7e9e1] bg-white p-3">
               <input
                 type="checkbox"
                 id="selectAll"
@@ -202,10 +202,10 @@ export default function BulkActivityUpdate() {
                 onChange={handleSelectAll}
                 className="cursor-pointer w-4 h-4"
               />
-              <label htmlFor="selectAll" className="text-white cursor-pointer flex-1 text-sm sm:text-base font-medium">
+              <label htmlFor="selectAll" className="flex-1 cursor-pointer text-sm font-medium text-[#2b3531] sm:text-base">
                 Select All
               </label>
-              <span className="text-xs sm:text-sm text-gray-400 whitespace-nowrap">
+              <span className="whitespace-nowrap text-xs text-[#8fa39d] sm:text-sm">
                 {selectedMembers.size}/{filteredMembers.length}
               </span>
             </div>
@@ -213,15 +213,15 @@ export default function BulkActivityUpdate() {
             {/* Members list */}
             <div className="space-y-2 max-h-64 sm:max-h-96 overflow-y-auto">
               {filteredMembers.length === 0 ? (
-                <p className="text-gray-400 text-center py-8 text-sm">No members found</p>
+                <p className="py-8 text-center text-sm text-[#8fa39d]">No members found</p>
               ) : (
                 filteredMembers.map((member) => (
                   <div
                     key={member._id}
                     className={`p-3 rounded border cursor-pointer transition-colors text-sm sm:text-base ${
                       selectedMembers.has(member._id)
-                        ? "bg-cyan-600 border-cyan-500"
-                        : "bg-slate-700 border-slate-600 hover:border-slate-500"
+                        ? "bg-[#49c89f] border-[#3db58d]"
+                        : "bg-white border-[#d7e9e1] hover:border-[#9fd4bf]"
                     }`}
                     onClick={() => handleSelectMember(member._id)}
                   >
@@ -234,12 +234,12 @@ export default function BulkActivityUpdate() {
                         onClick={(e) => e.stopPropagation()}
                       />
                       <div className="flex-1 min-w-0">
-                        <div className="text-white font-medium truncate">{member.name}</div>
-                        <div className="text-xs sm:text-sm text-gray-400 truncate">
+                        <div className="truncate font-medium text-[#1f2623]">{member.name}</div>
+                        <div className="truncate text-xs text-[#6d7874] sm:text-sm">
                           {member.enrollmentNumber}
                           {member.position && ` • ${member.position}`}
                         </div>
-                        <div className="text-xs text-gray-500 mt-1">
+                        <div className="mt-1 text-xs text-[#8fa39d]">
                           {member.points}pts • {member.hours}h
                         </div>
                       </div>
@@ -255,27 +255,27 @@ export default function BulkActivityUpdate() {
         <div className="md:col-span-1 order-1 md:order-2">
           <form
             onSubmit={handleSubmit}
-            className="bg-slate-800 rounded-lg border border-slate-700 p-4 sm:p-6 sticky top-4 sm:top-6"
+            className="sticky top-4 rounded-lg border border-[#d7e9e1] bg-[#f7fcfa] p-4 sm:top-6 sm:p-6"
           >
-            <h3 className="text-lg sm:text-xl font-bold text-white mb-4">Details</h3>
+            <h3 className="mb-4 text-lg font-bold text-[#1f2623] sm:text-xl">Details</h3>
 
             {/* Error */}
             {error && (
-              <div className="mb-4 p-3 bg-red-900/30 border border-red-700 rounded text-red-400 text-xs sm:text-sm">
+              <div className="mb-4 rounded border border-red-200 bg-red-50 p-3 text-xs text-red-600 sm:text-sm">
                 {error}
               </div>
             )}
 
             {/* Success */}
             {successMessage && (
-              <div className="mb-4 p-3 bg-green-900/30 border border-green-700 rounded text-green-400 text-xs sm:text-sm">
+              <div className="mb-4 rounded border border-green-200 bg-green-50 p-3 text-xs text-green-600 sm:text-sm">
                 {successMessage}
               </div>
             )}
 
             {/* Points */}
             <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[#5f6b67] sm:text-sm">
                 Points
               </label>
               <input
@@ -285,13 +285,13 @@ export default function BulkActivityUpdate() {
                   setPoints(e.target.value === "" ? "" : parseInt(e.target.value))
                 }
                 placeholder="10"
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 text-sm"
+                className="w-full rounded border border-[#d7e9e1] bg-white px-3 py-2 text-sm text-[#1f2623] placeholder-[#8fa39d] focus:border-[#49c89f] focus:outline-none"
               />
             </div>
 
             {/* Hours */}
             <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[#5f6b67] sm:text-sm">
                 Hours
               </label>
               <input
@@ -302,13 +302,13 @@ export default function BulkActivityUpdate() {
                   setHours(e.target.value === "" ? "" : parseFloat(e.target.value))
                 }
                 placeholder="2.5"
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 text-sm"
+                className="w-full rounded border border-[#d7e9e1] bg-white px-3 py-2 text-sm text-[#1f2623] placeholder-[#8fa39d] focus:border-[#49c89f] focus:outline-none"
               />
             </div>
 
             {/* Remark */}
             <div className="mb-3">
-              <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[#5f6b67] sm:text-sm">
                 Remark *
               </label>
               <textarea
@@ -316,20 +316,20 @@ export default function BulkActivityUpdate() {
                 onChange={(e) => setRemark(e.target.value)}
                 placeholder="e.g., Workshop"
                 rows={2}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white placeholder-gray-400 focus:outline-none focus:border-cyan-500 resize-none text-sm"
+                className="w-full resize-none rounded border border-[#d7e9e1] bg-white px-3 py-2 text-sm text-[#1f2623] placeholder-[#8fa39d] focus:border-[#49c89f] focus:outline-none"
               />
             </div>
 
             {/* Date */}
             <div className="mb-5">
-              <label className="block text-xs sm:text-sm font-medium text-gray-300 mb-1.5">
+              <label className="mb-1.5 block text-xs font-medium text-[#5f6b67] sm:text-sm">
                 Date
               </label>
               <input
                 type="date"
                 value={date}
                 onChange={(e) => setDate(e.target.value)}
-                className="w-full px-3 py-2 bg-slate-700 border border-slate-600 rounded text-white focus:outline-none focus:border-cyan-500 text-sm"
+                className="w-full rounded border border-[#d7e9e1] bg-white px-3 py-2 text-sm text-[#1f2623] focus:border-[#49c89f] focus:outline-none"
               />
             </div>
 
@@ -339,8 +339,8 @@ export default function BulkActivityUpdate() {
               disabled={submitting || selectedMembers.size === 0}
               className={`w-full py-2.5 rounded font-medium transition-colors text-sm sm:text-base ${
                 submitting || selectedMembers.size === 0
-                  ? "bg-gray-600 text-gray-400 cursor-not-allowed"
-                  : "bg-cyan-600 text-white hover:bg-cyan-700 active:bg-cyan-800"
+                  ? "cursor-not-allowed bg-gray-200 text-gray-500"
+                  : "bg-[#49c89f] text-white hover:bg-[#3db58d]"
               }`}
             >
               {submitting

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CloudLoader from "@/app/components/CloudLoader";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface Attendee {
   memberId: string;
@@ -40,7 +39,8 @@ export default function Attendance() {
     AttendanceRecord[]
   >([]);
   const [teamMembers, setTeamMembers] = useState<TeamMember[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [pageLoading, setPageLoading] = useState(true);
+  const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
   const [showAddForm, setShowAddForm] = useState(false);
@@ -100,10 +100,10 @@ export default function Attendance() {
 
       const data = await res.json();
       setAttendanceRecords(data);
-      setLoading(false);
+      setPageLoading(false);
     } catch (err) {
       setError(err instanceof Error ? err.message : "An error occurred");
-      setLoading(false);
+      setPageLoading(false);
     }
   };
 
@@ -144,7 +144,7 @@ export default function Attendance() {
       return;
     }
 
-    setLoading(true);
+    setSubmitting(true);
     setError("");
     setSuccessMessage("");
 
@@ -169,7 +169,7 @@ export default function Attendance() {
       const dateObj = new Date(formData.meetingDate);
       if (isNaN(dateObj.getTime())) {
         setError("Invalid meeting date. Please select a valid date.");
-        setLoading(false);
+        setSubmitting(false);
         setTimeout(() => setError(""), 3000);
         return;
       }
@@ -216,8 +216,26 @@ export default function Attendance() {
       setError(err instanceof Error ? err.message : "An error occurred");
       setTimeout(() => setError(""), 3000);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
+  };
+
+  const handleOpenAddForm = () => {
+    setError("");
+    setSuccessMessage("");
+    setShowEditForm(false);
+    setShowViewModal(false);
+    setSelectedRecord(null);
+    setFormData({
+      meetingTitle: "",
+      meetingDate: "",
+      meetingType: "regular",
+      duration: 60,
+      location: "",
+      description: "",
+    });
+    setSelectedAttendees(new Map());
+    setShowAddForm(true);
   };
 
   const toggleMemberAttendance = (
@@ -309,7 +327,7 @@ export default function Attendance() {
       return;
     }
 
-    setLoading(true);
+    setSubmitting(true);
     setError("");
     setSuccessMessage("");
 
@@ -333,7 +351,7 @@ export default function Attendance() {
       const dateObj = new Date(formData.meetingDate);
       if (isNaN(dateObj.getTime())) {
         setError("Invalid meeting date. Please select a valid date.");
-        setLoading(false);
+        setSubmitting(false);
         setTimeout(() => setError(""), 3000);
         return;
       }
@@ -379,80 +397,38 @@ export default function Attendance() {
       setError(err instanceof Error ? err.message : "An error occurred");
       setTimeout(() => setError(""), 3000);
     } finally {
-      setLoading(false);
+      setSubmitting(false);
     }
   };
 
-  if (loading) {
+  if (pageLoading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => {
-              const size = Math.random() * 2;
-              const left = Math.random() * 100;
-              const top = Math.random() * 100;
-              const opacity = Math.random() * 0.7 + 0.3;
-              const duration = Math.random() * 3 + 2;
-              return (
-                <div
-                  key={i}
-                  className="absolute rounded-full bg-white"
-                  style={{
-                    width: `${size}px`,
-                    height: `${size}px`,
-                    left: `${left}%`,
-                    top: `${top}%`,
-                    opacity: opacity,
-                    animation: `twinkle ${duration}s infinite`
-                  }}
-                ></div>
-              );
-            })}
-          </div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+      <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden flex items-center justify-center">
+        <div className="fixed inset-0 z-0 pointer-events-none">
+          <div className="absolute -top-20 -left-16 h-80 w-80 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+          <div className="absolute top-24 right-0 h-72 w-72 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+          <div className="absolute bottom-0 left-1/3 h-96 w-96 rounded-full bg-[#defdef] blur-3xl opacity-70" />
         </div>
         <div className="relative z-10 text-center">
           <CloudLoader size="50px" />
-          <p className="mt-4 text-purple-300 font-semibold">Loading attendance records...</p>
+          <p className="mt-4 text-[#1f6f58] font-semibold">Loading attendance records...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => (
-            <div key={i} className="absolute rounded-full bg-white" style={{width: Math.random() * 2 + 'px', height: Math.random() * 2 + 'px', left: Math.random() * 100 + '%', top: Math.random() * 100 + '%', opacity: Math.random() * 0.7 + 0.3, animation: `twinkle ${Math.random() * 3 + 2}s infinite`}}></div>
-          ))}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
+    <div className="min-h-screen bg-[#f4fff9] relative overflow-hidden">
+      <div className="fixed inset-0 z-0 pointer-events-none">
+        <div className="absolute -top-16 -left-20 h-96 w-96 rounded-full bg-[#c9ffe7] blur-3xl opacity-70" />
+        <div className="absolute top-28 right-0 h-80 w-80 rounded-full bg-[#b9f4e0] blur-3xl opacity-60" />
+        <div className="absolute bottom-0 left-1/3 h-112 w-md rounded-full bg-[#e5fff4] blur-3xl opacity-80" />
       </div>
 
       {/* Content */}
       <div className="relative z-10">
       {/* Header */}
-      <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
+      <div className="bg-white/85 backdrop-blur-xl border-b border-emerald-100 sticky top-0 z-50 shadow-[0_8px_30px_rgba(16,65,53,0.08)]">
         <div className="max-w-7xl mx-auto px-4 py-3 sm:py-8">
           <div className="flex justify-between items-start sm:items-center gap-3 sm:gap-6">
             <div className="space-y-1 sm:space-y-2 flex-1">
@@ -463,10 +439,10 @@ export default function Attendance() {
                   className="w-12 sm:w-20 h-12 sm:h-20 rounded-xl sm:rounded-2xl shadow-lg"
                 />
                 <div>
-                  <h1 className="text-xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  <h1 className="text-xl sm:text-5xl font-bold bg-linear-to-r from-emerald-900 to-emerald-600 bg-clip-text text-transparent">
                     Attendance
                   </h1>
-                  <p className="text-purple-200 text-xs sm:text-sm font-semibold hidden sm:block">
+                  <p className="text-emerald-700 text-xs sm:text-sm font-semibold hidden sm:block">
                     Track Meeting Attendance
                   </p>
                 </div>
@@ -479,7 +455,7 @@ export default function Attendance() {
               <div className="flex sm:hidden gap-2">
                 <Link
                   href="/dashboard"
-                  className="bg-white/10 hover:bg-white/20 backdrop-blur text-white w-10 h-10 rounded-lg font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 hover:shadow-lg hover:shadow-white/20"
+                  className="bg-white hover:bg-emerald-50 text-emerald-800 w-10 h-10 rounded-lg font-semibold transition duration-300 border border-emerald-200 hover:border-emerald-300 flex items-center justify-center gap-1 shadow-sm"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -487,7 +463,7 @@ export default function Attendance() {
                 </Link>
                 <Link
                   href="/performers"
-                  className="bg-white/10 hover:bg-white/20 backdrop-blur text-white w-10 h-10 rounded-lg font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center gap-1 hover:shadow-lg hover:shadow-white/20"
+                  className="bg-white hover:bg-emerald-50 text-emerald-800 w-10 h-10 rounded-lg font-semibold transition duration-300 border border-emerald-200 hover:border-emerald-300 flex items-center justify-center gap-1 shadow-sm"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -499,7 +475,7 @@ export default function Attendance() {
               <div className="hidden sm:flex gap-4 items-center">
                 <Link
                   href="/dashboard"
-                  className="group relative bg-white/10 hover:bg-white/20 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center gap-2 hover:shadow-xl hover:shadow-purple-500/20 transform hover:-translate-y-1"
+                  className="group relative bg-white hover:bg-emerald-50 text-emerald-900 px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-emerald-200 hover:border-emerald-300 flex items-center gap-2 hover:shadow-xl hover:shadow-emerald-100 transform hover:-translate-y-1"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -508,7 +484,7 @@ export default function Attendance() {
                 </Link>
                 <Link
                   href="/performers"
-                  className="group relative bg-white/10 hover:bg-white/20 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center gap-2 hover:shadow-xl hover:shadow-purple-500/20 transform hover:-translate-y-1"
+                  className="group relative bg-white hover:bg-emerald-50 text-emerald-900 px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-emerald-200 hover:border-emerald-300 flex items-center gap-2 hover:shadow-xl hover:shadow-emerald-100 transform hover:-translate-y-1"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -522,7 +498,7 @@ export default function Attendance() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-purple-400 to-blue-400 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110"
+                    className="flex items-center justify-center w-10 h-10 sm:w-12 sm:h-12 bg-linear-to-br from-emerald-500 to-emerald-700 rounded-full hover:shadow-lg hover:shadow-emerald-300 transition transform hover:scale-110"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
@@ -531,17 +507,17 @@ export default function Attendance() {
                   
                   {/* Dropdown Menu */}
                   {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-48 bg-slate-800 border border-purple-500/30 rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
-                      <div className="px-4 py-3 border-b border-purple-500/20">
-                        <p className="text-white font-semibold text-sm">{username}</p>
-                        <p className="text-purple-300 text-xs mt-1">Club Member</p>
+                    <div className="absolute right-0 mt-2 w-48 bg-white border border-emerald-100 rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
+                      <div className="px-4 py-3 border-b border-emerald-100">
+                        <p className="text-emerald-900 font-semibold text-sm">{username}</p>
+                        <p className="text-emerald-600 text-xs mt-1">Club Member</p>
                       </div>
                       <button
                         onClick={() => {
                           handleLogout();
                           setIsProfileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-3 text-red-400 hover:text-red-300 hover:bg-red-700/20 transition flex items-center gap-2 font-semibold text-sm"
+                        className="w-full text-left px-4 py-3 text-red-600 hover:text-red-700 hover:bg-red-50 transition flex items-center gap-2 font-semibold text-sm"
                       >
                         <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
@@ -560,12 +536,12 @@ export default function Attendance() {
       {/* Main Content */}
       <div className="relative z-10 max-w-7xl mx-auto px-4 py-8 sm:py-14">
         <div className="mb-8 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-          <h1 className="text-3xl sm:text-4xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+          <h1 className="text-3xl sm:text-4xl font-bold bg-linear-to-r from-emerald-900 to-emerald-600 bg-clip-text text-transparent">
             Meeting Attendance
           </h1>
           <button
-            onClick={() => setShowAddForm(true)}
-            className="w-full sm:w-auto bg-linear-to-r from-indigo-600 to-indigo-700 hover:from-indigo-700 hover:to-indigo-800 text-white px-6 py-3 rounded-xl hover:shadow-lg font-semibold whitespace-nowrap transition-all transform hover:-translate-y-1 border border-indigo-500/50"
+            onClick={handleOpenAddForm}
+            className="w-full sm:w-auto bg-linear-to-r from-emerald-700 to-emerald-600 hover:from-emerald-800 hover:to-emerald-700 text-white px-6 py-3 rounded-xl hover:shadow-lg hover:shadow-emerald-200 font-semibold whitespace-nowrap transition-all transform hover:-translate-y-1 border border-emerald-700/20"
           >
             Record New Meeting
           </button>
@@ -573,88 +549,88 @@ export default function Attendance() {
 
         {/* Success/Error Messages */}
         {successMessage && (
-          <div className="bg-green-600/20 border-2 border-green-500/50 text-green-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-green-500/80 transition animate-in fade-in slide-in-from-top-2">
+          <div className="bg-emerald-50 border-2 border-emerald-200 text-emerald-700 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 hover:border-emerald-300 transition animate-in fade-in slide-in-from-top-2 shadow-sm">
             <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <p className="font-bold text-green-200 mb-1">Success</p>
+              <p className="font-bold text-emerald-800 mb-1">Success</p>
               <p>{successMessage}</p>
             </div>
           </div>
         )}
 
         {error && (
-          <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
+          <div className="bg-red-50 border-2 border-red-200 text-red-700 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 hover:border-red-300 transition animate-in fade-in slide-in-from-top-2 shadow-sm">
             <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
             <div>
-              <p className="font-bold text-red-200 mb-1">Error</p>
+              <p className="font-bold text-red-800 mb-1">Error</p>
               <p>{error}</p>
             </div>
           </div>
         )}
 
         {/* Attendance Records Table */}
-        <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl overflow-hidden">
+        <div className="bg-white/90 backdrop-blur-xl rounded-3xl border border-emerald-100 shadow-[0_20px_45px_rgba(16,65,53,0.08)] overflow-hidden">
           {/* Desktop Table */}
           <div className="hidden md:block overflow-x-auto">
             <table className="min-w-full">
-              <thead className="bg-linear-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
+              <thead className="bg-emerald-50 border-b border-emerald-100">
                 <tr>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-sm font-bold text-emerald-800 uppercase tracking-wider">
                     Meeting Title
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-sm font-bold text-emerald-800 uppercase tracking-wider">
                     Date
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-sm font-bold text-emerald-800 uppercase tracking-wider">
                     Type
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-sm font-bold text-emerald-800 uppercase tracking-wider">
                     Attendees
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-sm font-bold text-emerald-800 uppercase tracking-wider">
                     Duration
                   </th>
-                  <th className="px-6 py-4 text-left text-sm font-bold text-purple-200 uppercase tracking-wider">
+                  <th className="px-6 py-4 text-left text-sm font-bold text-emerald-800 uppercase tracking-wider">
                     Actions
                   </th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-slate-700/50">
+              <tbody className="divide-y divide-emerald-100">
                 {attendanceRecords.length === 0 ? (
                   <tr>
                     <td
                       colSpan={6}
-                      className="px-6 py-12 text-center text-slate-400"
+                      className="px-6 py-12 text-center text-emerald-600"
                     >
                       <p className="text-lg font-semibold mb-2">No attendance records found</p>
-                      <p className="text-sm text-slate-500">Create your first meeting record to get started!</p>
+                      <p className="text-sm text-emerald-500">Create your first meeting record to get started!</p>
                     </td>
                   </tr>
                 ) : (
                   attendanceRecords.map((record) => (
-                    <tr key={record._id} className="hover:bg-purple-700/20 transition-colors border-b border-slate-700/50 last:border-b-0">
+                    <tr key={record._id} className="hover:bg-emerald-50 transition-colors border-b border-emerald-50 last:border-b-0">
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm font-semibold text-blue-300">
+                        <div className="text-sm font-semibold text-emerald-900">
                           {record.meetingTitle}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-slate-300">
+                        <div className="text-sm text-emerald-700">
                           {new Date(record.meetingDate).toLocaleDateString()}
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-blue-700/50 text-blue-200 border border-blue-500/50">
+                        <span className="px-3 py-1 inline-flex text-xs leading-5 font-bold rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 capitalize">
                           {record.meetingType}
                         </span>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-slate-300">
-                          <span className="text-green-400 font-semibold">
+                        <div className="text-sm text-emerald-700">
+                          <span className="text-emerald-800 font-semibold">
                             {
                               record.attendees.filter(
                                 (a) => a.status === "present" || a.status === "late"
@@ -662,33 +638,33 @@ export default function Attendance() {
                             }
                           </span>
                           {" / "}
-                          <span className="text-slate-400">
+                          <span className="text-emerald-500">
                             {record.attendees.length}
                           </span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap">
-                        <div className="text-sm text-slate-300">
+                        <div className="text-sm text-emerald-700">
                           {record.duration}
-                          <span className="text-slate-500"> min</span>
+                          <span className="text-emerald-500"> min</span>
                         </div>
                       </td>
                       <td className="px-6 py-4 whitespace-nowrap text-sm font-medium space-x-2">
                         <button
                           onClick={() => handleViewDetails(record)}
-                          className="text-blue-400 hover:text-blue-300 hover:bg-blue-700/30 px-3 py-1 rounded-lg transition-all"
+                          className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 px-3 py-1 rounded-lg transition-all"
                         >
                           View
                         </button>
                         <button
                           onClick={() => handleEditRecord(record)}
-                          className="text-purple-400 hover:text-purple-300 hover:bg-purple-700/30 px-3 py-1 rounded-lg transition-all"
+                          className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 px-3 py-1 rounded-lg transition-all"
                         >
                           Edit
                         </button>
                         <button
                           onClick={() => handleDeleteRecord(record._id)}
-                          className="text-red-400 hover:text-red-300 hover:bg-red-700/30 px-3 py-1 rounded-lg transition-all"
+                          className="text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1 rounded-lg transition-all"
                         >
                           Delete
                         </button>
@@ -703,35 +679,35 @@ export default function Attendance() {
           {/* Mobile Card View */}
           <div className="md:hidden p-4 space-y-3">
             {attendanceRecords.length === 0 ? (
-              <div className="text-center py-8 text-slate-400">
+              <div className="text-center py-8 text-emerald-600">
                 <p className="text-lg font-semibold mb-2">No attendance records found</p>
-                <p className="text-sm text-slate-500">Create your first meeting record to get started!</p>
+                <p className="text-sm text-emerald-500">Create your first meeting record to get started!</p>
               </div>
             ) : (
               attendanceRecords.map((record) => (
                 <div
                   key={record._id}
-                  className="bg-slate-700/50 border border-purple-500/30 rounded-xl p-4 hover:bg-purple-700/20 transition-colors space-y-2"
+                  className="bg-[#f7fff9] border border-emerald-100 rounded-xl p-4 hover:bg-emerald-50 transition-colors space-y-2"
                 >
                   <div className="flex justify-between items-start gap-2">
-                    <h3 className="font-semibold text-blue-300 flex-1 wrap">
+                    <h3 className="font-semibold text-emerald-900 flex-1 wrap">
                       {record.meetingTitle}
                     </h3>
-                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-blue-700/50 text-blue-200 border border-blue-500/50 whitespace-nowrap">
+                    <span className="px-2 py-1 text-xs font-bold rounded-full bg-emerald-100 text-emerald-700 border border-emerald-200 whitespace-nowrap capitalize">
                       {record.meetingType}
                     </span>
                   </div>
-                  <div className="grid grid-cols-2 gap-2 text-sm text-slate-300">
+                  <div className="grid grid-cols-2 gap-2 text-sm text-emerald-700">
                     <div>
-                      <span className="text-slate-500">Date:</span> {new Date(record.meetingDate).toLocaleDateString()}
+                      <span className="text-emerald-500">Date:</span> {new Date(record.meetingDate).toLocaleDateString()}
                     </div>
                     <div>
-                      <span className="text-slate-500">Duration:</span> {record.duration} min
+                      <span className="text-emerald-500">Duration:</span> {record.duration} min
                     </div>
                   </div>
-                  <div className="text-sm text-slate-300">
-                    <span className="text-slate-500">Attendees:</span>{" "}
-                    <span className="text-green-400 font-semibold">
+                  <div className="text-sm text-emerald-700">
+                    <span className="text-emerald-500">Attendees:</span>{" "}
+                    <span className="text-emerald-800 font-semibold">
                       {
                         record.attendees.filter(
                           (a) => a.status === "present" || a.status === "late"
@@ -739,26 +715,26 @@ export default function Attendance() {
                       }
                     </span>
                     {" / "}
-                    <span className="text-slate-400">
+                    <span className="text-emerald-500">
                       {record.attendees.length}
                     </span>
                   </div>
                   <div className="flex gap-2 pt-2 justify-end">
                     <button
                       onClick={() => handleViewDetails(record)}
-                      className="text-blue-400 hover:text-blue-300 hover:bg-blue-700/30 px-3 py-1 text-sm rounded-lg transition-all"
+                      className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 px-3 py-1 text-sm rounded-lg transition-all"
                     >
                       View
                     </button>
                     <button
                       onClick={() => handleEditRecord(record)}
-                      className="text-purple-400 hover:text-purple-300 hover:bg-purple-700/30 px-3 py-1 text-sm rounded-lg transition-all"
+                      className="text-emerald-700 hover:text-emerald-800 hover:bg-emerald-100 px-3 py-1 text-sm rounded-lg transition-all"
                     >
                       Edit
                     </button>
                     <button
                       onClick={() => handleDeleteRecord(record._id)}
-                      className="text-red-400 hover:text-red-300 hover:bg-red-700/30 px-3 py-1 text-sm rounded-lg transition-all"
+                      className="text-red-600 hover:text-red-700 hover:bg-red-50 px-3 py-1 text-sm rounded-lg transition-all"
                     >
                       Delete
                     </button>
@@ -771,19 +747,19 @@ export default function Attendance() {
 
         {/* Add Meeting Form Modal */}
         {showAddForm && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
-              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+          <div className="fixed inset-0 bg-emerald-950/20 backdrop-blur-sm flex items-start justify-center z-70 px-3 sm:px-6 pt-24 sm:pt-28 pb-6 overflow-y-auto">
+            <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-4xl w-full max-h-[calc(100vh-7rem)] sm:max-h-[calc(100vh-9rem)] overflow-y-auto shadow-2xl border border-emerald-100">
+              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-emerald-900 to-emerald-600 bg-clip-text text-transparent">
                 Record Meeting Attendance
               </h2>
               <form onSubmit={handleSubmit}>
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label
                       htmlFor="meeting-title"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
-                      Meeting Title <span className="text-red-400">*</span>
+                      Meeting Title <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="meeting-title"
@@ -795,7 +771,7 @@ export default function Attendance() {
                           meetingTitle: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                       placeholder="Enter meeting title"
                       required
                     />
@@ -803,9 +779,9 @@ export default function Attendance() {
                   <div>
                     <label
                       htmlFor="meeting-date"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
-                      Meeting Date <span className="text-red-400">*</span>
+                      Meeting Date <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="meeting-date"
@@ -817,17 +793,17 @@ export default function Attendance() {
                           meetingDate: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label
                       htmlFor="meeting-type"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
                       Meeting Type
                     </label>
@@ -840,7 +816,7 @@ export default function Attendance() {
                           meetingType: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 transition-all"
                     >
                       <option value="regular">Regular</option>
                       <option value="special">Special</option>
@@ -851,7 +827,7 @@ export default function Attendance() {
                   <div>
                     <label
                       htmlFor="duration"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
                       Duration (minutes)
                     </label>
@@ -865,7 +841,7 @@ export default function Attendance() {
                           duration: parseInt(e.target.value),
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                       min="1"
                       placeholder="0"
                     />
@@ -875,7 +851,7 @@ export default function Attendance() {
                 <div className="mb-4">
                   <label
                     htmlFor="location"
-                    className="block text-sm font-semibold text-purple-200 mb-2"
+                    className="block text-sm font-semibold text-emerald-800 mb-2"
                   >
                     Location
                   </label>
@@ -886,7 +862,7 @@ export default function Attendance() {
                     onChange={(e) =>
                       setFormData({ ...formData, location: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                    className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                     placeholder="Enter location"
                   />
                 </div>
@@ -894,7 +870,7 @@ export default function Attendance() {
                 <div className="mb-4">
                   <label
                     htmlFor="description"
-                    className="block text-sm font-semibold text-purple-200 mb-2"
+                    className="block text-sm font-semibold text-emerald-800 mb-2"
                   >
                     Description
                   </label>
@@ -904,29 +880,29 @@ export default function Attendance() {
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                    className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                     rows={3}
                     placeholder="Enter meeting description"
                   />
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-sm font-semibold text-purple-200 mb-3">
+                  <label className="block text-sm font-semibold text-emerald-800 mb-3">
                     Mark Attendance
                   </label>
-                  <div className="border border-purple-500/30 bg-slate-700/30 rounded-2xl p-4 max-h-60 overflow-y-auto">
+                  <div className="border border-emerald-200 bg-[#f7fff9] rounded-2xl p-4 max-h-60 overflow-y-auto">
                     {teamMembers.map((member) => {
                       const attendee = selectedAttendees.get(member._id);
                       return (
                         <div
                           key={member._id}
-                          className="flex items-center justify-between py-3 px-3 border-b border-slate-700/50 last:border-b-0 hover:bg-slate-700/30 rounded-lg transition-colors"
+                          className="flex items-center justify-between py-3 px-3 border-b border-emerald-100 last:border-b-0 hover:bg-emerald-50 rounded-lg transition-colors"
                         >
                           <div>
-                            <div className="font-semibold text-slate-100">
+                            <div className="font-semibold text-emerald-900">
                               {member.name}
                             </div>
-                            <div className="text-xs text-slate-400 mt-0.5">
+                            <div className="text-xs text-emerald-500 mt-0.5">
                               {member.enrollmentNumber}
                             </div>
                           </div>
@@ -939,7 +915,7 @@ export default function Attendance() {
                               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                                 attendee?.status === "present"
                                   ? "bg-green-600/80 text-white shadow-lg shadow-green-500/30"
-                                  : "bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                                  : "bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50"
                               }`}
                             >
                               Present
@@ -952,7 +928,7 @@ export default function Attendance() {
                               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                                 attendee?.status === "late"
                                   ? "bg-amber-600/80 text-white shadow-lg shadow-amber-500/30"
-                                  : "bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                                  : "bg-white text-amber-700 border border-amber-200 hover:bg-amber-50"
                               }`}
                             >
                               Late
@@ -965,7 +941,7 @@ export default function Attendance() {
                               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                                 attendee?.status === "absent"
                                   ? "bg-red-600/80 text-white shadow-lg shadow-red-500/30"
-                                  : "bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                                  : "bg-white text-red-600 border border-red-200 hover:bg-red-50"
                               }`}
                             >
                               Absent
@@ -980,10 +956,10 @@ export default function Attendance() {
                 <div className="flex space-x-4">
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="flex-1 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed"
+                    disabled={submitting}
+                    className="flex-1 bg-linear-to-r from-emerald-700 to-emerald-600 hover:from-emerald-800 hover:to-emerald-700 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-emerald-200 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed"
                   >
-                    {loading ? "Saving..." : "Save Attendance"}
+                    {submitting ? "Saving..." : "Save Attendance"}
                   </button>
                   <button
                     type="button"
@@ -991,8 +967,8 @@ export default function Attendance() {
                       setShowAddForm(false);
                       setSelectedAttendees(new Map());
                     }}
-                    disabled={loading}
-                    className="flex-1 bg-slate-700/50 border border-slate-600 hover:bg-slate-700 text-slate-200 py-3 rounded-xl font-bold transition-all disabled:cursor-not-allowed"
+                    disabled={submitting}
+                    className="flex-1 bg-white border border-emerald-200 hover:bg-emerald-50 text-emerald-800 py-3 rounded-xl font-bold transition-all disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -1004,19 +980,19 @@ export default function Attendance() {
 
         {/* Edit Meeting Form Modal */}
         {showEditForm && selectedRecord && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
-              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+          <div className="fixed inset-0 bg-emerald-950/20 backdrop-blur-sm flex items-start sm:items-center justify-center z-70 p-4 overflow-y-auto">
+            <div className="bg-white rounded-3xl p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-emerald-100">
+              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-emerald-900 to-emerald-600 bg-clip-text text-transparent">
                 Edit Meeting Attendance
               </h2>
               <form onSubmit={handleUpdateSubmit}>
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label
                       htmlFor="edit-meeting-title"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
-                      Meeting Title <span className="text-red-400">*</span>
+                      Meeting Title <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="edit-meeting-title"
@@ -1028,16 +1004,16 @@ export default function Attendance() {
                           meetingTitle: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                       required
                     />
                   </div>
                   <div>
                     <label
                       htmlFor="edit-meeting-date"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
-                      Meeting Date <span className="text-red-400">*</span>
+                      Meeting Date <span className="text-red-500">*</span>
                     </label>
                     <input
                       id="edit-meeting-date"
@@ -1049,17 +1025,17 @@ export default function Attendance() {
                           meetingDate: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                       required
                     />
                   </div>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 mb-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
                   <div>
                     <label
                       htmlFor="edit-meeting-type"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
                       Meeting Type
                     </label>
@@ -1072,7 +1048,7 @@ export default function Attendance() {
                           meetingType: e.target.value,
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 transition-all"
                     >
                       <option value="regular">Regular</option>
                       <option value="special">Special</option>
@@ -1083,7 +1059,7 @@ export default function Attendance() {
                   <div>
                     <label
                       htmlFor="edit-duration"
-                      className="block text-sm font-semibold text-purple-200 mb-2"
+                      className="block text-sm font-semibold text-emerald-800 mb-2"
                     >
                       Duration (minutes)
                     </label>
@@ -1097,7 +1073,7 @@ export default function Attendance() {
                           duration: parseInt(e.target.value),
                         })
                       }
-                      className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                      className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                       min="1"
                       placeholder="0"
                     />
@@ -1107,7 +1083,7 @@ export default function Attendance() {
                 <div className="mb-4">
                   <label
                     htmlFor="edit-location"
-                    className="block text-sm font-semibold text-purple-200 mb-2"
+                    className="block text-sm font-semibold text-emerald-800 mb-2"
                   >
                     Location
                   </label>
@@ -1118,7 +1094,7 @@ export default function Attendance() {
                     onChange={(e) =>
                       setFormData({ ...formData, location: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                    className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                     placeholder="Enter location"
                   />
                 </div>
@@ -1126,7 +1102,7 @@ export default function Attendance() {
                 <div className="mb-4">
                   <label
                     htmlFor="edit-description"
-                    className="block text-sm font-semibold text-purple-200 mb-2"
+                    className="block text-sm font-semibold text-emerald-800 mb-2"
                   >
                     Description
                   </label>
@@ -1136,29 +1112,29 @@ export default function Attendance() {
                     onChange={(e) =>
                       setFormData({ ...formData, description: e.target.value })
                     }
-                    className="w-full px-4 py-2.5 bg-slate-700/50 border border-purple-500/30 rounded-xl focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent text-slate-100 placeholder-slate-400 transition-all"
+                    className="w-full px-4 py-2.5 bg-[#f8fffb] border border-emerald-200 rounded-xl focus:outline-none focus:ring-2 focus:ring-emerald-400 focus:border-transparent text-emerald-900 placeholder-emerald-400 transition-all"
                     rows={3}
                     placeholder="Enter meeting description"
                   />
                 </div>
 
                 <div className="mb-6">
-                  <label className="block text-sm font-semibold text-purple-200 mb-3">
+                  <label className="block text-sm font-semibold text-emerald-800 mb-3">
                     Mark Attendance
                   </label>
-                  <div className="border border-purple-500/30 bg-slate-700/30 rounded-2xl p-4 max-h-60 overflow-y-auto">
+                  <div className="border border-emerald-200 bg-[#f7fff9] rounded-2xl p-4 max-h-60 overflow-y-auto">
                     {teamMembers.map((member) => {
                       const attendee = selectedAttendees.get(member._id);
                       return (
                         <div
                           key={member._id}
-                          className="flex items-center justify-between py-3 px-3 border-b border-slate-700/50 last:border-b-0 hover:bg-slate-700/30 rounded-lg transition-colors"
+                          className="flex items-center justify-between py-3 px-3 border-b border-emerald-100 last:border-b-0 hover:bg-emerald-50 rounded-lg transition-colors"
                         >
                           <div>
-                            <div className="font-semibold text-slate-100">
+                            <div className="font-semibold text-emerald-900">
                               {member.name}
                             </div>
-                            <div className="text-xs text-slate-400 mt-0.5">
+                            <div className="text-xs text-emerald-500 mt-0.5">
                               {member.enrollmentNumber}
                             </div>
                           </div>
@@ -1171,7 +1147,7 @@ export default function Attendance() {
                               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                                 attendee?.status === "present"
                                   ? "bg-green-600/80 text-white shadow-lg shadow-green-500/30"
-                                  : "bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                                  : "bg-white text-emerald-600 border border-emerald-200 hover:bg-emerald-50"
                               }`}
                             >
                               Present
@@ -1184,7 +1160,7 @@ export default function Attendance() {
                               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                                 attendee?.status === "late"
                                   ? "bg-amber-600/80 text-white shadow-lg shadow-amber-500/30"
-                                  : "bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                                  : "bg-white text-amber-700 border border-amber-200 hover:bg-amber-50"
                               }`}
                             >
                               Late
@@ -1197,7 +1173,7 @@ export default function Attendance() {
                               className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all ${
                                 attendee?.status === "absent"
                                   ? "bg-red-600/80 text-white shadow-lg shadow-red-500/30"
-                                  : "bg-slate-700/50 text-slate-400 hover:bg-slate-700 hover:text-slate-200"
+                                  : "bg-white text-red-600 border border-red-200 hover:bg-red-50"
                               }`}
                             >
                               Absent
@@ -1212,10 +1188,10 @@ export default function Attendance() {
                 <div className="flex space-x-4">
                   <button
                     type="submit"
-                    disabled={loading}
-                    className="flex-1 bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50 disabled:from-slate-600 disabled:to-slate-600 disabled:cursor-not-allowed"
+                    disabled={submitting}
+                    className="flex-1 bg-linear-to-r from-emerald-700 to-emerald-600 hover:from-emerald-800 hover:to-emerald-700 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-emerald-200 disabled:from-slate-400 disabled:to-slate-500 disabled:cursor-not-allowed"
                   >
-                    {loading ? "Updating..." : "Update Attendance"}
+                    {submitting ? "Updating..." : "Update Attendance"}
                   </button>
                   <button
                     type="button"
@@ -1232,8 +1208,8 @@ export default function Attendance() {
                         description: "",
                       });
                     }}
-                    disabled={loading}
-                    className="flex-1 bg-slate-700/50 border border-slate-600 hover:bg-slate-700 text-slate-200 py-3 rounded-xl font-bold transition-all disabled:cursor-not-allowed"
+                    disabled={submitting}
+                    className="flex-1 bg-white border border-emerald-200 hover:bg-emerald-50 text-emerald-800 py-3 rounded-xl font-bold transition-all disabled:cursor-not-allowed"
                   >
                     Cancel
                   </button>
@@ -1245,84 +1221,84 @@ export default function Attendance() {
 
         {/* View Details Modal */}
         {showViewModal && selectedRecord && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-purple-500/30">
-              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+          <div className="fixed inset-0 bg-emerald-950/20 backdrop-blur-sm flex items-start sm:items-center justify-center z-70 p-4 overflow-y-auto">
+            <div className="bg-white rounded-3xl p-8 max-w-3xl w-full max-h-[90vh] overflow-y-auto shadow-2xl border border-emerald-100">
+              <h2 className="text-3xl font-bold mb-6 bg-linear-to-r from-emerald-900 to-emerald-600 bg-clip-text text-transparent">
                 {selectedRecord.meetingTitle}
               </h2>
               <div className="mb-6 grid grid-cols-2 gap-4">
-                <div className="bg-slate-700/40 p-4 rounded-xl border border-purple-500/20">
-                  <p className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Date</p>
-                  <p className="font-semibold text-slate-100 mt-1">
+                <div className="bg-[#f7fff9] p-4 rounded-xl border border-emerald-100">
+                  <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Date</p>
+                  <p className="font-semibold text-emerald-900 mt-1">
                     {new Date(selectedRecord.meetingDate).toLocaleString()}
                   </p>
                 </div>
-                <div className="bg-slate-700/40 p-4 rounded-xl border border-purple-500/20">
-                  <p className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Type</p>
-                  <p className="font-semibold text-slate-100 mt-1 capitalize">
+                <div className="bg-[#f7fff9] p-4 rounded-xl border border-emerald-100">
+                  <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Type</p>
+                  <p className="font-semibold text-emerald-900 mt-1 capitalize">
                     {selectedRecord.meetingType}
                   </p>
                 </div>
-                <div className="bg-slate-700/40 p-4 rounded-xl border border-purple-500/20">
-                  <p className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Duration</p>
-                  <p className="font-semibold text-slate-100 mt-1">
+                <div className="bg-[#f7fff9] p-4 rounded-xl border border-emerald-100">
+                  <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Duration</p>
+                  <p className="font-semibold text-emerald-900 mt-1">
                     {selectedRecord.duration}
-                    <span className="text-slate-400 ml-1">minutes</span>
+                    <span className="text-emerald-500 ml-1">minutes</span>
                   </p>
                 </div>
-                <div className="bg-slate-700/40 p-4 rounded-xl border border-purple-500/20">
-                  <p className="text-xs font-semibold text-purple-300 uppercase tracking-wider">Location</p>
-                  <p className="font-semibold text-slate-100 mt-1">
+                <div className="bg-[#f7fff9] p-4 rounded-xl border border-emerald-100">
+                  <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wider">Location</p>
+                  <p className="font-semibold text-emerald-900 mt-1">
                     {selectedRecord.location || "N/A"}
                   </p>
                 </div>
               </div>
 
               {selectedRecord.description && (
-                <div className="mb-6 bg-slate-700/40 p-4 rounded-xl border border-purple-500/20">
-                  <p className="text-xs font-semibold text-purple-300 uppercase tracking-wider mb-2">Description</p>
-                  <p className="font-medium text-slate-100">
+                <div className="mb-6 bg-[#f7fff9] p-4 rounded-xl border border-emerald-100">
+                  <p className="text-xs font-semibold text-emerald-600 uppercase tracking-wider mb-2">Description</p>
+                  <p className="font-medium text-emerald-900">
                     {selectedRecord.description}
                   </p>
                 </div>
               )}
 
               <div className="mb-6">
-                <h3 className="text-lg font-bold mb-4 text-purple-200">
+                <h3 className="text-lg font-bold mb-4 text-emerald-800">
                   Attendance Details
                 </h3>
-                <div className="border border-purple-500/30 bg-slate-700/30 rounded-2xl overflow-hidden">
+                <div className="border border-emerald-100 bg-[#f7fff9] rounded-2xl overflow-hidden">
                   <table className="min-w-full">
-                    <thead className="bg-linear-to-r from-purple-700/50 to-blue-700/50 border-b border-purple-500/30">
+                    <thead className="bg-emerald-50 border-b border-emerald-100">
                       <tr>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-purple-200 uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-bold text-emerald-700 uppercase tracking-wider">
                           Name
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-purple-200 uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-bold text-emerald-700 uppercase tracking-wider">
                           Enrollment
                         </th>
-                        <th className="px-6 py-4 text-left text-xs font-bold text-purple-200 uppercase tracking-wider">
+                        <th className="px-6 py-4 text-left text-xs font-bold text-emerald-700 uppercase tracking-wider">
                           Status
                         </th>
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-slate-700/50">
+                    <tbody className="divide-y divide-emerald-100">
                       {selectedRecord.attendees.map((attendee, index) => (
-                        <tr key={index} className="hover:bg-purple-700/20 transition-colors">
-                          <td className="px-6 py-4 font-semibold text-slate-100">
+                        <tr key={index} className="hover:bg-emerald-50 transition-colors">
+                          <td className="px-6 py-4 font-semibold text-emerald-900">
                             {attendee.memberName}
                           </td>
-                          <td className="px-6 py-4 font-medium text-slate-300">
+                          <td className="px-6 py-4 font-medium text-emerald-700">
                             {attendee.enrollmentNumber}
                           </td>
                           <td className="px-6 py-4">
                             <span
                               className={`px-3 py-1.5 rounded-lg text-xs font-bold inline-block ${
                                 attendee.status === "present"
-                                  ? "bg-green-600/50 text-green-200 border border-green-500/50"
+                                  ? "bg-green-100 text-green-700 border border-green-200"
                                   : attendee.status === "late"
-                                  ? "bg-amber-600/50 text-amber-200 border border-amber-500/50"
-                                  : "bg-red-600/50 text-red-200 border border-red-500/50"
+                                  ? "bg-amber-100 text-amber-700 border border-amber-200"
+                                  : "bg-red-100 text-red-700 border border-red-200"
                               }`}
                             >
                               {attendee.status.toUpperCase()}
@@ -1337,7 +1313,7 @@ export default function Attendance() {
 
               <button
                 onClick={() => setShowViewModal(false)}
-                className="w-full bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-purple-500/50"
+                className="w-full bg-linear-to-r from-emerald-700 to-emerald-600 hover:from-emerald-800 hover:to-emerald-700 text-white py-3 rounded-xl font-bold transition-all shadow-lg hover:shadow-emerald-200"
               >
                 Close
               </button>

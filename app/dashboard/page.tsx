@@ -5,7 +5,6 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import CloudLoader from "@/app/components/CloudLoader";
 import BulkActivityUpdate from "@/app/components/BulkActivityUpdate";
-import { ShootingStars } from "@/components/ui/shooting-stars";
 
 interface TeamMember {
   _id: string;
@@ -632,40 +631,12 @@ export default function Dashboard() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-black relative overflow-hidden flex items-center justify-center">
-        <div className="fixed inset-0 z-0">
-          <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-          <div className="absolute inset-0">
-            {[...Array(100)].map((_, i) => {
-              const size = Math.random() * 2;
-              const left = Math.random() * 100;
-              const top = Math.random() * 100;
-              const opacity = Math.random() * 0.7 + 0.3;
-              const duration = Math.random() * 3 + 2;
-              return (
-                <div
-                  key={i}
-                  className="absolute rounded-full bg-white"
-                  style={{
-                    width: `${size}px`,
-                    height: `${size}px`,
-                    left: `${left}%`,
-                    top: `${top}%`,
-                    opacity: opacity,
-                    animation: `twinkle ${duration}s infinite`
-                  }}
-                ></div>
-              );
-            })}
-          </div>
-          <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-          <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-          <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-          <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
-        </div>
+      <div className="relative flex min-h-screen items-center justify-center overflow-hidden bg-[#eaf6f1]">
+        <div className="pointer-events-none absolute -left-16 top-10 h-64 w-64 rounded-full bg-[#d4efe5] blur-3xl"></div>
+        <div className="pointer-events-none absolute -right-20 bottom-10 h-64 w-64 rounded-full bg-[#cfe9df] blur-3xl"></div>
         <div className="relative z-10 text-center">
           <CloudLoader />
-          <p className="mt-4 text-white font-semibold">
+          <p className="mt-4 font-semibold text-[#2a342f]">
             Loading dashboard...
           </p>
         </div>
@@ -674,52 +645,14 @@ export default function Dashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-black relative overflow-hidden">
-      {/* Galaxy Background */}
-      <div className="fixed inset-0 z-0">
-        <div className="absolute inset-0 bg-linear-to-b from-indigo-950 via-black to-purple-950"></div>
-        <div className="absolute inset-0">
-          {[...Array(100)].map((_, i) => {
-            const size = Math.random() * 2;
-            const left = Math.random() * 100;
-            const top = Math.random() * 100;
-            const opacity = Math.random() * 0.7 + 0.3;
-            const duration = Math.random() * 3 + 2;
-            return (
-              <div
-                key={i}
-                className="absolute rounded-full bg-white"
-                style={{
-                  width: `${size}px`,
-                  height: `${size}px`,
-                  left: `${left}%`,
-                  top: `${top}%`,
-                  opacity: opacity,
-                  animation: `twinkle ${duration}s infinite`
-                }}
-              ></div>
-            );
-          })}
-        </div>
-        {/* Shooting Stars Effect */}
-        <ShootingStars
-          starColor="#9E00FF"
-          trailColor="#2EB9DF"
-          minSpeed={15}
-          maxSpeed={35}
-          minDelay={1000}
-          maxDelay={3000}
-        />
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob"></div>
-        <div className="absolute top-1/3 right-1/4 w-96 h-96 bg-blue-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-2000"></div>
-        <div className="absolute bottom-1/4 left-1/2 w-96 h-96 bg-indigo-600 rounded-full mix-blend-multiply filter blur-3xl opacity-20 animate-blob animation-delay-4000"></div>
-        <div className="absolute top-1/2 right-0 w-72 h-72 bg-pink-600 rounded-full mix-blend-multiply filter blur-3xl opacity-15 animate-blob animation-delay-3000"></div>
-      </div>
+    <div className="relative min-h-screen overflow-hidden bg-[#eaf6f1]">
+      <div className="pointer-events-none absolute -left-16 top-10 h-64 w-64 rounded-full bg-[#d4efe5] blur-3xl"></div>
+      <div className="pointer-events-none absolute -right-20 bottom-10 h-64 w-64 rounded-full bg-[#cfe9df] blur-3xl"></div>
 
       {/* Content */}
       <div className="relative z-10">
       {/* Header */}
-      <div className="bg-slate-900/50 backdrop-blur-md border-b border-white/20 sticky top-0 z-50">
+      <div className="sticky top-0 z-50 border-b border-[#d7e9e1] bg-[#eef8f4]/95 backdrop-blur-md">
         <div className="max-w-7xl mx-auto px-4 py-3 sm:py-8">
           <div className="flex justify-between items-start sm:items-center gap-3 sm:gap-6">
             <div className="space-y-1 sm:space-y-2 flex-1">
@@ -730,10 +663,10 @@ export default function Dashboard() {
                   className="w-12 sm:w-20 h-12 sm:h-20 rounded-xl sm:rounded-2xl shadow-lg"
                 />
                 <div>
-                  <h1 className="text-xl sm:text-5xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                  <h1 className="text-xl sm:text-5xl font-bold text-[#1f2623]">
                     TrackU
                   </h1>
-                  <p className="text-purple-200 text-xs sm:text-sm font-semibold hidden sm:block">
+                  <p className="hidden text-xs font-semibold text-[#5f6b67] sm:block sm:text-sm">
                     Manage Your Team
                   </p>
                 </div>
@@ -746,7 +679,7 @@ export default function Dashboard() {
               <div className="flex sm:hidden gap-2">
                 <Link
                   href="/performers"
-                  className="w-10 h-10 bg-white/10 hover:bg-white/20 backdrop-blur text-white rounded-lg font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center justify-center hover:shadow-lg hover:shadow-white/20"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg border border-[#cfe4db] bg-white text-[#2b3531] transition duration-300 hover:border-[#9fd4bf] hover:bg-[#f3fbf7]"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
@@ -754,7 +687,7 @@ export default function Dashboard() {
                 </Link>
                 <Link
                   href="/attendance"
-                  className="w-10 h-10 bg-linear-to-r from-blue-500 to-blue-600 hover:from-blue-600 hover:to-blue-700 text-white rounded-lg font-semibold transition duration-300 flex items-center justify-center hover:shadow-lg hover:shadow-blue-500/20"
+                  className="flex h-10 w-10 items-center justify-center rounded-lg bg-[#49c89f] font-semibold text-white transition duration-300 hover:bg-[#3db58d]"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -766,7 +699,7 @@ export default function Dashboard() {
               <div className="hidden sm:flex gap-4 items-center">
                 <Link
                   href="/performers"
-                  className="group relative bg-white/10 hover:bg-white/20 backdrop-blur text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 border border-white/30 hover:border-white/60 flex items-center gap-2 hover:shadow-xl hover:shadow-purple-500/20 transform hover:-translate-y-1"
+                  className="group relative flex items-center gap-2 rounded-2xl border border-[#cfe4db] bg-white px-6 py-3 font-semibold text-[#2b3531] transition duration-300 hover:-translate-y-1 hover:border-[#9fd4bf] hover:bg-[#f3fbf7] hover:shadow-xl"
                 >
                   <svg
                     className="w-5 h-5"
@@ -785,7 +718,7 @@ export default function Dashboard() {
                 </Link>
                 <Link
                   href="/attendance"
-                  className="group relative bg-linear-to-r from-blue-500 via-blue-600 to-blue-700 hover:from-blue-600 hover:via-blue-700 hover:to-blue-800 text-white px-6 py-3 rounded-2xl font-semibold transition duration-300 shadow-lg hover:shadow-2xl hover:shadow-blue-500/40 flex items-center gap-2 transform hover:-translate-y-1"
+                  className="group relative flex items-center gap-2 rounded-2xl bg-[#49c89f] px-6 py-3 font-semibold text-white shadow-lg transition duration-300 hover:-translate-y-1 hover:bg-[#3db58d] hover:shadow-2xl"
                 >
                   <svg
                     className="w-5 h-5"
@@ -804,18 +737,18 @@ export default function Dashboard() {
                 </Link>
 
                 {/* Members Badge */}
-                <div className="flex items-center gap-2 px-4 py-2 bg-blue-500/20 border border-blue-500/40 rounded-2xl hover:border-blue-500/60 hover:bg-blue-500/30 transition">
-                  <svg className="w-5 h-5 text-blue-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="flex items-center gap-2 rounded-2xl border border-[#cfe4db] bg-white px-4 py-2 transition hover:border-[#9fd4bf]">
+                  <svg className="h-5 w-5 text-[#49c89f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" />
                   </svg>
-                  <span className="text-blue-200 font-bold text-base">{members.length} Members</span>
+                  <span className="text-base font-bold text-[#2b3531]">{members.length} Members</span>
                 </div>
               </div>
 
               {/* Settings Button */}
               <button
                 onClick={openClubSettings}
-                className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-linear-to-br from-blue-400 to-cyan-400 rounded-full hover:shadow-lg hover:shadow-blue-500/50 transition transform hover:scale-110"
+                className="flex h-10 w-10 items-center justify-center rounded-full bg-[#49c89f] transition hover:scale-110 hover:shadow-lg sm:h-12 sm:w-12"
                 title="Club Settings"
               >
                 <svg className="w-5 h-5 sm:w-6 sm:h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -829,7 +762,7 @@ export default function Dashboard() {
                 <div className="relative">
                   <button
                     onClick={() => setIsProfileMenuOpen(!isProfileMenuOpen)}
-                    className="w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center bg-linear-to-br from-purple-400 to-blue-400 rounded-full hover:shadow-lg hover:shadow-purple-500/50 transition transform hover:scale-110"
+                    className="flex h-10 w-10 items-center justify-center rounded-full bg-[#2f8f71] transition hover:scale-110 hover:shadow-lg sm:h-12 sm:w-12"
                   >
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 text-white" fill="currentColor" viewBox="0 0 24 24">
                       <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm3.5-9c.83 0 1.5-.67 1.5-1.5S16.33 8 15.5 8 14 8.67 14 9.5s.67 1.5 1.5 1.5zm-7 0c.83 0 1.5-.67 1.5-1.5S9.33 8 8.5 8 7 8.67 7 9.5 7.67 11 8.5 11zm3.5 6.5c2.33 0 4.31-1.46 5.11-3.5H6.89c.8 2.04 2.78 3.5 5.11 3.5z" />
@@ -838,9 +771,9 @@ export default function Dashboard() {
                   
                   {/* Dropdown Menu */}
                   {isProfileMenuOpen && (
-                    <div className="absolute right-0 mt-2 w-56 bg-slate-800 border border-purple-500/30 rounded-2xl shadow-xl overflow-hidden animate-in fade-in slide-in-from-top-2 z-50">
-                      <div className="px-4 py-3 border-b border-purple-500/20">
-                        <p className="text-white font-semibold text-sm">{username}</p>
+                    <div className="animate-in fade-in slide-in-from-top-2 absolute right-0 z-50 mt-2 w-56 overflow-hidden rounded-2xl border border-[#d7e9e1] bg-white shadow-xl">
+                      <div className="border-b border-[#e2efe9] px-4 py-3">
+                        <p className="text-sm font-semibold text-[#2b3531]">{username}</p>
                       </div>
                       <button
                         onClick={() => {
@@ -848,7 +781,7 @@ export default function Dashboard() {
                           setIsProfileMenuOpen(false);
                         }}
                         disabled={loadingClubUsers}
-                        className="w-full text-left px-4 py-3 text-purple-300 hover:text-purple-200 hover:bg-purple-700/20 transition flex items-center gap-2 font-semibold text-sm disabled:opacity-60 disabled:cursor-not-allowed border-b border-purple-500/20"
+                        className="flex w-full items-center gap-2 border-b border-[#e2efe9] px-4 py-3 text-left text-sm font-semibold text-[#2f8f71] transition hover:bg-[#f4fbf8] hover:text-[#237559] disabled:cursor-not-allowed disabled:opacity-60"
                       >
                         <svg
                           className="w-4 h-4"
@@ -870,7 +803,7 @@ export default function Dashboard() {
                           handleLogout();
                           setIsProfileMenuOpen(false);
                         }}
-                        className="w-full text-left px-4 py-3 text-red-400 hover:text-red-300 hover:bg-red-700/20 transition flex items-center gap-2 font-semibold text-sm"
+                        className="flex w-full items-center gap-2 px-4 py-3 text-left text-sm font-semibold text-red-500 transition hover:bg-red-50 hover:text-red-600"
                       >
                         <svg
                           className="w-4 h-4"
@@ -940,24 +873,24 @@ export default function Dashboard() {
         )}
 
         {error && (
-          <div className="bg-red-600/20 border-2 border-red-500/50 text-red-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-red-500/80 transition animate-in fade-in slide-in-from-top-2">
+          <div className="animate-in fade-in slide-in-from-top-2 mb-8 flex items-start gap-4 rounded-2xl border-2 border-red-200 bg-red-50 px-6 py-4 font-semibold text-red-700 transition hover:border-red-300">
             <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4v2m0 4v2m0-16a9 9 0 110 18 9 9 0 010-18z" />
             </svg>
             <div>
-              <p className="font-bold text-red-200 mb-1">Error</p>
+              <p className="mb-1 font-bold text-red-700">Error</p>
               <p>{error}</p>
             </div>
           </div>
         )}
 
         {successMessage && (
-          <div className="bg-green-600/20 border-2 border-green-500/50 text-green-300 px-6 py-4 rounded-2xl mb-8 font-semibold flex items-start gap-4 backdrop-blur-sm hover:border-green-500/80 transition animate-in fade-in slide-in-from-top-2">
+          <div className="animate-in fade-in slide-in-from-top-2 mb-8 flex items-start gap-4 rounded-2xl border-2 border-green-200 bg-green-50 px-6 py-4 font-semibold text-green-700 transition hover:border-green-300">
             <svg className="w-6 h-6 mt-0.5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
             <div>
-              <p className="font-bold text-green-200 mb-1">Success</p>
+              <p className="mb-1 font-bold text-green-700">Success</p>
               <p>{successMessage}</p>
             </div>
           </div>
@@ -967,16 +900,16 @@ export default function Dashboard() {
         <div className="mb-8 flex gap-2 items-center">
           {/* Search Bar */}
           <div className="flex-1 relative group">
-            <div className="absolute inset-0 bg-linear-to-r from-purple-600/20 to-blue-600/20 rounded-2xl blur opacity-0 group-focus-within:opacity-100 transition duration-300"></div>
+            <div className="absolute inset-0 rounded-2xl bg-linear-to-r from-[#bfe8d8] to-[#d7efe6] opacity-0 blur group-focus-within:opacity-100 transition duration-300"></div>
             <input
               type="text"
               placeholder="Search by name or enrollment number..."
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
-              className="relative w-full pl-14 pr-12 py-4 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 text-white placeholder-gray-500 shadow-lg hover:shadow-xl transition duration-300 bg-slate-800/70 backdrop-blur-sm text-base font-medium"
+              className="relative w-full rounded-2xl border-2 border-[#cfe4db] bg-white py-4 pl-14 pr-12 text-base font-medium text-[#1f2623] placeholder-[#8fa39d] shadow-lg transition duration-300 hover:border-[#9fd4bf] hover:shadow-xl focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20"
             />
             <svg
-              className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-purple-400 pointer-events-none"
+              className="pointer-events-none absolute left-4 top-1/2 h-5 w-5 -translate-y-1/2 transform text-[#49c89f]"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -991,7 +924,7 @@ export default function Dashboard() {
             {searchQuery && (
               <button
                 onClick={() => setSearchQuery("")}
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400 hover:text-gray-200 transition"
+                className="absolute right-3 top-1/2 -translate-y-1/2 transform text-[#8fa39d] transition hover:text-[#2f8f71]"
                 aria-label="Clear search"
               >
                 <svg
@@ -1014,7 +947,7 @@ export default function Dashboard() {
           {/* Bulk Activity Button */}
           <button
             onClick={() => setShowBulkUpdate(!showBulkUpdate)}
-            className="group bg-linear-to-r from-cyan-600 via-cyan-700 to-blue-600 hover:from-cyan-700 hover:via-cyan-800 hover:to-blue-700 active:from-cyan-800 active:via-cyan-900 active:to-blue-800 text-white px-2 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg sm:rounded-2xl transition duration-300 font-bold shadow-lg sm:shadow-xl hover:shadow-lg sm:hover:shadow-2xl hover:shadow-cyan-500/40 transform hover:-translate-y-1 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base hover:scale-105 flex-shrink-0 border-2 border-cyan-400/50 hover:border-cyan-300"
+            className="group flex shrink-0 items-center justify-center gap-1.5 rounded-lg border-2 border-[#6ecfb2] bg-[#49c89f] px-2 py-2.5 text-xs font-bold text-white transition duration-300 hover:scale-105 hover:-translate-y-1 hover:bg-[#39b68d] sm:gap-2 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-4 md:text-base"
             title="Bulk Activity Update"
           >
             {showBulkUpdate ? (
@@ -1037,7 +970,7 @@ export default function Dashboard() {
           {/* Add Member Button */}
           <button
             onClick={() => setShowAddForm(!showAddForm)}
-            className="group bg-linear-to-r from-purple-600 via-purple-700 to-blue-600 hover:from-purple-700 hover:via-purple-800 hover:to-blue-700 active:from-purple-800 active:via-purple-900 active:to-blue-800 text-white px-2 sm:px-6 md:px-8 py-2.5 sm:py-3 md:py-4 rounded-lg sm:rounded-2xl transition duration-300 font-bold shadow-lg sm:shadow-xl hover:shadow-lg sm:hover:shadow-2xl hover:shadow-purple-500/40 transform hover:-translate-y-1 flex items-center justify-center gap-1.5 sm:gap-2 text-xs sm:text-sm md:text-base hover:scale-105 flex-shrink-0 border-2 border-purple-400/50 hover:border-purple-300"
+            className="group flex shrink-0 items-center justify-center gap-1.5 rounded-lg border-2 border-[#9fd4bf] bg-white px-2 py-2.5 text-xs font-bold text-[#2b3531] transition duration-300 hover:scale-105 hover:-translate-y-1 hover:bg-[#f3fbf7] sm:gap-2 sm:rounded-2xl sm:px-6 sm:py-3 sm:text-sm md:px-8 md:py-4 md:text-base"
             title="Add New Member"
           >
             {showAddForm ? (
@@ -1060,30 +993,30 @@ export default function Dashboard() {
 
         {/* Search Results Info */}
         {searchQuery && (
-          <div className="mb-6 p-4 bg-linear-to-r from-purple-600/20 to-blue-600/20 border-2 border-purple-500/40 rounded-2xl backdrop-blur-sm flex items-center gap-3 animate-in fade-in">
-            <svg className="w-5 h-5 text-purple-300 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="animate-in fade-in mb-6 flex items-center gap-3 rounded-2xl border-2 border-[#cde4da] bg-[#f5fbf8] p-4">
+            <svg className="h-5 w-5 shrink-0 text-[#49c89f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
-            <div className="text-sm text-gray-200">
-              Found <span className="font-bold text-purple-300 text-base">{filteredMembers.length}</span>{" "}
+            <div className="text-sm text-[#4e5a56]">
+              Found <span className="text-base font-bold text-[#2f8f71]">{filteredMembers.length}</span>{" "}
               <span className="font-semibold">
                 member{filteredMembers.length !== 1 ? "s" : ""}
               </span>{" "}
-              matching "<span className="font-bold text-purple-200">{searchQuery}</span>"
+              matching "<span className="font-bold text-[#2b3531]">{searchQuery}</span>"
             </div>
           </div>
         )}
 
         {/* Add Member Form */}
         {showAddForm && (
-          <div className="bg-linear-to-br from-slate-800/70 to-slate-800/50 backdrop-blur-xl rounded-3xl shadow-2xl p-8 mb-8 border-2 border-purple-500/30 hover:border-purple-500/60 transition animate-in fade-in slide-in-from-top-2">
+          <div className="animate-in fade-in slide-in-from-top-2 mb-8 rounded-3xl border-2 border-[#cde4da] bg-white p-8 shadow-2xl transition hover:border-[#9fd4bf]">
             <div className="flex items-center gap-3 mb-6">
-              <div className="p-3 bg-linear-to-br from-purple-500 to-blue-500 rounded-xl">
+              <div className="rounded-xl bg-[#49c89f] p-3">
                 <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
                 </svg>
               </div>
-              <h2 className="text-3xl font-bold text-white">Add New Team Member</h2>
+              <h2 className="text-3xl font-bold text-[#1f2623]">Add New Team Member</h2>
             </div>
             <form onSubmit={handleAddMember} className="space-y-5">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
@@ -1095,7 +1028,7 @@ export default function Dashboard() {
                     setFormData({ ...formData, name: e.target.value })
                   }
                   required
-                  className="px-5 py-4 bg-slate-700/60 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-500 font-semibold transition shadow-lg"
+                  className="rounded-2xl border-2 border-[#cde4da] bg-[#f6fcfa] px-5 py-4 font-semibold text-[#1f2623] shadow-lg transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20"
                 />
                 <input
                   type="text"
@@ -1108,7 +1041,7 @@ export default function Dashboard() {
                     })
                   }
                   required
-                  className="px-5 py-4 bg-slate-700/60 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-500 font-semibold transition shadow-lg"
+                  className="rounded-2xl border-2 border-[#cde4da] bg-[#f6fcfa] px-5 py-4 font-semibold text-[#1f2623] shadow-lg transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20"
                 />
               </div>
               <input
@@ -1118,11 +1051,11 @@ export default function Dashboard() {
                 onChange={(e) =>
                   setFormData({ ...formData, position: e.target.value })
                 }
-                className="w-full px-5 py-4 bg-slate-700/60 border-2 border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-2xl focus:outline-none focus:ring-2 focus:ring-purple-500/50 placeholder-gray-500 font-semibold transition shadow-lg"
+                className="w-full rounded-2xl border-2 border-[#cde4da] bg-[#f6fcfa] px-5 py-4 font-semibold text-[#1f2623] shadow-lg transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20"
               />
               <button
                 type="submit"
-                className="w-full bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 active:from-green-800 active:to-green-900 text-white px-6 py-4 rounded-2xl transition font-bold shadow-lg hover:shadow-xl hover:shadow-green-500/40 transform hover:-translate-y-1 text-lg flex items-center justify-center gap-2"
+                className="flex w-full items-center justify-center gap-2 rounded-2xl bg-[#49c89f] px-6 py-4 text-lg font-bold text-white transition hover:-translate-y-1 hover:bg-[#39b68d] hover:shadow-xl"
               >
                 <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
@@ -1142,21 +1075,21 @@ export default function Dashboard() {
 
         {/* Team Members List */}
         {members.length === 0 ? (
-          <div className="bg-linear-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-purple-500/30 hover:border-purple-500/60 transition">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-purple-500/30 to-blue-500/30 rounded-full mb-6">
-              <svg className="w-10 h-10 text-purple-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="rounded-3xl border-2 border-[#cde4da] bg-white p-16 text-center shadow-2xl transition hover:border-[#9fd4bf]">
+            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#e7f8f1]">
+              <svg className="h-10 w-10 text-[#49c89f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M18 9v3m0 0v3m0-3h3m-3 0h-3m-2-5a4 4 0 11-8 0 4 4 0 018 0zM3 20a6 6 0 0112 0v1H3v-1z" />
               </svg>
             </div>
-            <p className="text-gray-300 text-lg font-semibold mb-2">
+            <p className="mb-2 text-lg font-semibold text-[#2b3531]">
               No Team Members Yet
             </p>
-            <p className="text-gray-400 text-base mb-6 max-w-md mx-auto">
+            <p className="mx-auto mb-6 max-w-md text-base text-[#6d7874]">
               Your team list is empty. Start by clicking the "Add Member" button to add your first team member!
             </p>
             <button
               onClick={() => setShowAddForm(true)}
-              className="bg-linear-to-r from-purple-600 to-blue-600 hover:from-purple-700 hover:to-blue-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-purple-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#49c89f] px-8 py-3 font-bold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#39b68d] hover:shadow-xl"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4v16m8-8H4" />
@@ -1165,21 +1098,21 @@ export default function Dashboard() {
             </button>
           </div>
         ) : filteredMembers.length === 0 ? (
-          <div className="bg-linear-to-br from-slate-800/50 to-slate-700/50 backdrop-blur-xl rounded-3xl shadow-2xl p-16 text-center border-2 border-amber-500/30 hover:border-amber-500/60 transition">
-            <div className="inline-flex items-center justify-center w-20 h-20 bg-linear-to-br from-amber-500/30 to-orange-500/30 rounded-full mb-6">
-              <svg className="w-10 h-10 text-amber-300" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="rounded-3xl border-2 border-[#ecdcb2] bg-[#fff9e8] p-16 text-center shadow-2xl transition hover:border-[#dfc889]">
+            <div className="mb-6 inline-flex h-20 w-20 items-center justify-center rounded-full bg-[#ffeec5]">
+              <svg className="h-10 w-10 text-[#c49a30]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1.5} d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
               </svg>
             </div>
-            <p className="text-gray-300 text-lg font-semibold mb-2">
+            <p className="mb-2 text-lg font-semibold text-[#5f4f26]">
               No Results Found
             </p>
-            <p className="text-gray-400 text-base mb-6 max-w-md mx-auto">
-              Your search for "<span className="font-bold text-amber-300">{searchQuery}</span>" didn't match any members.
+            <p className="mx-auto mb-6 max-w-md text-base text-[#7a6a3f]">
+              Your search for "<span className="font-bold text-[#9a7a2f]">{searchQuery}</span>" didn't match any members.
             </p>
             <button
               onClick={() => setSearchQuery("")}
-              className="bg-linear-to-r from-amber-600 to-orange-600 hover:from-amber-700 hover:to-orange-700 text-white px-8 py-3 rounded-2xl font-bold shadow-lg hover:shadow-xl hover:shadow-amber-500/40 transform hover:-translate-y-1 inline-flex items-center gap-2"
+              className="inline-flex items-center gap-2 rounded-2xl bg-[#d5a340] px-8 py-3 font-bold text-white shadow-lg transition hover:-translate-y-1 hover:bg-[#c09031] hover:shadow-xl"
             >
               <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1192,19 +1125,19 @@ export default function Dashboard() {
             {filteredMembers.map((member) => (
               <div
                 key={member._id}
-                className="group bg-slate-800/50 backdrop-blur-xl rounded-2xl shadow-lg p-4 hover:shadow-xl hover:shadow-purple-500/30 transition-all duration-300 border border-purple-500/30 hover:border-purple-500/70 transform hover:-translate-y-1 overflow-hidden relative"
+                className="group relative overflow-hidden rounded-2xl border border-[#cde4da] bg-white p-4 shadow-lg transition-all duration-300 hover:-translate-y-1 hover:border-[#9fd4bf] hover:shadow-xl"
               >
                 {/* Gradient overlay on hover */}
-                <div className="absolute inset-0 bg-linear-to-br from-purple-600/0 to-blue-600/0 group-hover:from-purple-600/10 group-hover:to-blue-600/10 transition duration-300"></div>
+                <div className="absolute inset-0 bg-linear-to-br from-[#dff5ed]/0 to-[#cfeadd]/0 transition duration-300 group-hover:from-[#dff5ed]/80 group-hover:to-[#cfeadd]/40"></div>
 
                 <div className="relative z-10 mb-3">
                   <div className="flex items-start justify-between mb-3 gap-4">
                     {/* Member Name and ID - Left side */}
                     <div>
-                      <h3 className="text-lg font-bold text-white group-hover:text-transparent group-hover:bg-linear-to-r group-hover:from-purple-200 group-hover:to-blue-200 group-hover:bg-clip-text transition duration-300">
+                      <h3 className="text-lg font-bold text-[#1f2623] transition duration-300 group-hover:text-[#2f8f71]">
                         {member.name}
                       </h3>
-                      <p className="text-xs text-gray-400 mt-0.5">
+                      <p className="mt-0.5 text-xs text-[#7a8580]">
                         ID: {member.enrollmentNumber}
                       </p>
                     </div>
@@ -1212,17 +1145,17 @@ export default function Dashboard() {
                     {/* Creator Info - Right side */}
                     <div className="text-right">
                       {member.createdBy && (
-                        <p className="text-xs text-gray-400 mb-1">
+                        <p className="mb-1 text-xs text-[#7a8580]">
                           Added by:{" "}
-                          <span className="font-semibold text-blue-400">
+                          <span className="font-semibold text-[#2f8f71]">
                             {member.createdBy.username}
                           </span>
                         </p>
                       )}
                       {member.lastUpdatedBy && (
-                        <p className="text-xs text-gray-400">
+                        <p className="text-xs text-[#7a8580]">
                           Last updated by:{" "}
-                          <span className="font-semibold text-green-400">
+                          <span className="font-semibold text-[#2f8f71]">
                             {member.lastUpdatedBy.username}
                           </span>
                         </p>
@@ -1231,9 +1164,9 @@ export default function Dashboard() {
                   </div>
 
                   {member.position && (
-                    <div className="inline-flex items-center gap-1 px-3 py-1 bg-linear-to-r from-amber-500/20 to-orange-500/20 border border-amber-500/40 rounded-lg mb-3 hover:border-amber-500/70 transition">
+                    <div className="mb-3 inline-flex items-center gap-1 rounded-lg border border-[#ecdcb2] bg-[#fff5d8] px-3 py-1 transition hover:border-[#dfc889]">
                       <span className="text-sm">📍</span>
-                      <p className="text-xs font-bold text-amber-300">
+                      <p className="text-xs font-bold text-[#9a7a2f]">
                         {member.position}
                       </p>
                     </div>
@@ -1241,20 +1174,20 @@ export default function Dashboard() {
                 </div>
 
                 {/* Stats Section */}
-                <div className="grid grid-cols-2 gap-3 mb-3 py-3 border-t border-b border-purple-500/30 relative z-10">
-                  <div className="text-center p-3 bg-linear-to-br from-purple-500/30 to-blue-500/30 rounded-lg border border-purple-500/40 hover:border-purple-500/70 transition group-hover:shadow-lg group-hover:shadow-purple-500/20">
-                    <p className="text-2xl font-bold text-purple-300 drop-shadow-lg">
+                <div className="relative z-10 mb-3 grid grid-cols-2 gap-3 border-y border-[#e1eee8] py-3">
+                  <div className="rounded-lg border border-[#cde4da] bg-[#f5fbf8] p-3 text-center transition group-hover:shadow-lg">
+                    <p className="text-2xl font-bold text-[#2f8f71]">
                       {member.points}
                     </p>
-                    <p className="text-xs text-gray-300 mt-1 font-semibold">
+                    <p className="mt-1 text-xs font-semibold text-[#5f6b67]">
                       ⭐ Task
                     </p>
                   </div>
-                  <div className="text-center p-3 bg-linear-to-br from-green-500/30 to-emerald-500/30 rounded-lg border border-green-500/40 hover:border-green-500/70 transition group-hover:shadow-lg group-hover:shadow-green-500/20">
-                    <p className="text-2xl font-bold text-green-300 drop-shadow-lg">
+                  <div className="rounded-lg border border-[#cde4da] bg-[#f5fbf8] p-3 text-center transition group-hover:shadow-lg">
+                    <p className="text-2xl font-bold text-[#2f8f71]">
                       {member.hours}
                     </p>
-                    <p className="text-xs text-gray-300 mt-1 font-semibold">
+                    <p className="mt-1 text-xs font-semibold text-[#5f6b67]">
                       ⏱️ Hours
                     </p>
                   </div>
@@ -1263,20 +1196,20 @@ export default function Dashboard() {
                 {/* Remarks Section */}
                 {(member.remarks ?? []).length > 0 && (
                   <div className="mb-3 relative z-10">
-                    <p className="text-xs font-bold text-gray-200 mb-2 flex items-center gap-1">
+                    <p className="mb-2 flex items-center gap-1 text-xs font-bold text-[#2b3531]">
                       <span className="text-sm">💬</span>
                       Remarks ({(member.remarks ?? []).length})
                     </p>
-                    <div className="bg-slate-700/50 rounded-lg p-2 max-h-32 overflow-y-auto border border-purple-500/20 hover:border-purple-500/40 transition">
+                    <div className="max-h-32 overflow-y-auto rounded-lg border border-[#e1eee8] bg-[#f7fcfa] p-2 transition hover:border-[#cde4da]">
                       {(member.remarks ?? []).map((remark, idx) => (
                         <div
                           key={idx}
-                          className="text-xs text-gray-300 mb-2 pb-2 border-b border-purple-500/20 last:border-b-0"
+                          className="mb-2 border-b border-[#e1eee8] pb-2 text-xs text-[#5f6b67] last:border-b-0"
                         >
-                          <p className="font-bold text-blue-300 mb-0.5">
+                          <p className="mb-0.5 font-bold text-[#2f8f71]">
                             {remark.text}
                           </p>
-                          <p className="text-gray-500 text-xs">
+                          <p className="text-xs text-[#8a9590]">
                             📅 {new Date(remark.date).toLocaleDateString()}
                           </p>
                         </div>
@@ -1325,9 +1258,9 @@ export default function Dashboard() {
 
         {/* Edit Member Modal */}
         {showEditForm && selectedMember && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
-            <div className="bg-white rounded-2xl shadow-2xl p-4 sm:p-6 max-w-md w-full border-2 border-blue-200 my-4">
-              <h2 className="text-xl sm:text-2xl font-bold text-blue-700 mb-3 sm:mb-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#0f1f19]/40 p-2 backdrop-blur-sm sm:p-4">
+            <div className="my-4 w-full max-w-md rounded-2xl border-2 border-[#cde4da] bg-white p-4 shadow-2xl sm:p-6">
+              <h2 className="mb-3 text-xl font-bold text-[#2f8f71] sm:mb-4 sm:text-2xl">
                 Edit Member Information
               </h2>
 
@@ -1336,7 +1269,7 @@ export default function Dashboard() {
                 className="space-y-3 sm:space-y-4"
               >
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
+                  <label className="mb-1 block text-xs font-bold text-[#2b3531] sm:mb-2 sm:text-sm">
                     Full Name
                   </label>
                   <input
@@ -1348,12 +1281,12 @@ export default function Dashboard() {
                     required
                     placeholder="Enter full name"
                     aria-label="Full Name"
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-50 border-2 border-blue-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border-2 border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm text-[#1f2623] focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20 sm:px-4 sm:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
+                  <label className="mb-1 block text-xs font-bold text-[#2b3531] sm:mb-2 sm:text-sm">
                     Enrollment Number
                   </label>
                   <input
@@ -1368,12 +1301,12 @@ export default function Dashboard() {
                     required
                     placeholder="Enter enrollment number"
                     aria-label="Enrollment Number"
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-50 border-2 border-blue-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border-2 border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm text-[#1f2623] focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20 sm:px-4 sm:text-base"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs sm:text-sm font-bold text-gray-800 mb-1 sm:mb-2">
+                  <label className="mb-1 block text-xs font-bold text-[#2b3531] sm:mb-2 sm:text-sm">
                     Position
                   </label>
                   <input
@@ -1384,14 +1317,14 @@ export default function Dashboard() {
                     }
                     placeholder="Enter position (e.g., Captain, Vice-Captain)"
                     aria-label="Position"
-                    className="w-full px-3 sm:px-4 py-2 text-sm sm:text-base bg-blue-50 border-2 border-blue-200 text-gray-900 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500"
+                    className="w-full rounded-xl border-2 border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm text-[#1f2623] focus:border-[#49c89f] focus:outline-none focus:ring-2 focus:ring-[#49c89f]/20 sm:px-4 sm:text-base"
                   />
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-2 pt-2 sm:pt-4">
                   <button
                     type="submit"
-                    className="flex-1 bg-linear-to-r from-blue-600 to-blue-700 hover:from-blue-700 hover:to-blue-800 text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base"
+                    className="flex-1 rounded-xl bg-[#49c89f] px-4 py-2.5 text-sm font-bold text-white shadow-md transition hover:bg-[#39b68d] sm:py-2 sm:text-base"
                   >
                     Save Changes
                   </button>
@@ -1401,7 +1334,7 @@ export default function Dashboard() {
                       setShowEditForm(false);
                       setSelectedMember(null);
                     }}
-                    className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 sm:py-2 rounded-xl transition font-bold shadow-md text-sm sm:text-base"
+                    className="flex-1 rounded-xl border border-[#cde4da] bg-[#f6fcfa] px-4 py-2.5 text-sm font-bold text-[#2b3531] shadow-md transition hover:bg-[#eef9f4] sm:py-2 sm:text-base"
                   >
                     Cancel
                   </button>
@@ -1413,9 +1346,9 @@ export default function Dashboard() {
 
         {/* Update Member Modal */}
         {showUpdateForm && selectedMember && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
-            <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-sm w-full border border-purple-500/40 my-4 max-h-[90vh] overflow-y-auto">
-              <h2 className="text-xl sm:text-2xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent mb-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#0f1f19]/40 p-2 backdrop-blur-sm sm:p-4">
+            <div className="my-4 max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[#cde4da] bg-white p-4 shadow-2xl sm:p-6">
+              <h2 className="mb-4 text-xl font-bold text-[#2f8f71] sm:text-2xl">
                 Update {selectedMember.name}
               </h2>
 
@@ -1425,8 +1358,8 @@ export default function Dashboard() {
               >
                 {/* Task Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-purple-300 mb-1">
-                    Add Task <span className="text-purple-400">(Current: {selectedMember.points})</span>
+                  <label className="mb-1 block text-xs font-semibold text-[#2f8f71] sm:text-sm">
+                    Add Task <span className="text-[#4aa687]">(Current: {selectedMember.points})</span>
                   </label>
                   <input
                     type="number"
@@ -1440,14 +1373,14 @@ export default function Dashboard() {
                       })
                     }
                     placeholder="Enter task points"
-                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-purple-500/40 hover:border-purple-500/70 focus:border-purple-500 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-purple-500/50 placeholder-gray-500 font-medium transition"
+                    className="w-full rounded-lg border border-[#d7e9e1] bg-[#f6fcfa] px-3 py-2 text-xs font-medium text-[#1f2623] transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-1 focus:ring-[#49c89f]/20 sm:text-sm"
                   />
                 </div>
 
                 {/* Hours Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-blue-300 mb-1">
-                    Add Hours <span className="text-blue-400">(Current: {selectedMember.hours.toFixed(1)})</span>
+                  <label className="mb-1 block text-xs font-semibold text-[#2f8f71] sm:text-sm">
+                    Add Hours <span className="text-[#4aa687]">(Current: {selectedMember.hours.toFixed(1)})</span>
                   </label>
                   <input
                     type="number"
@@ -1462,13 +1395,13 @@ export default function Dashboard() {
                       })
                     }
                     placeholder="Enter hours (e.g., 5.4)"
-                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-blue-500/40 hover:border-blue-500/70 focus:border-blue-500 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-blue-500/50 placeholder-gray-500 font-medium transition"
+                    className="w-full rounded-lg border border-[#d7e9e1] bg-[#f6fcfa] px-3 py-2 text-xs font-medium text-[#1f2623] transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-1 focus:ring-[#49c89f]/20 sm:text-sm"
                   />
                 </div>
 
                 {/* Date Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-indigo-300 mb-1">
+                  <label className="mb-1 block text-xs font-semibold text-[#2f8f71] sm:text-sm">
                     Record Date
                   </label>
                   <input
@@ -1479,17 +1412,17 @@ export default function Dashboard() {
                     }
                     max={new Date().toISOString().split("T")[0]}
                     aria-label="Record date for this entry"
-                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-indigo-500/40 hover:border-indigo-500/70 focus:border-indigo-500 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-indigo-500/50 placeholder-gray-500 font-medium transition"
+                    className="w-full rounded-lg border border-[#d7e9e1] bg-[#f6fcfa] px-3 py-2 text-xs font-medium text-[#1f2623] transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-1 focus:ring-[#49c89f]/20 sm:text-sm"
                   />
-                  <p className="text-[10px] sm:text-xs text-gray-400 mt-1">
+                  <p className="mt-1 text-[10px] text-[#8a9590] sm:text-xs">
                     Defaults to today
                   </p>
                 </div>
 
                 {/* Remark Input */}
                 <div>
-                  <label className="block text-xs sm:text-sm font-semibold text-gray-300 mb-1">
-                    Add Remark <span className="text-red-400 font-bold">*</span>
+                  <label className="mb-1 block text-xs font-semibold text-[#2f8f71] sm:text-sm">
+                    Add Remark <span className="font-bold text-red-500">*</span>
                   </label>
                   <textarea
                     required
@@ -1498,17 +1431,17 @@ export default function Dashboard() {
                       setUpdateData({ ...updateData, remark: e.target.value })
                     }
                     placeholder="Add a note or remark... (Required)"
-                    className="w-full px-3 py-2 text-xs sm:text-sm bg-slate-700/60 border border-gray-500/40 hover:border-gray-500/70 focus:border-gray-400 text-white rounded-lg focus:outline-none focus:ring-1 focus:ring-gray-500/50 placeholder-gray-500 font-medium transition resize-none"
+                    className="w-full resize-none rounded-lg border border-[#d7e9e1] bg-[#f6fcfa] px-3 py-2 text-xs font-medium text-[#1f2623] transition placeholder-[#8fa39d] hover:border-[#9fd4bf] focus:border-[#49c89f] focus:outline-none focus:ring-1 focus:ring-[#49c89f]/20 sm:text-sm"
                     rows={2}
                   />
                 </div>
 
                 {/* Buttons */}
-                <div className="flex gap-2 pt-3 border-t border-purple-500/20 mt-4">
+                <div className="mt-4 flex gap-2 border-t border-[#e2efe9] pt-3">
                   <button
                     type="submit"
                     disabled={updateLoading}
-                    className="flex-1 bg-linear-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 disabled:from-gray-600 disabled:to-gray-700 disabled:cursor-not-allowed text-white px-3 py-2 rounded-lg transition font-bold shadow-lg hover:shadow-xl hover:shadow-green-500/30 text-xs sm:text-sm flex items-center justify-center gap-1.5 transform hover:-translate-y-0.5 disabled:hover:scale-100 disabled:opacity-60"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-lg bg-[#49c89f] px-3 py-2 text-xs font-bold text-white shadow-lg transition hover:-translate-y-0.5 hover:bg-[#39b68d] hover:shadow-xl disabled:cursor-not-allowed disabled:opacity-60 disabled:hover:scale-100 sm:text-sm"
                   >
                     {updateLoading ? (
                       <>
@@ -1530,7 +1463,7 @@ export default function Dashboard() {
                       setShowUpdateForm(false);
                       setSelectedMember(null);
                     }}
-                    className="flex-1 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-bold shadow-lg hover:shadow-xl text-xs sm:text-sm flex items-center justify-center gap-1.5"
+                    className="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-xs font-bold text-[#2b3531] shadow-lg transition hover:bg-[#eef9f4] hover:shadow-xl sm:text-sm"
                   >
                     <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1545,15 +1478,15 @@ export default function Dashboard() {
 
         {/* Club Users Modal */}
         {showClubUsers && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
-            <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-sm w-full border border-purple-500/40 my-4 max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#0f1f19]/40 p-2 backdrop-blur-sm sm:p-4">
+            <div className="my-4 max-h-[90vh] w-full max-w-sm overflow-y-auto rounded-2xl border border-[#cde4da] bg-white p-4 shadow-2xl sm:p-6">
               <div className="flex items-center justify-between mb-4">
-                <h2 className="text-lg sm:text-xl font-bold bg-linear-to-r from-purple-200 to-blue-200 bg-clip-text text-transparent">
+                <h2 className="text-lg font-bold text-[#2f8f71] sm:text-xl">
                   Logged Club Leaders ({clubUsers.length})
                 </h2>
                 <button
                   onClick={() => setShowClubUsers(false)}
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-[#8fa39d] transition hover:text-[#2f8f71]"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1567,41 +1500,41 @@ export default function Dashboard() {
                 </div>
               ) : clubUsers.length === 0 ? (
                 <div className="text-center py-8">
-                  <p className="text-gray-400 text-sm">No members found</p>
+                  <p className="text-sm text-[#6d7874]">No members found</p>
                 </div>
               ) : (
                 <div className="space-y-2">
                   {clubUsers.map((user) => (
                     <div
                       key={user.id}
-                      className="bg-slate-700/50 border border-purple-500/30 rounded-lg p-3 hover:border-purple-500/50 transition"
+                      className="rounded-lg border border-[#d7e9e1] bg-[#f7fcfa] p-3 transition hover:border-[#9fd4bf]"
                     >
                       <div className="flex items-start justify-between gap-2">
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2">
-                            <p className="text-white font-semibold text-sm truncate">
+                            <p className="truncate text-sm font-semibold text-[#1f2623]">
                               {user.username}
                             </p>
                             {user.isClubLeader && (
-                              <span className="px-2 py-0.5 bg-linear-to-r from-yellow-500 to-orange-500 text-white text-[10px] font-bold rounded-full whitespace-nowrap">
+                              <span className="whitespace-nowrap rounded-full bg-[#d5a340] px-2 py-0.5 text-[10px] font-bold text-white">
                                 Leader
                               </span>
                             )}
                             {user.isApproved && !user.isClubLeader && (
-                              <span className="px-2 py-0.5 bg-linear-to-r from-green-500 to-emerald-500 text-white text-[10px] font-bold rounded-full whitespace-nowrap">
+                              <span className="whitespace-nowrap rounded-full bg-[#49c89f] px-2 py-0.5 text-[10px] font-bold text-white">
                                 Approved
                               </span>
                             )}
                             {!user.isApproved && (
-                              <span className="px-2 py-0.5 bg-slate-600 text-gray-300 text-[10px] font-bold rounded-full whitespace-nowrap">
+                              <span className="whitespace-nowrap rounded-full bg-gray-200 px-2 py-0.5 text-[10px] font-bold text-gray-600">
                                 Pending
                               </span>
                             )}
                           </div>
-                          <p className="text-gray-400 text-xs truncate mt-1">
+                          <p className="mt-1 truncate text-xs text-[#6d7874]">
                             {user.email}
                           </p>
-                          <p className="text-gray-500 text-[10px] mt-1">
+                          <p className="mt-1 text-[10px] text-[#8fa39d]">
                             Joined: {new Date(user.joinedAt).toLocaleDateString()}
                           </p>
                         </div>
@@ -1613,7 +1546,7 @@ export default function Dashboard() {
 
               <button
                 onClick={() => setShowClubUsers(false)}
-                className="w-full mt-4 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-semibold shadow-lg hover:shadow-xl text-sm"
+                className="mt-4 w-full rounded-lg border border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm font-semibold text-[#2b3531] shadow-lg transition hover:bg-[#eef9f4] hover:shadow-xl"
               >
                 Close
               </button>
@@ -1623,21 +1556,21 @@ export default function Dashboard() {
 
         {/* Update History Modal */}
         {showUpdateHistory && selectedMember && (
-          <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center p-2 sm:p-4 z-50 overflow-y-auto">
-            <div className="bg-linear-to-br from-slate-800/90 to-slate-900/90 backdrop-blur-xl rounded-2xl shadow-2xl p-4 sm:p-6 max-w-2xl w-full border border-cyan-500/40 my-4 max-h-[90vh] overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center overflow-y-auto bg-[#0f1f19]/40 p-2 backdrop-blur-sm sm:p-4">
+            <div className="my-4 max-h-[90vh] w-full max-w-2xl overflow-y-auto rounded-2xl border border-[#cde4da] bg-white p-4 shadow-2xl sm:p-6">
               <div className="flex items-center justify-between mb-4">
                 <div>
-                  <h2 className="text-lg sm:text-xl font-bold bg-linear-to-r from-cyan-200 to-blue-200 bg-clip-text text-transparent">
+                  <h2 className="text-lg font-bold text-[#2f8f71] sm:text-xl">
                     Update History
                   </h2>
-                  <p className="text-gray-400 text-sm mt-1">{selectedMember.name} - {updateHistory.length} updates</p>
+                  <p className="mt-1 text-sm text-[#6d7874]">{selectedMember.name} - {updateHistory.length} updates</p>
                 </div>
                 <button
                   onClick={() => {
                     setShowUpdateHistory(false);
                     setUpdateHistory([]);
                   }}
-                  className="text-gray-400 hover:text-white transition"
+                  className="text-[#8fa39d] transition hover:text-[#2f8f71]"
                 >
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1651,49 +1584,49 @@ export default function Dashboard() {
                 </div>
               ) : updateHistory.length === 0 ? (
                 <div className="text-center py-8">
-                  <div className="inline-flex items-center justify-center w-16 h-16 bg-cyan-500/20 rounded-full mb-4">
-                    <svg className="w-8 h-8 text-cyan-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <div className="mb-4 inline-flex h-16 w-16 items-center justify-center rounded-full bg-[#e7f8f1]">
+                    <svg className="h-8 w-8 text-[#49c89f]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
                     </svg>
                   </div>
-                  <p className="text-gray-400 text-sm">No update history found</p>
-                  <p className="text-gray-500 text-xs mt-2">Updates will appear here once you start tracking member progress</p>
+                  <p className="text-sm text-[#6d7874]">No update history found</p>
+                  <p className="mt-2 text-xs text-[#8fa39d]">Updates will appear here once you start tracking member progress</p>
                 </div>
               ) : (
                 <div className="space-y-3">
                   {updateHistory.map((update) => (
                     <div
                       key={update._id}
-                      className="bg-slate-700/50 border border-cyan-500/30 rounded-lg p-4 hover:border-cyan-500/50 transition"
+                      className="rounded-lg border border-[#d7e9e1] bg-[#f7fcfa] p-4 transition hover:border-[#9fd4bf]"
                     >
                       <div className="flex items-start justify-between gap-3 mb-3">
                         <div className="flex-1">
                           <div className="flex items-center gap-2 mb-2">
-                            <span className="px-2 py-1 bg-purple-500/20 border border-purple-500/40 rounded text-purple-300 text-xs font-bold">
+                            <span className="rounded border border-[#cde4da] bg-[#ecf9f4] px-2 py-1 text-xs font-bold text-[#2f8f71]">
                               ⭐ {update.points} Tasks
                             </span>
-                            <span className="px-2 py-1 bg-green-500/20 border border-green-500/40 rounded text-green-300 text-xs font-bold">
+                            <span className="rounded border border-[#cde4da] bg-[#ecf9f4] px-2 py-1 text-xs font-bold text-[#2f8f71]">
                               ⏱️ {update.hours} Hours
                             </span>
                           </div>
-                          <p className="text-gray-300 text-sm mb-1">
-                            <span className="text-cyan-300 font-semibold">📅 Record Date:</span>{" "}
+                          <p className="mb-1 text-sm text-[#4e5a56]">
+                            <span className="font-semibold text-[#2f8f71]">📅 Record Date:</span>{" "}
                             {new Date(update.date).toLocaleDateString()}
                           </p>
                           {update.remark && (
-                            <p className="text-gray-400 text-sm italic mb-1">
+                            <p className="mb-1 text-sm italic text-[#6d7874]">
                               💬 "{update.remark}"
                             </p>
                           )}
-                          <p className="text-gray-500 text-xs mt-2">
-                            Added by <span className="text-blue-400 font-semibold">{update.addedBy.username}</span> on{" "}
+                          <p className="mt-2 text-xs text-[#8fa39d]">
+                            Added by <span className="font-semibold text-[#2f8f71]">{update.addedBy.username}</span> on{" "}
                             {new Date(update.addedAt).toLocaleDateString()} at{" "}
                             {new Date(update.addedAt).toLocaleTimeString()}
                           </p>
                         </div>
                         <button
                           onClick={() => deleteUpdate(selectedMember._id, update._id)}
-                          className="bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white p-2 rounded-lg transition text-xs font-bold shadow-lg hover:shadow-red-500/40 flex-shrink-0"
+                          className="shrink-0 rounded-lg bg-red-500 p-2 text-xs font-bold text-white shadow-lg transition hover:bg-red-600"
                           title="Delete this update"
                         >
                           <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1711,7 +1644,7 @@ export default function Dashboard() {
                   setShowUpdateHistory(false);
                   setUpdateHistory([]);
                 }}
-                className="w-full mt-4 bg-slate-700/60 hover:bg-slate-700 border border-slate-600/40 hover:border-slate-600/70 text-gray-200 hover:text-white px-3 py-2 rounded-lg transition font-semibold shadow-lg hover:shadow-xl text-sm"
+                className="mt-4 w-full rounded-lg border border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm font-semibold text-[#2b3531] shadow-lg transition hover:bg-[#eef9f4] hover:shadow-xl"
               >
                 Close
               </button>
@@ -1721,9 +1654,9 @@ export default function Dashboard() {
 
         {/* First Delete Confirmation Modal */}
         {showDeleteConfirm && selectedMember && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 border-2 border-red-300">
-              <div className="flex items-center justify-center w-16 h-16 bg-linear-to-br from-red-100 to-red-200 rounded-full mx-auto mb-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f1f19]/40 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-md rounded-2xl border-2 border-red-200 bg-white p-6 shadow-2xl sm:p-8">
+              <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-red-100">
                 <svg
                   className="w-8 h-8 text-red-700"
                   fill="none"
@@ -1738,17 +1671,17 @@ export default function Dashboard() {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-red-700 mb-4 text-center">
+              <h2 className="mb-4 text-center text-2xl font-bold text-red-700">
                 Delete Member?
               </h2>
-              <p className="text-gray-700 mb-2 text-center font-medium">
+              <p className="mb-2 text-center font-medium text-[#2b3531]">
                 Are you sure you want to delete{" "}
                 <span className="font-bold text-red-700">
                   {selectedMember.name}
                 </span>
                 ?
               </p>
-              <p className="text-gray-600 text-sm mb-6 text-center">
+              <p className="mb-6 text-center text-sm text-[#6d7874]">
                 This action cannot be undone.
               </p>
               <div className="flex gap-3">
@@ -1757,7 +1690,7 @@ export default function Dashboard() {
                     setShowDeleteConfirm(false);
                     setShowSecondDeleteConfirm(true);
                   }}
-                  className="flex-1 bg-linear-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                  className="flex-1 rounded-xl bg-red-500 px-4 py-2.5 font-bold text-white shadow-md transition hover:bg-red-600"
                 >
                   Yes, Delete
                 </button>
@@ -1766,7 +1699,7 @@ export default function Dashboard() {
                     setShowDeleteConfirm(false);
                     setSelectedMember(null);
                   }}
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                  className="flex-1 rounded-xl border border-[#cde4da] bg-[#f6fcfa] px-4 py-2.5 font-bold text-[#2b3531] shadow-md transition hover:bg-[#eef9f4]"
                 >
                   Cancel
                 </button>
@@ -1777,9 +1710,9 @@ export default function Dashboard() {
 
         {/* Second Delete Confirmation Modal */}
         {showSecondDeleteConfirm && selectedMember && (
-          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-4">
-            <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full p-6 sm:p-8 border-4 border-red-500">
-              <div className="flex items-center justify-center w-20 h-20 bg-linear-to-br from-red-600 to-red-700 rounded-full mx-auto mb-4">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f1f19]/40 p-4 backdrop-blur-sm">
+            <div className="w-full max-w-md rounded-2xl border-4 border-red-500 bg-white p-6 shadow-2xl sm:p-8">
+              <div className="mx-auto mb-4 flex h-20 w-20 items-center justify-center rounded-full bg-red-600">
                 <svg
                   className="w-10 h-10 text-white"
                   fill="none"
@@ -1794,13 +1727,13 @@ export default function Dashboard() {
                   />
                 </svg>
               </div>
-              <h2 className="text-2xl font-bold text-red-800 mb-4 text-center">
+              <h2 className="mb-4 text-center text-2xl font-bold text-red-800">
                 Final Confirmation
               </h2>
-              <p className="text-gray-700 mb-2 text-center font-semibold">
+              <p className="mb-2 text-center font-semibold text-[#2b3531]">
                 This is your last chance!
               </p>
-              <p className="text-gray-600 text-sm mb-6 text-center">
+              <p className="mb-6 text-center text-sm text-[#6d7874]">
                 Deleting{" "}
                 <span className="font-bold text-red-700">
                   {selectedMember.name}
@@ -1811,7 +1744,7 @@ export default function Dashboard() {
               <div className="flex gap-3">
                 <button
                   onClick={handleDeleteMember}
-                  className="flex-1 bg-linear-to-r from-red-700 to-red-800 hover:from-red-800 hover:to-red-900 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                  className="flex-1 rounded-xl bg-red-600 px-4 py-2.5 font-bold text-white shadow-md transition hover:bg-red-700"
                 >
                   Permanently Delete
                 </button>
@@ -1820,7 +1753,7 @@ export default function Dashboard() {
                     setShowSecondDeleteConfirm(false);
                     setSelectedMember(null);
                   }}
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2.5 rounded-xl transition font-bold shadow-md"
+                  className="flex-1 rounded-xl border border-[#cde4da] bg-[#f6fcfa] px-4 py-2.5 font-bold text-[#2b3531] shadow-md transition hover:bg-[#eef9f4]"
                 >
                   Cancel
                 </button>
@@ -1831,21 +1764,21 @@ export default function Dashboard() {
 
         {/* Club Settings Modal */}
         {showClubSettings && (
-          <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center z-50 p-3 sm:p-4 md:p-6">
-            <div className="bg-linear-to-br from-slate-800 to-slate-900 rounded-3xl shadow-2xl max-w-2xl md:max-w-4xl w-full p-4 sm:p-6 md:p-8 border-2 border-blue-500/30 max-h-[95vh] overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center bg-[#0f1f19]/40 p-3 backdrop-blur-sm sm:p-4 md:p-6">
+            <div className="max-h-[95vh] w-full max-w-2xl overflow-y-auto rounded-3xl border-2 border-[#cde4da] bg-white p-4 shadow-2xl sm:p-6 md:max-w-4xl md:p-8">
               <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
                 <div className="flex items-center gap-2 sm:gap-3 md:gap-4 min-w-0">
-                  <div className="p-2 sm:p-3 md:p-4 bg-linear-to-br from-blue-500 to-cyan-500 rounded-2xl flex-shrink-0">
+                  <div className="rounded-2xl bg-[#49c89f] p-2 shrink-0 sm:p-3 md:p-4">
                     <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-8 md:h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                   </div>
-                  <h2 className="text-lg sm:text-2xl md:text-3xl font-bold text-white truncate">Club Settings</h2>
+                  <h2 className="truncate text-lg font-bold text-[#1f2623] sm:text-2xl md:text-3xl">Club Settings</h2>
                 </div>
                 <button
                   onClick={() => setShowClubSettings(false)}
-                  className="text-gray-400 hover:text-white transition flex-shrink-0 ml-2"
+                  className="ml-2 shrink-0 text-[#8fa39d] transition hover:text-[#2f8f71]"
                 >
                   <svg className="w-5 h-5 sm:w-6 sm:h-6 md:w-7 md:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
@@ -1856,23 +1789,23 @@ export default function Dashboard() {
               <div className="space-y-3 sm:space-y-4 md:space-y-6">
                 {/* Club Name */}
                 <div>
-                  <label className="text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3 block">Club Name</label>
+                  <label className="mb-1.5 block text-xs font-semibold text-[#2b3531] sm:mb-2 sm:text-sm md:mb-3 md:text-base">Club Name</label>
                   <input
                     type="text"
                     value={clubSettingsData.name}
                     onChange={(e) => setClubSettingsData({ ...clubSettingsData, name: e.target.value })}
-                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white text-sm md:text-base focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
+                    className="w-full rounded-2xl border border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm text-[#1f2623] transition focus:border-[#49c89f] focus:outline-none sm:px-4 sm:py-3 md:px-5 md:py-4 md:text-base"
                     placeholder="Enter club name"
                   />
                 </div>
 
                 {/* Description */}
                 <div>
-                  <label className="text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-1.5 sm:mb-2 md:mb-3 block">Description</label>
+                  <label className="mb-1.5 block text-xs font-semibold text-[#2b3531] sm:mb-2 sm:text-sm md:mb-3 md:text-base">Description</label>
                   <textarea
                     value={clubSettingsData.description}
                     onChange={(e) => setClubSettingsData({ ...clubSettingsData, description: e.target.value })}
-                    className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white text-sm md:text-base focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition resize-none"
+                    className="w-full resize-none rounded-2xl border border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm text-[#1f2623] transition focus:border-[#49c89f] focus:outline-none sm:px-4 sm:py-3 md:px-5 md:py-4 md:text-base"
                     placeholder="Enter club description"
                     rows={3}
                   />
@@ -1880,7 +1813,7 @@ export default function Dashboard() {
 
                 {/* Banner Image - URL or Upload */}
                 <div>
-                  <label className="text-gray-300 text-xs sm:text-sm md:text-base font-semibold mb-2 sm:mb-3 md:mb-4 block">Banner Image</label>
+                  <label className="mb-2 block text-xs font-semibold text-[#2b3531] sm:mb-3 sm:text-sm md:mb-4 md:text-base">Banner Image</label>
                   
                   {/* Image Upload Tabs */}
                   <div className="flex gap-1.5 sm:gap-2 md:gap-3 mb-3 sm:mb-4 md:mb-5">
@@ -1889,8 +1822,8 @@ export default function Dashboard() {
                       onClick={() => setClubSettingsData({ ...clubSettingsData, uploadMode: 'url' } as any)}
                       className={`flex-1 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-lg font-semibold text-xs sm:text-sm md:text-base transition ${
                         (clubSettingsData as any).uploadMode !== 'upload'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                          ? 'bg-[#49c89f] text-white'
+                          : 'bg-[#f6fcfa] text-[#5f6b67] hover:bg-[#eef9f4] border border-[#cde4da]'
                       }`}
                     >
                       <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 inline mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1903,8 +1836,8 @@ export default function Dashboard() {
                       onClick={() => setClubSettingsData({ ...clubSettingsData, uploadMode: 'upload' } as any)}
                       className={`flex-1 px-3 sm:px-4 md:px-6 py-1.5 sm:py-2 md:py-3 rounded-lg font-semibold text-xs sm:text-sm md:text-base transition ${
                         (clubSettingsData as any).uploadMode === 'upload'
-                          ? 'bg-blue-600 text-white'
-                          : 'bg-slate-700 text-gray-300 hover:bg-slate-600'
+                          ? 'bg-[#49c89f] text-white'
+                          : 'bg-[#f6fcfa] text-[#5f6b67] hover:bg-[#eef9f4] border border-[#cde4da]'
                       }`}
                     >
                       <svg className="w-3 h-3 sm:w-4 sm:h-4 md:w-5 md:h-5 inline mr-1 md:mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -1920,7 +1853,7 @@ export default function Dashboard() {
                       type="url"
                       value={clubSettingsData.imageUrl}
                       onChange={(e) => setClubSettingsData({ ...clubSettingsData, imageUrl: e.target.value })}
-                      className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-slate-700/50 border border-blue-500/30 rounded-2xl text-white text-sm md:text-base focus:outline-none focus:border-blue-500/70 focus:bg-slate-700/70 transition"
+                      className="w-full rounded-2xl border border-[#cde4da] bg-[#f6fcfa] px-3 py-2 text-sm text-[#1f2623] transition focus:border-[#49c89f] focus:outline-none sm:px-4 sm:py-3 md:px-5 md:py-4 md:text-base"
                       placeholder="https://example.com/image.jpg"
                     />
                   )}
@@ -1928,13 +1861,13 @@ export default function Dashboard() {
                   {/* File Upload Input */}
                   {(clubSettingsData as any).uploadMode === 'upload' && (
                     <div>
-                      <label className="flex items-center justify-center w-full px-3 sm:px-4 md:px-6 py-6 sm:py-8 md:py-12 border-2 border-dashed border-blue-500/30 rounded-2xl hover:border-blue-500/70 hover:bg-slate-700/50 transition cursor-pointer bg-slate-700/30">
+                      <label className="flex w-full cursor-pointer items-center justify-center rounded-2xl border-2 border-dashed border-[#9fd4bf] bg-[#f6fcfa] px-3 py-6 transition hover:border-[#49c89f] hover:bg-[#eef9f4] sm:px-4 sm:py-8 md:px-6 md:py-12">
                         <div className="text-center">
-                          <svg className="w-6 sm:w-8 md:w-10 h-6 sm:h-8 md:h-10 mx-auto mb-1.5 sm:mb-2 md:mb-3 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <svg className="mx-auto mb-1.5 h-6 w-6 text-[#8fa39d] sm:mb-2 sm:h-8 sm:w-8 md:mb-3 md:h-10 md:w-10" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                           </svg>
-                          <p className="text-gray-300 font-semibold text-xs sm:text-sm md:text-base">Drop image or click to upload</p>
-                          <p className="text-gray-400 text-[10px] sm:text-xs md:text-sm mt-0.5 sm:mt-1 md:mt-2">PNG, JPG, GIF up to 5MB</p>
+                          <p className="text-xs font-semibold text-[#2b3531] sm:text-sm md:text-base">Drop image or click to upload</p>
+                          <p className="mt-0.5 text-[10px] text-[#8fa39d] sm:mt-1 sm:text-xs md:mt-2 md:text-sm">PNG, JPG, GIF up to 5MB</p>
                         </div>
                         <input
                           type="file"
@@ -1999,11 +1932,11 @@ export default function Dashboard() {
                     </div>
                   )}
 
-                  <p className="text-gray-400 text-xs md:text-sm mt-1.5 sm:mt-2 md:mt-3">Recommended size: 1200x400px or wider</p>
+                  <p className="mt-1.5 text-xs text-[#8fa39d] sm:mt-2 md:mt-3 md:text-sm">Recommended size: 1200x400px or wider</p>
                   {clubSettingsData.imageUrl && (
                     <div className="mt-2 sm:mt-4 md:mt-6">
-                      <p className="text-gray-300 text-xs md:text-sm font-semibold mb-1.5 sm:mb-2 md:mb-3">Preview:</p>
-                      <div className="relative h-32 sm:h-40 md:h-56 rounded-lg overflow-hidden border-2 border-blue-500/50 bg-slate-700/30 flex items-center justify-center">
+                      <p className="mb-1.5 text-xs font-semibold text-[#2b3531] sm:mb-2 md:mb-3 md:text-sm">Preview:</p>
+                      <div className="relative flex h-32 items-center justify-center overflow-hidden rounded-lg border-2 border-[#9fd4bf] bg-[#f6fcfa] sm:h-40 md:h-56">
                         <img
                           src={clubSettingsData.imageUrl}
                           alt="Banner preview"
@@ -2018,16 +1951,16 @@ export default function Dashboard() {
                           }}
                         />
                         {!imageLoadStatus && (
-                          <div className="absolute inset-0 flex items-center justify-center bg-slate-700/50">
-                            <p className="text-gray-400 text-xs sm:text-sm md:text-base">Loading image...</p>
+                          <div className="absolute inset-0 flex items-center justify-center bg-[#eef9f4]">
+                            <p className="text-xs text-[#8fa39d] sm:text-sm md:text-base">Loading image...</p>
                           </div>
                         )}
                       </div>
                       {imageLoadStatus === "loaded" && (
-                        <p className="text-green-400 text-xs md:text-sm mt-1.5 sm:mt-2 md:mt-3">✓ Image ready - Click "Save Changes" to apply</p>
+                        <p className="mt-1.5 text-xs text-green-600 sm:mt-2 md:mt-3 md:text-sm">✓ Image ready - Click "Save Changes" to apply</p>
                       )}
                       {imageLoadStatus === "error" && (
-                        <p className="text-orange-400 text-xs md:text-sm mt-1.5 sm:mt-2 md:mt-3">⚠ Preview issue but will still save</p>
+                        <p className="mt-1.5 text-xs text-orange-500 sm:mt-2 md:mt-3 md:text-sm">⚠ Preview issue but will still save</p>
                       )}
                     </div>
                   )}
@@ -2039,7 +1972,7 @@ export default function Dashboard() {
                 <button
                   onClick={handleSaveClubSettings}
                   disabled={savingSettings}
-                  className="flex-1 bg-linear-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 disabled:from-gray-600 disabled:to-gray-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-2xl transition font-bold shadow-lg hover:shadow-blue-500/40 flex items-center justify-center gap-1 sm:gap-2 md:gap-3 text-xs sm:text-base md:text-lg"
+                  className="flex flex-1 items-center justify-center gap-1 rounded-2xl bg-[#49c89f] px-4 py-2 text-xs font-bold text-white shadow-lg transition hover:bg-[#39b68d] sm:gap-2 sm:px-6 sm:py-3 sm:text-base md:gap-3 md:px-8 md:py-4 md:text-lg disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   {savingSettings ? (
                     <>
@@ -2059,7 +1992,7 @@ export default function Dashboard() {
                 <button
                   onClick={() => setShowClubSettings(false)}
                   disabled={savingSettings}
-                  className="flex-1 bg-gray-600 hover:bg-gray-700 disabled:bg-gray-700 text-white px-4 sm:px-6 md:px-8 py-2 sm:py-3 md:py-4 rounded-2xl transition font-bold shadow-md text-xs sm:text-base md:text-lg"
+                  className="flex-1 rounded-2xl border border-[#cde4da] bg-[#f6fcfa] px-4 py-2 text-xs font-bold text-[#2b3531] shadow-md transition hover:bg-[#eef9f4] sm:px-6 sm:py-3 sm:text-base md:px-8 md:py-4 md:text-lg disabled:cursor-not-allowed disabled:opacity-60"
                 >
                   Cancel
                 </button>
